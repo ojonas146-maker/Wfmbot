@@ -112,6 +112,37 @@ async function getAveragePrice(itemName) {
     const name = (item.i18n && item.i18n.en && item.i18n.en.name) ? item.i18n.en.name : itemName
     const maxRank = item.maxRank || 0
     let reply = '📊 *' + name + '* (PC)\n\n'
+
+    // ===== Volume de vendas (90d / 48h) — inline, sem dependência externa =====
+    let salesStats = null
+    try {
+      const statsRes = await axios.get(
+        'https://api.warframe.market/v1/items/' + slug + '/statistics',
+        {
+          timeout: 15000,
+          headers: {
+            'Platform': 'pc',
+            'Language': 'en',
+            'Accept': 'application/json',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            'Origin': 'https://warframe.market',
+            'Referer': 'https://warframe.market/'
+          }
+        }
+      )
+      const payload = statsRes.data && statsRes.data.payload ? statsRes.data.payload : {}
+      const closed = payload.statistics_closed || {}
+      let vol48 = 0, vol90 = 0
+      const h48 = closed['48hours'] || []
+      const d90 = closed['90days'] || []
+      for (const r of h48) vol48 += (r.volume || 0)
+      for (const r of d90) vol90 += (r.volume || 0)
+      salesStats = { vol48h: vol48, vol90d: vol90 }
+    } catch (e) {
+      console.error('volume stats:', e.message)
+    }
+
+    // ===== Preços =====
     if (maxRank > 0) {
       const rank0 = await getTopOrders(slug, 0)
       const rankMax = await getTopOrders(slug, maxRank)
@@ -131,6 +162,16 @@ async function getAveragePrice(itemName) {
       if (statsSell) reply += '🟢 *Vendendo (online)*\nMédia: *' + statsSell.avg + 'p*\nMin: ' + statsSell.min + 'p | Max: ' + statsSell.max + 'p\nOrdens: ' + statsSell.count + '\n\n'
       if (statsBuy) reply += '🔵 *Comprando (online)*\nMédia: *' + statsBuy.avg + 'p*\nMin: ' + statsBuy.min + 'p | Max: ' + statsBuy.max + 'p\nOrdens: ' + statsBuy.count
     }
+
+    // ===== Volume de vendas no rodapé =====
+    if (salesStats && (salesStats.vol90d || salesStats.vol48h)) {
+      const v90 = salesStats.vol90d != null ? salesStats.vol90d.toLocaleString('pt-BR') : '—'
+      const v48 = salesStats.vol48h != null ? salesStats.vol48h.toLocaleString('pt-BR') : '—'
+      reply += '\n\n📈 *Volume de vendas*\n'
+      reply += '• 90d: *' + v90 + '* vendas\n'
+      reply += '• 48h: *' + v48 + '* vendas'
+    }
+
     return reply.trim()
   } catch (err) {
     console.error(err.message)

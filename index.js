@@ -1,5 +1,6 @@
 // index.js — bootstrap do bot. Toda a lógica de domínio vive em src/;
 // este arquivo só levanta o socket do WhatsApp e liga os comandos.
+require('dotenv').config()
 const { default: makeWASocket, useMultiFileAuthState, DisconnectReason } = require('@whiskeysockets/baileys')
 const pino = require('pino')
 
