@@ -1,0 +1,7027 @@
+{
+  "acceltra": {
+    "display": "Acceltra",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "toxin",
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "recoil"
+    ],
+    "raw_text": "MS | CD > TOX | CC / TOX > FR / DMG / SC | IMP > Z > REC"
+  },
+  "ack_and_brunt": {
+    "display": "Ack & Brunt",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "acrid": {
+    "display": "Acrid",
+    "must_have": [
+      "multishot",
+      "base_damage_/_melee_damage"
+    ],
+    "priority": [
+      "status_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "recoil",
+      "critical_chance"
+    ],
+    "raw_text": "MS | DMG | SC / TOX / FR | Z > REC"
+  },
+  "aegrit": {
+    "display": "Aegrit",
+    "must_have": [
+      "critical_damage",
+      "critical_chance"
+    ],
+    "priority": [
+      "base_damage_/_melee_damage",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "impact",
+      "recoil"
+    ],
+    "raw_text": "CD | CC | DMG / TOX / FR | IMP > Z > REC | * 4 active grenades limit makes excess multishot possible"
+  },
+  "aeolak": {
+    "display": "Aeolak",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | IMP > Z > PUNC > REC"
+  },
+  "afentis": {
+    "display": "Afentis",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD / CC | CC > TOX / FR / DMG / SC | PUNC > Z > REC"
+  },
+  "afuris": {
+    "display": "Afuris",
+    "must_have": [
+      "projectile_speed"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | PUNC > Z / PFS* > REC"
+  },
+  "akarius": {
+    "display": "Akarius",
+    "must_have": [
+      "critical_chance"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "fire_rate_/_attack_speed",
+      "status_chance",
+      "impact",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | TOX / CC* / DMG / FR / SC | IMP > Z > REC"
+  },
+  "akaten": {
+    "display": "Akaten",
+    "must_have": [
+      "critical_chance",
+      "base_damage_/_melee_damage"
+    ],
+    "priority": [
+      "critical_damage",
+      "puncture",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency"
+    ],
+    "raw_text": "CC | DMG | CD | PUNC > SLIDE / FIN / EFF"
+  },
+  "akbolto": {
+    "display": "Akbolto",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | PUNC > Z > REC"
+  },
+  "akbronco": {
+    "display": "Akbronco",
+    "must_have": [
+      "multishot",
+      "toxin"
+    ],
+    "priority": [
+      "base_damage_/_melee_damage",
+      "critical_damage",
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "status_chance"
+    ],
+    "raw_text": "MSTOXDMG | MSCDCC > FR / TOX / DMG / SC"
+  },
+  "akjagara": {
+    "display": "Akjagara",
+    "must_have": [
+      "projectile_speed"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "slash",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | Z / PFS* > SL > REC"
+  },
+  "aklato": {
+    "display": "Aklato",
+    "must_have": [
+      "projectile_speed"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | Z / PFS* > REC"
+  },
+  "aklex": {
+    "display": "Aklex",
+    "must_have": [
+      "projectile_speed"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | PUNC > Z / PFS* > REC"
+  },
+  "akmagnus": {
+    "display": "Akmagnus",
+    "must_have": [
+      "projectile_speed"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | IMP > Z / PFS* / PUNC > REC"
+  },
+  "aksomati": {
+    "display": "Aksomati",
+    "must_have": [
+      "projectile_speed"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | PUNC > Z / PFS* > REC"
+  },
+  "akstiletto": {
+    "display": "Akstiletto",
+    "must_have": [
+      "projectile_speed"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | IMP > Z / PFS* >REC"
+  },
+  "akvasto": {
+    "display": "Akvasto",
+    "must_have": [
+      "projectile_speed"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | Z / PFS* > REC"
+  },
+  "akzani": {
+    "display": "Akzani",
+    "must_have": [
+      "projectile_speed"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | PUNC > Z / PFS* > REC"
+  },
+  "alternox": {
+    "display": "Alternox",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | Z > REC"
+  },
+  "amanata": {
+    "display": "Amanata",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "ambassador": {
+    "display": "Ambassador",
+    "must_have": [
+      "multishot"
+    ],
+    "priority": [
+      "critical_damage",
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "recoil"
+    ],
+    "raw_text": "MS* | CD | CC > TOX / FR / DMG / SC | Z > REC"
+  },
+  "amphis": {
+    "display": "Amphis",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "impact",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | IMP > SLIDE / FIN / EFF"
+  },
+  "amprex": {
+    "display": "Amprex",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | Z > REC"
+  },
+  "anku": {
+    "display": "Anku",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "puncture",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | PUNC > SLIDE / FIN / EFF"
+  },
+  "ankyros": {
+    "display": "Ankyros",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "impact",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | IMP > SLIDE / FIN / EFF"
+  },
+  "angstrum": {
+    "display": "Angstrum",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | Z > REC > AMMO(inc)"
+  },
+  "arbucep": {
+    "display": "Arbucep",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | Z > REC"
+  },
+  "arca_plasmor": {
+    "display": "Arca Plasmor",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC / FR / TOX / DMG / SC | REC > AMMO"
+  },
+  "arca_scisco": {
+    "display": "Arca Scisco",
+    "must_have": [
+      "projectile_speed"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG /SC | PUNC > Z / PFS* > REC"
+  },
+  "arca_titron": {
+    "display": "Arca Titron",
+    "must_have": [
+      "heavy_attack_efficiency"
+    ],
+    "priority": [
+      "critical_chance",
+      "base_damage_/_melee_damage",
+      "electricity",
+      "critical_damage",
+      "initial_combo",
+      "impact",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "slash"
+    ],
+    "raw_text": "CC | DMG | ELEC(infl) / CD > IC | IMP > SLIDE / FIN / EFF* / SL | * -EFF not ideal for Heavy Attack spam"
+  },
+  "argo_and_vel": {
+    "display": "Argo & Vel",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "argonak": {
+    "display": "Argonak",
+    "must_have": [
+      "multishot",
+      "critical_chance"
+    ],
+    "priority": [
+      "critical_damage",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "recoil"
+    ],
+    "raw_text": "MS | CC > CD | CC > TOX / FR / DMG / SC | IMP > Z > REC"
+  },
+  "arum_spinosa": {
+    "display": "Arum Spinosa",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "artax": {
+    "display": "Artax",
+    "must_have": [
+      "multishot",
+      "toxin"
+    ],
+    "priority": [
+      "base_damage_/_melee_damage",
+      "damage_vs_infested",
+      "damage_vs_corpus"
+    ],
+    "raw_text": "MS | TOX | DMG | DTI > DTC"
+  },
+  "astilla": {
+    "display": "Astilla",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | IMP > REC"
+  },
+  "athodai": {
+    "display": "Athodai",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "punch_through",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC / PT | Z > REC"
+  },
+  "atomos": {
+    "display": "Atomos",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "recoil",
+      "magazine_capacity"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | Z > REC > AMMO > MAG"
+  },
+  "atterax": {
+    "display": "Atterax",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "attica": {
+    "display": "Attica",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | PUNC > Z > REC"
+  },
+  "ax52": {
+    "display": "AX-52",
+    "must_have": [
+      "puncture"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "recoil",
+      "magazine_capacity"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG > SC | Z / PUNC* > REC | * -PUNC removes most of the base damage but sells well"
+  },
+  "azima": {
+    "display": "Azima",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "projectile_speed",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | Z / PFS > REC"
+  },
+  "azothane": {
+    "display": "Azothane",
+    "must_have": [
+      "heavy_attack_efficiency"
+    ],
+    "priority": [
+      "fire_rate_/_attack_speed",
+      "range",
+      "critical_damage",
+      "electricity",
+      "impact",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | IMP > SLIDE / FIN / EFF* / SL(infl) | * -EFF not ideal for Heavy Attack spam"
+  },
+  "balla": {
+    "display": "Balla",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "puncture",
+      "impact",
+      "slide_attack_critical_chance",
+      "heavy_attack_efficiency",
+      "finisher_damage"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | PUNC > IMP > SLIDE / EFF / FIN | * -EFF not ideal for Heavy Attack spam"
+  },
+  "ballistica": {
+    "display": "Ballistica",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "recoil",
+      "magazine_capacity"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | PUNC > Z > REC / AMMO(inc) / MAG(inc)"
+  },
+  "basmu": {
+    "display": "Basmu",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "recoil",
+      "finisher_damage"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | Z / AMMO* > REC"
+  },
+  "batoten": {
+    "display": "Batoten",
+    "must_have": [
+      "critical_chance",
+      "base_damage_/_melee_damage"
+    ],
+    "priority": [
+      "critical_damage",
+      "impact",
+      "puncture",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency"
+    ],
+    "raw_text": "CC | DMG | CD | IMP > PUNC > SLIDE / FIN / EFF"
+  },
+  "battacor": {
+    "display": "Battacor",
+    "must_have": [
+      "multishot"
+    ],
+    "priority": [
+      "critical_damage",
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "impact",
+      "slash",
+      "recoil"
+    ],
+    "raw_text": "MS* | CD | CC > TOX / FR / DMG / SC | PUNC > IMP(0%) / Z / SL(0%) > REC"
+  },
+  "baza": {
+    "display": "Baza",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | IMP > Z / PUNC > REC"
+  },
+  "bo": {
+    "display": "Bo",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "impact",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency"
+    ],
+    "raw_text": "AS | RNG / CD | CD > ELEC(infl) | IMP >> SLIDE / FIN / EFF"
+  },
+  "boar": {
+    "display": "Boar",
+    "must_have": [
+      "multishot",
+      "heat"
+    ],
+    "priority": [
+      "status_chance",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "impact",
+      "recoil",
+      "slash"
+    ],
+    "raw_text": "MS | HEAT | SC / FR / DMG | IMP > REC > SL(inc) / AMMO(inc) | Incarnon rolls"
+  },
+  "bolto": {
+    "display": "Bolto",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | PUNC > Z > REC"
+  },
+  "boltace": {
+    "display": "Boltace",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "puncture",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slide_attack_critical_chance"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | PUNC > FIN / EFF / SLIDE"
+  },
+  "boltor": {
+    "display": "Boltor",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | PUNC > Z > REC"
+  },
+  "brakk": {
+    "display": "Brakk",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | IMP > Z > PUNC > REC | scipha"
+  },
+  "braton": {
+    "display": "Braton",
+    "must_have": [
+      "multishot"
+    ],
+    "priority": [
+      "critical_damage",
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS* | CD | CC > TOX > FR / DMG / SC | IMP(Vandal) / PUNC(Prime) > Z > REC"
+  },
+  "broken_scepter": {
+    "display": "Broken Scepter",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "impact",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | IMP > SLIDE / FIN / EFF"
+  },
+  "broken_war": {
+    "display": "Broken War",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "bronco": {
+    "display": "Bronco",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "impact"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "critical_chance",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR* / TOX / DMG / SC | IMP* > Z >REC > AMMO | * -IMP and +FR are both bad for [Hemorrhage] Builds"
+  },
+  "bubonico": {
+    "display": "Bubonico",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "fire_rate_/_attack_speed",
+      "critical_chance",
+      "toxin",
+      "electricity",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "puncture",
+      "recoil",
+      "slash",
+      "finisher_damage"
+    ],
+    "raw_text": "MS | CD / FR | CC / FR / TOX / ELEC / DMG / SC | IMP / PUNC > AMMO* > REC > SL"
+  },
+  "burst_laser": {
+    "display": "Burst Laser",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "puncture"
+    ],
+    "raw_text": "MS | CD | CC | PUNC"
+  },
+  "burston": {
+    "display": "Burston",
+    "must_have": [
+      "critical_chance",
+      "critical_damage"
+    ],
+    "priority": [
+      "toxin",
+      "base_damage_/_melee_damage",
+      "fire_rate_/_attack_speed",
+      "impact",
+      "puncture",
+      "recoil",
+      "magazine_capacity",
+      "slash"
+    ],
+    "raw_text": "CC | CD | TOX / DMG / FR | IMP > PUNC / Z > REC / AMMO(inc) / MAG(inc) > SL(inc)"
+  },
+  "buzlok": {
+    "display": "Buzlok",
+    "must_have": [
+      "multishot",
+      "critical_chance"
+    ],
+    "priority": [
+      "critical_damage",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CC > CD | CC > TOX / FR / DMG / SC | IMP > Z > PUNC > REC"
+  },
+  "cadus": {
+    "display": "Cadus",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF"
+  },
+  "cantare": {
+    "display": "Cantare",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "recoil",
+      "finisher_damage"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | Z > REC > AMMO*"
+  },
+  "cassowar": {
+    "display": "Cassowar",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "puncture",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD / ELEC(infl) | PUNC > SLIDE / FIN / EFF / SL(infl)"
+  },
+  "castanas": {
+    "display": "Castanas",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | IMP > Z > REC"
+  },
+  "catabolyst": {
+    "display": "Catabolyst",
+    "must_have": [
+      "multishot"
+    ],
+    "priority": [
+      "critical_damage",
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "recoil"
+    ],
+    "raw_text": "MS* | CD | CC > FR / TOX / DMG / SC | Z > REC"
+  },
+  "catchmoon": {
+    "display": "Catchmoon",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "puncture",
+      "slash",
+      "recoil",
+      "finisher_damage"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | IMP > Z / PUNC(0%) / SL(0%) > REC > AMMO*"
+  },
+  "caustacyst": {
+    "display": "Caustacyst",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "critical_chance",
+      "base_damage_/_melee_damage"
+    ],
+    "raw_text": "ASRNGCD > ELEC(infl) | CCCDDMG / AS"
+  },
+  "cedo": {
+    "display": "Cedo",
+    "must_have": [
+      "multishot",
+      "toxin"
+    ],
+    "priority": [
+      "fire_rate_/_attack_speed",
+      "punch_through",
+      "base_damage_/_melee_damage",
+      "critical_damage",
+      "critical_chance",
+      "status_chance"
+    ],
+    "raw_text": "MSTOXFR / PT / DMG | MSCDFR / CC > TOX / DMG / SC"
+  },
+  "ceramic_dagger": {
+    "display": "Ceramic Dagger",
+    "must_have": [
+      "initial_combo"
+    ],
+    "priority": [
+      "critical_chance",
+      "base_damage_/_melee_damage",
+      "critical_damage",
+      "fire_rate_/_attack_speed",
+      "puncture",
+      "slide_attack_critical_chance",
+      "heavy_attack_efficiency",
+      "finisher_damage"
+    ],
+    "raw_text": "CC | IC* | NONE / DMG / CD / AS | PUNC > SLIDE > EFF / FIN | * 34 IC breakpoint for constant 11x combo"
+  },
+  "cerata": {
+    "display": "Cerata",
+    "must_have": [
+      "heavy_attack_efficiency"
+    ],
+    "priority": [
+      "critical_chance",
+      "base_damage_/_melee_damage",
+      "critical_damage",
+      "initial_combo",
+      "slide_attack_critical_chance",
+      "finisher_damage"
+    ],
+    "raw_text": "CC | DMG | CD / IC | SLIDE > FIN / EFF* | * -EFF not ideal for Heavy Attack spam"
+  },
+  "cernos": {
+    "display": "Cernos",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "impact"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "critical_chance",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "magazine_capacity",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR* / DMG / SC | IMP* / Z / MAG > REC | * -IMP not usable for [Internal Bleeding]"
+  },
+  "cestra": {
+    "display": "Cestra",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | PUNC > Z > REC"
+  },
+  "cinta": {
+    "display": "Cinta",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "magazine_capacity",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | PUNC > Z / MAG > REC"
+  },
+  "cobra_and_crane": {
+    "display": "Cobra & Crane",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "impact",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | IMP > SLIDE / FIN / EFF"
+  },
+  "coda_bassocyst": {
+    "display": "Coda Bassocyst",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "electricity",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / ELEC | REC"
+  },
+  "coda_motovore": {
+    "display": "Coda Motovore",
+    "must_have": [
+      "impact",
+      "puncture"
+    ],
+    "priority": [
+      "fire_rate_/_attack_speed",
+      "range",
+      "critical_damage",
+      "electricity",
+      "slash",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slide_attack_critical_chance",
+      "magazine_capacity"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | IMP* / PUNC* / SL / FIN / EFF / SLIDE | * -IMP and -PUNC are harmful to the Heavy Slam damage"
+  },
+  "convectrix": {
+    "display": "Convectrix",
+    "must_have": [
+      "multishot",
+      "fire_rate_/_attack_speed"
+    ],
+    "priority": [
+      "critical_damage",
+      "status_chance",
+      "electricity",
+      "heat",
+      "critical_chance",
+      "base_damage_/_melee_damage"
+    ],
+    "raw_text": "MSFR / CDSC / ELEC / HEAT | MSCDCC / FR > DMG"
+  },
+  "corinth": {
+    "display": "Corinth",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | IMP / PUNC > REC"
+  },
+  "cortege": {
+    "display": "Cortege",
+    "must_have": [
+      "multishot"
+    ],
+    "priority": [
+      "critical_damage",
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "recoil"
+    ],
+    "raw_text": "MS* | CD | CC > TOX / FR / DMG / SC | Z > REC"
+  },
+  "corufell": {
+    "display": "Corufell",
+    "must_have": [
+      "heavy_attack_efficiency"
+    ],
+    "priority": [
+      "critical_chance",
+      "critical_damage",
+      "base_damage_/_melee_damage",
+      "fire_rate_/_attack_speed",
+      "impact",
+      "puncture",
+      "slide_attack_critical_chance",
+      "finisher_damage"
+    ],
+    "raw_text": "CC | CD | DMG / AS | IMP > PUNC > SLIDE > FIN / EFF* | * -EFF not ideal for Heavy Attack spam"
+  },
+  "corvas": {
+    "display": "Corvas",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "damage_vs_corpus",
+      "electricity",
+      "cold"
+    ],
+    "raw_text": "MSCDCC > TOX / FR / DMG / SC | CDDTCELEC / COLD > DTC"
+  },
+  "cronus": {
+    "display": "Cronus",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "impact",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | IMP > SLIDE / FIN / EFF / SL(infl)"
+  },
+  "cryotra": {
+    "display": "Cryotra",
+    "must_have": [
+      "multishot",
+      "fire_rate_/_attack_speed"
+    ],
+    "priority": [
+      "status_chance",
+      "punch_through",
+      "impact",
+      "damage_vs_infested",
+      "damage_vs_corpus"
+    ],
+    "raw_text": "MS | FR | SC / PT | IMP > DTI > DTC"
+  },
+  "cyanex": {
+    "display": "Cyanex",
+    "must_have": [
+      "multishot",
+      "base_damage_/_melee_damage"
+    ],
+    "priority": [
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "status_chance",
+      "impact",
+      "recoil",
+      "critical_chance"
+    ],
+    "raw_text": "MS | DMG | FR / TOX / SC | IMP > Z > REC"
+  },
+  "cyath": {
+    "display": "Cyath",
+    "must_have": [
+      "heavy_attack_efficiency"
+    ],
+    "priority": [
+      "fire_rate_/_attack_speed",
+      "range",
+      "critical_damage",
+      "electricity",
+      "impact",
+      "puncture",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | IMP > PUNC > SLIDE / FIN / EFF* / SL(infl) | * -EFF not ideal for Heavy Attack spam"
+  },
+  "cycron": {
+    "display": "Cycron",
+    "must_have": [
+      "critical_chance"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "impact",
+      "recoil",
+      "slash"
+    ],
+    "raw_text": "MS | CD | CC* > FR / TOX / DMG / SC | PUNC(0% Tenet) > IMP(0%) / Z / AMMO > REC / SL(0% Tenet) | Negatives order accounts for base Cycron (reflects in general sale value)."
+  },
+  "cyngas": {
+    "display": "Cyngas",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | IMP > PUNC > Z > REC"
+  },
+  "daikyu": {
+    "display": "Daikyu",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "base_damage_/_melee_damage",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "status_chance",
+      "impact",
+      "puncture",
+      "magazine_capacity",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > DMG / FR / TOX / SC | IMP / PUNC > Z / MAG > REC"
+  },
+  "dakra_prime": {
+    "display": "Dakra Prime",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "dark_dagger": {
+    "display": "Dark Dagger",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "heavy_attack_efficiency",
+      "finisher_damage"
+    ],
+    "raw_text": "AS | RNG | CD / ELEC(infl) | SLIDE / EFF / FIN"
+  },
+  "dark_splitsword": {
+    "display": "Dark Split-Sword",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "puncture",
+      "impact",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | PUNC > IMP(0%) > SLIDE / FIN / EFF / SL(infl)"
+  },
+  "dark_sword": {
+    "display": "Dark Sword",
+    "must_have": [
+      "critical_chance",
+      "critical_damage"
+    ],
+    "priority": [
+      "base_damage_/_melee_damage",
+      "toxin",
+      "initial_combo",
+      "fire_rate_/_attack_speed",
+      "range",
+      "electricity"
+    ],
+    "raw_text": "CCCD / DMGDMG / TOX / CD / IC | ASRNGCD / ELEC(infl)"
+  },
+  "deconstructor": {
+    "display": "Deconstructor",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "impact",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency"
+    ],
+    "raw_text": "AS | RNG | CD | IMP > SLIDE / FIN / EFF"
+  },
+  "dehtat": {
+    "display": "Dehtat",
+    "must_have": [
+      "heavy_attack_efficiency"
+    ],
+    "priority": [
+      "fire_rate_/_attack_speed",
+      "range",
+      "critical_damage",
+      "electricity",
+      "puncture",
+      "impact",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | PUNC > IMP > SLIDE / FIN / EFF* / SL(infl) | * -EFF not ideal for Heavy Attack spam"
+  },
+  "dera": {
+    "display": "Dera",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "status_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "puncture",
+      "recoil",
+      "magazine_capacity"
+    ],
+    "raw_text": "MS | CD | CC / SC > TOX / FR / DMG | PUNC > Z > REC > AMMO(inc) > MAG(inc)"
+  },
+  "despair": {
+    "display": "Despair",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "recoil",
+      "magazine_capacity"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | PUNC > Z > REC > AMMO(inc) > MAG(inc)"
+  },
+  "destreza": {
+    "display": "Destreza",
+    "must_have": [
+      "puncture"
+    ],
+    "priority": [
+      "fire_rate_/_attack_speed",
+      "range",
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | PUNC* > SLIDE / FIN / EFF | * -PUNC can be harmful for incarnon evos if it removes all puncture"
+  },
+  "detron": {
+    "display": "Detron",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | Z > REC"
+  },
+  "dex_dakra": {
+    "display": "Dex Dakra",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "deth_machine_rifle": {
+    "display": "Deth Machine Rifle",
+    "must_have": [
+      "multishot",
+      "fire_rate_/_attack_speed"
+    ],
+    "priority": [
+      "status_chance",
+      "punch_through",
+      "damage_vs_infested",
+      "damage_vs_corpus",
+      "slash"
+    ],
+    "raw_text": "MS | FR | SC / PT | DTI > DTC > SL"
+  },
+  "dokrahm": {
+    "display": "Dokrahm",
+    "must_have": [
+      "heavy_attack_efficiency"
+    ],
+    "priority": [
+      "fire_rate_/_attack_speed",
+      "range",
+      "critical_damage",
+      "electricity",
+      "puncture",
+      "impact",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | PUNC > IMP > SLIDE / FIN / EFF* / SL(infl) | * -EFF not ideal for Heavy Attack spam"
+  },
+  "dorrclave": {
+    "display": "Dorrclave",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "drakgoon": {
+    "display": "Drakgoon",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "recoil",
+      "slash"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | REC > SL > AMMO"
+  },
+  "dragon_nikana": {
+    "display": "Dragon Nikana",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "dread": {
+    "display": "Dread",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "magazine_capacity",
+      "recoil",
+      "slash"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | Z / MAG > REC / AMMO(inc) / SL(inc)"
+  },
+  "dual_cestra": {
+    "display": "Dual Cestra",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | PUNC > Z > REC"
+  },
+  "dual_cleavers": {
+    "display": "Dual Cleavers",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "dual_coda_torxica": {
+    "display": "Dual Coda Torxica",
+    "must_have": [
+      "projectile_speed"
+    ],
+    "priority": [
+      "multishot",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "critical_damage",
+      "critical_chance",
+      "punch_through",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | FR / TOX / CD | CC > PT > FR / TOX / DMG / SC | PUNC > Z / PFS* > REC"
+  },
+  "dual_decurion": {
+    "display": "Dual Decurion",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | IMP > Z > PUNC > REC"
+  },
+  "dual_ether": {
+    "display": "Dual Ether",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "dual_heat_swords": {
+    "display": "Dual Heat Swords",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "dual_ichor": {
+    "display": "Dual Ichor",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "critical_damage"
+    ],
+    "priority": [
+      "range",
+      "electricity",
+      "heavy_attack_efficiency",
+      "finisher_damage",
+      "slide_attack_critical_chance"
+    ],
+    "raw_text": "AS | CD > RNG | RNG > ELEC(infl) | EFF / FIN / SLIDE | * 3 positives no negative unranked viral / gas roll is good for use"
+  },
+  "dual_kamas": {
+    "display": "Dual Kamas",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "dual_keres": {
+    "display": "Dual Keres",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "puncture",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | PUNC > SLIDE / FIN / EFF / SL(infl)"
+  },
+  "dual_raza": {
+    "display": "Dual Raza",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "dual_skana": {
+    "display": "Dual Skana",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "dual_toxocyst": {
+    "display": "Dual Toxocyst",
+    "must_have": [
+      "projectile_speed"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "punch_through",
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "recoil",
+      "magazine_capacity"
+    ],
+    "raw_text": "MS | CD | PT / CC > FR / DMG / SC | Z / PFS* / PUNC > REC > AMMO(inc) / MAG(inc)"
+  },
+  "dual_viciss": {
+    "display": "Dual Viciss",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF"
+  },
+  "dual_zoren": {
+    "display": "Dual Zoren",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slide_attack_critical_chance",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | FIN / EFF / SLIDE / SL(infl)"
+  },
+  "edun": {
+    "display": "Edun",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "puncture",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | PUNC > SLIDE / FIN / EFF / SL(infl)"
+  },
+  "efv5_jupiter": {
+    "display": "EFV-5 Jupiter",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "impact",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | PUNC > IMP(0%) / Z > REC"
+  },
+  "efv8_mars": {
+    "display": "EFV-8 Mars",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "puncture",
+      "slash",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | IMP > PUNC > Z / SL(0%) > REC"
+  },
+  "ekhein": {
+    "display": "Ekhein",
+    "must_have": [
+      "heavy_attack_efficiency"
+    ],
+    "priority": [
+      "critical_chance",
+      "critical_damage",
+      "base_damage_/_melee_damage",
+      "fire_rate_/_attack_speed",
+      "impact",
+      "slide_attack_critical_chance",
+      "finisher_damage"
+    ],
+    "raw_text": "CC | CD | DMG / AS | IMP > SLIDE > FIN / EFF* | * -EFF not ideal for Heavy Attack spam"
+  },
+  "embolist": {
+    "display": "Embolist",
+    "must_have": [
+      "multishot",
+      "critical_chance"
+    ],
+    "priority": [
+      "base_damage_/_melee_damage",
+      "fire_rate_/_attack_speed",
+      "status_chance",
+      "toxin",
+      "critical_damage"
+    ],
+    "raw_text": "MS* | DMG / FRFR / SC / TOX | MS* | CD | CC** / FR / TOX / DMG / SC"
+  },
+  "endura": {
+    "display": "Endura",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "puncture",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | PUNC > SLIDE / FIN / EFF / SL(infl)"
+  },
+  "enkaus": {
+    "display": "Enkaus",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | PUNC > Z > REC"
+  },
+  "epitaph": {
+    "display": "Epitaph",
+    "must_have": [
+      "magazine_capacity"
+    ],
+    "priority": [
+      "toxin",
+      "cold",
+      "multishot",
+      "fire_rate_/_attack_speed",
+      "status_chance",
+      "impact",
+      "recoil",
+      "damage_vs_infested",
+      "reload_speed",
+      "projectile_speed"
+    ],
+    "raw_text": "TOX | COLD | MS > FR / SC > ANY > NONE | IMP > Z / MAG* > REC > AMMO / DTI / RLS* / PFS > ANY | Status priming rolls | disposition too low to completely remove impact"
+  },
+  "ether_daggers": {
+    "display": "Ether Daggers",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "ether_reaper": {
+    "display": "Ether Reaper",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "ether_sword": {
+    "display": "Ether Sword",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "euphona_prime": {
+    "display": "Euphona Prime",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | IMP > Z > REC | rivens won't save this"
+  },
+  "evensong": {
+    "display": "Evensong",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "magazine_capacity",
+      "recoil"
+    ],
+    "raw_text": "MS | CD / CC | CC > TOX / FR / DMG / SC | Z / MAG > REC"
+  },
+  "exergis": {
+    "display": "Exergis",
+    "must_have": [
+      "multishot",
+      "base_damage_/_melee_damage"
+    ],
+    "priority": [
+      "fire_rate_/_attack_speed",
+      "status_chance",
+      "slash",
+      "magazine_capacity",
+      "punch_through",
+      "toxin",
+      "puncture",
+      "impact",
+      "recoil",
+      "critical_chance"
+    ],
+    "raw_text": "MS | DMG / FR | SC > SL / MAG / PT / TOX | PUNC > IMP >> REC > MAG"
+  },
+  "falcor": {
+    "display": "Falcor",
+    "must_have": [
+      "heavy_attack_efficiency"
+    ],
+    "priority": [
+      "critical_chance",
+      "electricity",
+      "base_damage_/_melee_damage",
+      "critical_damage",
+      "impact",
+      "puncture",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "slash"
+    ],
+    "raw_text": "CC | ELEC(infl) | DMG > CD > NONE | IMP > PUNC / SLIDE > FIN / EFF* / SL(infl) | * -EFF not ideal for Heavy Attack spam"
+  },
+  "fang": {
+    "display": "Fang",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "puncture",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | PUNC > SLIDE / FIN / EFF"
+  },
+  "felarx": {
+    "display": "Felarx",
+    "must_have": [
+      "multishot",
+      "toxin"
+    ],
+    "priority": [
+      "base_damage_/_melee_damage",
+      "fire_rate_/_attack_speed",
+      "punch_through",
+      "critical_damage",
+      "critical_chance",
+      "status_chance"
+    ],
+    "raw_text": "MSTOXDMG / FR / PT | MSCDCC > FR / TOX / DMG / SC"
+  },
+  "ferrox": {
+    "display": "Ferrox",
+    "must_have": [
+      "multishot"
+    ],
+    "priority": [
+      "critical_damage",
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS* | CD | CC > TOX / FR / DMG / SC | PUNC > Z > REC"
+  },
+  "fluctus": {
+    "display": "Fluctus",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | Z > REC"
+  },
+  "flux_rifle": {
+    "display": "Flux Rifle",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "recoil",
+      "slash",
+      "initial_combo"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | Z > REC > SL / AMMO* | * -AMMO specifically for base Flux Rifle (Infinite Ammo Battery)"
+  },
+  "fragor": {
+    "display": "Fragor",
+    "must_have": [
+      "heavy_attack_efficiency"
+    ],
+    "priority": [
+      "fire_rate_/_attack_speed",
+      "range",
+      "critical_damage",
+      "electricity",
+      "impact",
+      "slide_attack_critical_chance",
+      "finisher_damage"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | IMP > SLIDE / FIN / EFF* | * -EFF not ideal for Heavy Attack spam"
+  },
+  "fulmin": {
+    "display": "Fulmin",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "impact"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "critical_chance",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / DMG / FR* / SC | IMP* > Z / AMMO > REC | * +FR and -IMP are bad for [Internal Bleeding]"
+  },
+  "furax": {
+    "display": "Furax",
+    "must_have": [
+      "finisher_damage"
+    ],
+    "priority": [
+      "fire_rate_/_attack_speed",
+      "range",
+      "critical_damage",
+      "electricity",
+      "impact",
+      "slide_attack_critical_chance",
+      "heavy_attack_efficiency",
+      "status_chance"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | IMP > SLIDE / FIN* / EFF | * -FIN harmful for [Melee Crescendo]"
+  },
+  "furis": {
+    "display": "Furis",
+    "must_have": [
+      "projectile_speed"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "punch_through",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC / PT | PUNC > Z > REC > PFS*"
+  },
+  "fusilai": {
+    "display": "Fusilai",
+    "must_have": [
+      "multishot",
+      "critical_chance"
+    ],
+    "priority": [
+      "critical_damage",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CC > CD | CC > FR / TOX / DMG / SC | PUNC > Z > REC"
+  },
+  "galariak_prime": {
+    "display": "Galariak Prime",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "puncture",
+      "impact",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | PUNC > IMP > SLIDE / FIN / EFF"
+  },
+  "galatine": {
+    "display": "Galatine",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "galvacord": {
+    "display": "Galvacord",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF"
+  },
+  "gammacor": {
+    "display": "Gammacor",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | Z > REC > AMMO(inc)"
+  },
+  "gazal_machete": {
+    "display": "Gazal Machete",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "gaze": {
+    "display": "Gaze",
+    "must_have": [
+      "multishot"
+    ],
+    "priority": [
+      "critical_damage",
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "impact",
+      "slash",
+      "recoil"
+    ],
+    "raw_text": "MS* | CD | CC > FR / TOX / DMG / SC | PUNC > IMP(0%) / Z / SL(0%) > REC > AMMO"
+  },
+  "ghoulsaw": {
+    "display": "Ghoulsaw",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "glaive": {
+    "display": "Glaive",
+    "must_have": [
+      "heavy_attack_efficiency"
+    ],
+    "priority": [
+      "critical_chance",
+      "base_damage_/_melee_damage",
+      "critical_damage",
+      "initial_combo",
+      "slide_attack_critical_chance",
+      "finisher_damage"
+    ],
+    "raw_text": "CC | DMG | NONE > CD > IC | SLIDE > FIN / EFF* | * -EFF not ideal for Heavy Attack spam"
+  },
+  "glaxion": {
+    "display": "Glaxion",
+    "must_have": [
+      "multishot"
+    ],
+    "priority": [
+      "toxin",
+      "cold",
+      "critical_damage",
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance"
+    ],
+    "raw_text": "TOXCOLDANY | MS* | CDCC > TOX / FR / DMG / SC"
+  },
+  "gorgon": {
+    "display": "Gorgon",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "recoil",
+      "magazine_capacity"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | IMP > Z > REC / AMMO(inc) / MAG(inc)"
+  },
+  "gotva_prime": {
+    "display": "Gotva Prime",
+    "must_have": [
+      "puncture"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "recoil",
+      "magazine_capacity"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | Z / PUNC* > REC | * -PUNC removes most of the base damage but sells well"
+  },
+  "grakata": {
+    "display": "Grakata",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | IMP > Z > PUNC > REC"
+  },
+  "gram": {
+    "display": "Gram",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "grattler": {
+    "display": "Grattler",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | PUNC > Z > REC"
+  },
+  "grimoire": {
+    "display": "Grimoire",
+    "must_have": [
+      "magazine_capacity"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "recoil",
+      "finisher_damage"
+    ],
+    "raw_text": "MS | CD | CC / FR / TOX / DMG / SC | MAG* > REC"
+  },
+  "grinlok": {
+    "display": "Grinlok",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "recoil"
+    ],
+    "raw_text": "MS | CD / CC | CC > TOX / FR / DMG / SC | IMP > Z > REC"
+  },
+  "guandao": {
+    "display": "Guandao",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "gunsen": {
+    "display": "Gunsen",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "haalvu": {
+    "display": "Haalvu",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "projectile_speed",
+      "recoil",
+      "finisher_damage"
+    ],
+    "raw_text": "MS | CD | CC / TOX / FR / DMG | Z / AMMO / PFS > REC"
+  },
+  "halikar": {
+    "display": "Halikar",
+    "must_have": [
+      "heavy_attack_efficiency"
+    ],
+    "priority": [
+      "critical_chance",
+      "base_damage_/_melee_damage",
+      "electricity",
+      "critical_damage",
+      "initial_combo",
+      "puncture",
+      "slide_attack_critical_chance",
+      "finisher_damage"
+    ],
+    "raw_text": "CC | DMG | ELEC(infl) / CD / IC | PUNC > SLIDE > FIN / EFF* | * -EFF not ideal for Heavy Attack spam"
+  },
+  "harmony": {
+    "display": "Harmony",
+    "must_have": [
+      "critical_chance",
+      "status_duration"
+    ],
+    "priority": [
+      "base_damage_/_melee_damage",
+      "initial_combo",
+      "critical_damage",
+      "fire_rate_/_attack_speed",
+      "range",
+      "electricity"
+    ],
+    "raw_text": "CCSDDMG / IC / CD | ASRNGCD > ELEC(infl)"
+  },
+  "harpak": {
+    "display": "Harpak",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | PUNC > Z > REC"
+  },
+  "hate": {
+    "display": "Hate",
+    "must_have": [
+      "heavy_attack_efficiency"
+    ],
+    "priority": [
+      "fire_rate_/_attack_speed",
+      "range",
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF* / SL(infl) | * -EFF not ideal for Heavy Attack spam"
+  },
+  "heat_dagger": {
+    "display": "Heat Dagger",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "puncture",
+      "impact",
+      "slide_attack_critical_chance",
+      "heavy_attack_efficiency",
+      "slash",
+      "finisher_damage"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | PUNC > IMP > SLIDE / EFF / SL(infl) / FIN"
+  },
+  "heat_sword": {
+    "display": "Heat Sword",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "hek": {
+    "display": "Hek",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "fire_rate_/_attack_speed",
+      "critical_chance",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | FR / CC > TOX / DMG / SC | PUNC > REC > AMMO"
+  },
+  "heliocor": {
+    "display": "Heliocor",
+    "must_have": [
+      "heavy_attack_efficiency"
+    ],
+    "priority": [
+      "fire_rate_/_attack_speed",
+      "range",
+      "critical_damage",
+      "electricity",
+      "impact",
+      "slide_attack_critical_chance",
+      "finisher_damage"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | IMP > SLIDE > FIN / EFF* | * -EFF not ideal for Heavy Attack spam"
+  },
+  "helstrum": {
+    "display": "Helstrum",
+    "must_have": [
+      "multishot",
+      "status_chance"
+    ],
+    "priority": [
+      "projectile_speed",
+      "fire_rate_/_attack_speed",
+      "impact",
+      "damage_vs_infested",
+      "damage_vs_corpus",
+      "critical_chance",
+      "critical_damage",
+      "damage_vs_grineer"
+    ],
+    "raw_text": "MS | SC | PFS / FR | IMP > DTI > DTC / CC / CD / DTG | Primer"
+  },
+  "hema": {
+    "display": "Hema",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | Z > REC / AMMO"
+  },
+  "hespar": {
+    "display": "Hespar",
+    "must_have": [
+      "heavy_attack_efficiency"
+    ],
+    "priority": [
+      "critical_chance",
+      "critical_damage",
+      "base_damage_/_melee_damage",
+      "fire_rate_/_attack_speed",
+      "impact",
+      "slide_attack_critical_chance",
+      "finisher_damage"
+    ],
+    "raw_text": "CC | CD | DMG / AS | IMP > SLIDE / FIN / EFF* | * -EFF not ideal for Heavy Attack spam"
+  },
+  "higasa": {
+    "display": "Higasa",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | PUNC > Z > REC"
+  },
+  "hikou": {
+    "display": "Hikou",
+    "must_have": [
+      "multishot",
+      "base_damage_/_melee_damage"
+    ],
+    "priority": [
+      "fire_rate_/_attack_speed",
+      "status_chance",
+      "toxin",
+      "puncture",
+      "recoil",
+      "critical_chance"
+    ],
+    "raw_text": "MS | DMG / FR | FR / SC / TOX | PUNC > Z > REC"
+  },
+  "hind": {
+    "display": "Hind",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | Z > REC"
+  },
+  "hirudo": {
+    "display": "Hirudo",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "puncture",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | PUNC > SLIDE / FIN / EFF"
+  },
+  "hystrix": {
+    "display": "Hystrix",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | PUNC > Z > REC"
+  },
+  "ignis": {
+    "display": "Ignis",
+    "must_have": [
+      "toxin",
+      "cold"
+    ],
+    "priority": [
+      "critical_damage",
+      "multishot",
+      "fire_rate_/_attack_speed",
+      "critical_chance",
+      "base_damage_/_melee_damage",
+      "status_chance"
+    ],
+    "raw_text": "TOXCOLDCD / MS / FR / ANY | MSCDCC > TOX / FR / DMG / SC"
+  },
+  "imperator": {
+    "display": "Imperator",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | IMP > Z > PUNC > Z > REC"
+  },
+  "innodem": {
+    "display": "Innodem",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "puncture",
+      "slide_attack_critical_chance",
+      "heavy_attack_efficiency",
+      "slash",
+      "finisher_damage"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | PUNC > SLIDE / EFF / SL(infl) / FIN"
+  },
+  "jat_kittag": {
+    "display": "Jat Kittag",
+    "must_have": [
+      "toxin"
+    ],
+    "priority": [
+      "critical_chance",
+      "critical_damage",
+      "base_damage_/_melee_damage",
+      "fire_rate_/_attack_speed",
+      "impact",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency"
+    ],
+    "raw_text": "CC | CD | DMG / TOX* / AS | IMP > SLIDE / FIN / EFF"
+  },
+  "jat_kusar": {
+    "display": "Jat Kusar",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF"
+  },
+  "javlok": {
+    "display": "Javlok",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | Z > REC"
+  },
+  "jaw_sword": {
+    "display": "Jaw Sword",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "kama": {
+    "display": "Kama",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "karak": {
+    "display": "Karak",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | IMP > PUNC / Z > REC"
+  },
+  "karyst": {
+    "display": "Karyst",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "heavy_attack_efficiency",
+      "finisher_damage"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / EFF / FIN"
+  },
+  "keratinos": {
+    "display": "Keratinos",
+    "must_have": [
+      "impact"
+    ],
+    "priority": [
+      "fire_rate_/_attack_speed",
+      "range",
+      "critical_damage",
+      "electricity",
+      "puncture",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | IMP* > PUNC > SLIDE / FIN / EFF / SL(infl)"
+  },
+  "kesheg": {
+    "display": "Kesheg",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "impact",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | IMP > SLIDE / FIN / EFF / SL(infl)"
+  },
+  "kestrel": {
+    "display": "Kestrel",
+    "must_have": [
+      "heavy_attack_efficiency"
+    ],
+    "priority": [
+      "critical_chance",
+      "base_damage_/_melee_damage",
+      "critical_damage",
+      "electricity",
+      "initial_combo",
+      "impact",
+      "slide_attack_critical_chance",
+      "finisher_damage"
+    ],
+    "raw_text": "CC | DMG | CD / ELEC(infl) / NONE / IC | IMP > SLIDE / FIN / EFF* | * -EFF not ideal for Heavy Attack spam"
+  },
+  "knell": {
+    "display": "Knell",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "magazine_capacity",
+      "impact",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | Z / MAG / IMP > PUNC > REC | * single shot magazine -MAG harmless"
+  },
+  "kogake": {
+    "display": "Kogake",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "impact",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | IMP > SLIDE / FIN / EFF"
+  },
+  "kohm": {
+    "display": "Kohm",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "fire_rate_/_attack_speed",
+      "critical_chance",
+      "base_damage_/_melee_damage",
+      "toxin",
+      "status_chance",
+      "slash",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | FR / CC > DMG / TOX / SC | SL > REC"
+  },
+  "kohmak": {
+    "display": "Kohmak",
+    "must_have": [
+      "critical_chance"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "slash",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC* > TOX / FR / DMG / SC | Z > SL > REC"
+  },
+  "komorex": {
+    "display": "Komorex",
+    "must_have": [
+      "multishot",
+      "critical_chance"
+    ],
+    "priority": [
+      "critical_damage",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "recoil",
+      "slash"
+    ],
+    "raw_text": "MS | CC / CD | CD > TOX / FR / DMG / SC | Z / PUNC > REC > SL"
+  },
+  "kompressa": {
+    "display": "Kompressa",
+    "must_have": [
+      "critical_chance"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "projectile_speed",
+      "magazine_capacity",
+      "reload_speed"
+    ],
+    "raw_text": "MSCD | CC* / TOX / FR / DMG / SC / R | MSFRSC / DMG / PFS / MAG / RLS"
+  },
+  "korrudo": {
+    "display": "Korrudo",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "impact",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | IMP > SLIDE / FIN / EFF / SL(infl)"
+  },
+  "korumm": {
+    "display": "Korumm",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "puncture",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | PUNC > SLIDE / FIN / EFF / SL(infl)"
+  },
+  "kraken": {
+    "display": "Kraken",
+    "must_have": [
+      "projectile_speed"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | IMP > Z / PFS* > REC"
+  },
+  "kreska": {
+    "display": "Kreska",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "impact",
+      "puncture",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | IMP > PUNC > SLIDE / FIN / EFF / SL(infl)"
+  },
+  "krohkur": {
+    "display": "Krohkur",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "kronen": {
+    "display": "Kronen",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "kronsh": {
+    "display": "Kronsh",
+    "must_have": [
+      "heavy_attack_efficiency"
+    ],
+    "priority": [
+      "fire_rate_/_attack_speed",
+      "range",
+      "critical_damage",
+      "electricity",
+      "impact",
+      "puncture",
+      "slide_attack_critical_chance",
+      "finisher_damage"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | IMP > PUNC(0%) > SLIDE / FIN / EFF* | * -EFF not ideal for Heavy Attack spam"
+  },
+  "kulstar": {
+    "display": "Kulstar",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | IMP > Z > REC"
+  },
+  "kunai": {
+    "display": "Kunai",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | PUNC > Z > REC > AMMO(inc)"
+  },
+  "kuva_ayanga": {
+    "display": "Kuva Ayanga",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | IMP > Z > REC"
+  },
+  "kuva_bramma": {
+    "display": "Kuva Bramma",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "magazine_capacity",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC / FR > TOX / DMG / SC | IMP > Z / MAG > REC"
+  },
+  "kuva_chakkhurr": {
+    "display": "Kuva Chakkhurr",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC / FR > TOX / DMG / SC | IMP > Z > REC | Usable for [Internal Bleeding] | Has forced impact proc"
+  },
+  "kuva_shildeg": {
+    "display": "Kuva Shildeg",
+    "must_have": [
+      "heavy_attack_efficiency"
+    ],
+    "priority": [
+      "fire_rate_/_attack_speed",
+      "range",
+      "critical_damage",
+      "electricity",
+      "puncture",
+      "impact",
+      "slide_attack_critical_chance",
+      "finisher_damage"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | PUNC > IMP > SLIDE / FIN / EFF* | * -EFF not ideal for Heavy Attack spam"
+  },
+  "kuva_twin_stubbas": {
+    "display": "Kuva Twin Stubbas",
+    "must_have": [
+      "projectile_speed"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | IMP > Z / PFS* > REC"
+  },
+  "lacera": {
+    "display": "Lacera",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF"
+  },
+  "lacerten": {
+    "display": "Lacerten",
+    "must_have": [
+      "critical_chance",
+      "critical_damage"
+    ],
+    "priority": [
+      "base_damage_/_melee_damage",
+      "impact",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency"
+    ],
+    "raw_text": "CC | CD | DMG | IMP > SLIDE / FIN / EFF"
+  },
+  "laetum": {
+    "display": "Laetum",
+    "must_have": [
+      "multishot",
+      "toxin"
+    ],
+    "priority": [
+      "base_damage_/_melee_damage",
+      "fire_rate_/_attack_speed",
+      "critical_damage",
+      "critical_chance",
+      "status_chance"
+    ],
+    "raw_text": "MSTOXDMG / FR | MSCDCC > FR / TOX / DMG / SC"
+  },
+  "lanka": {
+    "display": "Lanka",
+    "must_have": [
+      "projectile_speed"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "recoil",
+      "magazine_capacity"
+    ],
+    "raw_text": "MS | CD / CC | CC > TOX / FR / DMG / SC | Z > REC / PFS*"
+  },
+  "larkspur": {
+    "display": "Larkspur",
+    "must_have": [
+      "multishot",
+      "fire_rate_/_attack_speed"
+    ],
+    "priority": [
+      "punch_through",
+      "status_chance",
+      "heat",
+      "electricity",
+      "impact",
+      "puncture",
+      "slash",
+      "recoil",
+      "critical_chance"
+    ],
+    "raw_text": "MS | FR | PT / SC / HEAT / ELEC | IMP > Z / PUNC(0%) / SL(0%) > REC"
+  },
+  "laser_rifle": {
+    "display": "Laser Rifle",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "puncture"
+    ],
+    "raw_text": "MS | CD | CC | PUNC"
+  },
+  "lato": {
+    "display": "Lato",
+    "must_have": [
+      "projectile_speed"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "critical_chance",
+      "punch_through",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "recoil",
+      "magazine_capacity"
+    ],
+    "raw_text": "MS | CD | CC > PT / FR / TOX / DMG / SC | Z / PFS* > REC > AMMO(Inc) / MAG(Inc)"
+  },
+  "latron": {
+    "display": "Latron",
+    "must_have": [
+      "puncture"
+    ],
+    "priority": [
+      "multishot",
+      "critical_chance",
+      "base_damage_/_melee_damage",
+      "critical_damage",
+      "recoil",
+      "magazine_capacity"
+    ],
+    "raw_text": "MS / CC / DMG / CD | Z > REC / AMMO(Inc) / MAG(Inc) / PUNC* | any 3p1n combination is ideal for use"
+  },
+  "lecta": {
+    "display": "Lecta",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF"
+  },
+  "lenz": {
+    "display": "Lenz",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "magazine_capacity",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC / FR > TOX / DMG / SC | IMP > Z / MAG > REC"
+  },
+  "lesion": {
+    "display": "Lesion",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "lex": {
+    "display": "Lex",
+    "must_have": [
+      "projectile_speed"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC / FR > TOX / DMG / SC | PUNC > Z / PFS* > REC"
+  },
+  "machete": {
+    "display": "Machete",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "magistar": {
+    "display": "Magistar",
+    "must_have": [
+      "critical_chance",
+      "base_damage_/_melee_damage"
+    ],
+    "priority": [
+      "critical_damage",
+      "initial_combo",
+      "fire_rate_/_attack_speed",
+      "range",
+      "electricity"
+    ],
+    "raw_text": "CCDMGNONE / CD > IC | ASRNGCD > ELEC(infl)"
+  },
+  "magnus": {
+    "display": "Magnus",
+    "must_have": [
+      "projectile_speed"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | IMP > Z / PFS* / PUNC > REC"
+  },
+  "mandonel": {
+    "display": "Mandonel",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | Z > REC"
+  },
+  "marelok": {
+    "display": "Marelok",
+    "must_have": [
+      "projectile_speed"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | IMP > Z / PFS* > REC"
+  },
+  "masseter": {
+    "display": "Masseter",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "impact",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | IMP > SLIDE / FIN / EFF > SL(infl)"
+  },
+  "mausolon": {
+    "display": "Mausolon",
+    "must_have": [
+      "multishot"
+    ],
+    "priority": [
+      "critical_damage",
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "impact",
+      "slash",
+      "recoil"
+    ],
+    "raw_text": "MS* | CD | CC > TOX / FR / DMG / SC | PUNC > IMP > Z / SL(0%) > REC"
+  },
+  "mewan": {
+    "display": "Mewan",
+    "must_have": [
+      "heavy_attack_efficiency"
+    ],
+    "priority": [
+      "fire_rate_/_attack_speed",
+      "range",
+      "critical_damage",
+      "electricity",
+      "puncture",
+      "impact",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | PUNC > IMP > SLIDE / FIN / EFF* / SL(infl) | * -EFF not ideal for Heavy Attack spam"
+  },
+  "mios": {
+    "display": "Mios",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "impact",
+      "puncture",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | IMP > PUNC > SLIDE / FIN / EFF / SL(infl)"
+  },
+  "mire": {
+    "display": "Mire",
+    "must_have": [
+      "heavy_attack_efficiency"
+    ],
+    "priority": [
+      "critical_chance",
+      "base_damage_/_melee_damage",
+      "critical_damage",
+      "toxin",
+      "impact",
+      "puncture",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "slash"
+    ],
+    "raw_text": "CC | DMG / CD | DMG / TOX | IMP > PUNC > SLIDE > FIN / EFF* / SL(infl) | * -EFF not ideal for Heavy Attack spam"
+  },
+  "miter": {
+    "display": "Miter",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "heat",
+      "status_chance",
+      "fire_rate_/_attack_speed",
+      "recoil",
+      "magazine_capacity"
+    ],
+    "raw_text": "MS | CD | CC > TOX / DMG / HEAT / SC / FR | Z > REC > AMMO(inc) / MAG(inc)"
+  },
+  "morgha": {
+    "display": "Morgha",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | IMP > Z > REC"
+  },
+  "multron": {
+    "display": "Multron",
+    "must_have": [
+      "multishot",
+      "fire_rate_/_attack_speed"
+    ],
+    "priority": [
+      "status_chance",
+      "punch_through",
+      "puncture",
+      "damage_vs_infested",
+      "damage_vs_corpus"
+    ],
+    "raw_text": "MS | FR | SC / PT | PUNC > DTI > DTC"
+  },
+  "mutalist_cernos": {
+    "display": "Mutalist Cernos",
+    "must_have": [
+      "critical_chance",
+      "critical_damage"
+    ],
+    "priority": [
+      "base_damage_/_melee_damage",
+      "electricity",
+      "magazine_capacity",
+      "impact",
+      "recoil",
+      "toxin",
+      "fire_rate_/_attack_speed"
+    ],
+    "raw_text": "CC | CD | DMG / ELEC | Z / MAG / IMP > REC"
+  },
+  "mutalist_quanta": {
+    "display": "Mutalist Quanta",
+    "must_have": [
+      "multishot",
+      "base_damage_/_melee_damage"
+    ],
+    "priority": [
+      "status_chance",
+      "fire_rate_/_attack_speed",
+      "puncture",
+      "recoil",
+      "critical_chance"
+    ],
+    "raw_text": "MS | DMG | SC / FR | PUNC > Z > REC"
+  },
+  "nagantaka": {
+    "display": "Nagantaka",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "status_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > SC / TOX / FR / DMG | Z >> REC"
+  },
+  "nami_skyla": {
+    "display": "Nami Skyla",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "nami_solo": {
+    "display": "Nami Solo",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slash",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency"
+    ],
+    "raw_text": "AS | RNG / CD | ELEC(infl) > CD | SL(infl) > SLIDE / FIN / EFF"
+  },
+  "nataruk": {
+    "display": "Nataruk",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "puncture",
+      "magazine_capacity",
+      "recoil",
+      "finisher_damage"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG | PUNC > Z / MAG / AMMO* > REC"
+  },
+  "nepheri": {
+    "display": "Nepheri",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "puncture",
+      "impact",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | PUNC > IMP > SLIDE / FIN / EFF"
+  },
+  "nikana": {
+    "display": "Nikana",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "ninkondi": {
+    "display": "Ninkondi",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "critical_chance",
+      "base_damage_/_melee_damage"
+    ],
+    "raw_text": "ASRNGCD > ELEC(infl) | CCCDDMG / AS"
+  },
+  "nukor": {
+    "display": "Nukor",
+    "must_have": [
+      "critical_chance"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "punch_through",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC* / TOX > FR / DMG / SC / PT | Z > REC"
+  },
+  "obex": {
+    "display": "Obex",
+    "must_have": [
+      "finisher_damage"
+    ],
+    "priority": [
+      "fire_rate_/_attack_speed",
+      "range",
+      "critical_damage",
+      "electricity",
+      "impact",
+      "slide_attack_critical_chance",
+      "heavy_attack_efficiency"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | IMP > SLIDE / EFF / FIN* | * -FIN not ideal for some incarnon evos"
+  },
+  "ocucor": {
+    "display": "Ocucor",
+    "must_have": [
+      "critical_chance"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "projectile_speed",
+      "slash",
+      "recoil",
+      "puncture",
+      "reload_speed"
+    ],
+    "raw_text": "MS | CD | TOX > CC* > FR / DMG > SC | IMP(0%) / Z / PFS / SL(0%) > REC / PUNC > RLS"
+  },
+  "ogris": {
+    "display": "Ogris",
+    "must_have": [
+      "base_damage_/_melee_damage",
+      "critical_chance"
+    ],
+    "priority": [
+      "multishot",
+      "heat",
+      "status_chance",
+      "toxin",
+      "magazine_capacity",
+      "projectile_speed",
+      "recoil",
+      "critical_damage",
+      "fire_rate_/_attack_speed"
+    ],
+    "raw_text": "MSDMGHEAT / SC / TOX | MSMAG / PFSPFS / REC / TOX | MS | DMG* | NONE | MSCD | DMG > CC** / TOX / CC / FR"
+  },
+  "ohma": {
+    "display": "Ohma",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "heavy_attack_efficiency",
+      "finisher_damage"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / EFF / FIN"
+  },
+  "okina": {
+    "display": "Okina",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "puncture",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | PUNC > SLIDE / FIN / EFF / SL(infl)"
+  },
+  "onos": {
+    "display": "Onos",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | PUNC > Z > REC"
+  },
+  "ooltha": {
+    "display": "Ooltha",
+    "must_have": [
+      "heavy_attack_efficiency"
+    ],
+    "priority": [
+      "fire_rate_/_attack_speed",
+      "range",
+      "critical_damage",
+      "electricity",
+      "puncture",
+      "impact",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | PUNC > IMP > SLIDE / FIN / EFF* / SL(infl) | * -EFF not ideal for Heavy Attack spam"
+  },
+  "opticor": {
+    "display": "Opticor",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | Z > PUNC > REC"
+  },
+  "orthos": {
+    "display": "Orthos",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "orvius": {
+    "display": "Orvius",
+    "must_have": [
+      "heavy_attack_efficiency"
+    ],
+    "priority": [
+      "critical_chance",
+      "base_damage_/_melee_damage",
+      "critical_damage",
+      "electricity",
+      "initial_combo",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "slash"
+    ],
+    "raw_text": "CC | DMG | CD / ELEC(infl) / NONE / IC | SLIDE > FIN / EFF* > SL(infl) | * -EFF not ideal for Heavy Attack spam"
+  },
+  "pandero": {
+    "display": "Pandero",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance"
+    ],
+    "raw_text": "MSCDCC > FR / TOX / DMG / SC"
+  },
+  "pangolin_sword": {
+    "display": "Pangolin Sword",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "panthera": {
+    "display": "Panthera",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | Z > REC"
+  },
+  "paracesis": {
+    "display": "Paracesis",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "paracyst": {
+    "display": "Paracyst",
+    "must_have": [
+      "multishot",
+      "status_chance"
+    ],
+    "priority": [
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "recoil",
+      "critical_chance"
+    ],
+    "raw_text": "MS | SC / FR | DMG / FR | Z > REC"
+  },
+  "paris": {
+    "display": "Paris",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "magazine_capacity",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | PUNC > Z / MAG > REC > AMMO(inc)"
+  },
+  "pathocyst": {
+    "display": "Pathocyst",
+    "must_have": [
+      "critical_chance",
+      "base_damage_/_melee_damage"
+    ],
+    "priority": [
+      "electricity",
+      "critical_damage",
+      "initial_combo",
+      "impact",
+      "puncture",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "CC | DMG | ELEC(infl) / CD / IC / NONE | IMP > PUNC > SLIDE > FIN / EFF / SL(infl)"
+  },
+  "pennant": {
+    "display": "Pennant",
+    "must_have": [
+      "heavy_attack_efficiency"
+    ],
+    "priority": [
+      "critical_chance",
+      "critical_damage",
+      "base_damage_/_melee_damage",
+      "fire_rate_/_attack_speed",
+      "puncture",
+      "slide_attack_critical_chance",
+      "finisher_damage"
+    ],
+    "raw_text": "CC | CD | DMG / AS | PUNC > SLIDE > FIN / EFF* | Bonus Attack Speed on Heavy Attack kills"
+  },
+  "penta": {
+    "display": "Penta",
+    "must_have": [
+      "critical_chance",
+      "base_damage_/_melee_damage"
+    ],
+    "priority": [
+      "critical_damage",
+      "multishot",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "status_chance",
+      "magazine_capacity"
+    ],
+    "raw_text": "CCDMGCD | MSCDCC > TOX / FR / DMG / SC | ANYNONEMAG"
+  },
+  "perigale": {
+    "display": "Perigale",
+    "must_have": [
+      "multishot",
+      "critical_chance"
+    ],
+    "priority": [
+      "critical_damage",
+      "fire_rate_/_attack_speed",
+      "heat",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "cold",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CC / CD | CD > FR / HEAT / TOX / DMG / SC / COLD | PUNC / Z > REC"
+  },
+  "phaedra": {
+    "display": "Phaedra",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | PUNC > Z > REC"
+  },
+  "phage": {
+    "display": "Phage",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "punch_through",
+      "toxin",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC / FR > DMG / SC / PT / TOX | REC | FR TOX CD / DMG +REC is best but doesnt sell well"
+  },
+  "phantasma": {
+    "display": "Phantasma",
+    "must_have": [
+      "multishot",
+      "fire_rate_/_attack_speed"
+    ],
+    "priority": [
+      "base_damage_/_melee_damage",
+      "electricity",
+      "heat",
+      "status_chance",
+      "impact",
+      "puncture",
+      "slash",
+      "recoil",
+      "critical_chance"
+    ],
+    "raw_text": "MS | FR / DMG | ELEC / HEAT / DMG / SC | IMP > PUNC(0%) / SL(0%) > REC"
+  },
+  "phenmor": {
+    "display": "Phenmor",
+    "must_have": [
+      "multishot",
+      "toxin"
+    ],
+    "priority": [
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "critical_damage",
+      "critical_chance",
+      "status_chance"
+    ],
+    "raw_text": "MSTOX / FRDMG / FR | MSCDCC > TOX / FR / DMG / SC"
+  },
+  "plague_keewar": {
+    "display": "Plague Keewar",
+    "must_have": [
+      "heavy_attack_efficiency"
+    ],
+    "priority": [
+      "fire_rate_/_attack_speed",
+      "range",
+      "critical_damage",
+      "electricity",
+      "impact",
+      "puncture",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | IMP > PUNC > SLIDE / FIN / EFF* / SL(infl) | * -EFF not ideal for Heavy Attack spam"
+  },
+  "plague_kripath": {
+    "display": "Plague Kripath",
+    "must_have": [
+      "heavy_attack_efficiency"
+    ],
+    "priority": [
+      "fire_rate_/_attack_speed",
+      "range",
+      "critical_damage",
+      "electricity",
+      "puncture",
+      "impact",
+      "slide_attack_critical_chance",
+      "finisher_damage"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | PUNC > IMP > SLIDE / FIN / EFF* | * -EFF not ideal for Heavy Attack spam"
+  },
+  "plasma_sword": {
+    "display": "Plasma Sword",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF"
+  },
+  "plinx": {
+    "display": "Plinx",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "recoil",
+      "finisher_damage"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | IMP > Z / AMMO* > REC"
+  },
+  "pox": {
+    "display": "Pox",
+    "must_have": [
+      "multishot",
+      "fire_rate_/_attack_speed"
+    ],
+    "priority": [
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "toxin",
+      "recoil",
+      "critical_chance"
+    ],
+    "raw_text": "MS | FR / DMG | SC / DMG / TOX | Z > REC"
+  },
+  "praedos": {
+    "display": "Praedos",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slide_attack_critical_chance",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | FIN / EFF / SLIDE / SL(infl)"
+  },
+  "pride": {
+    "display": "Pride",
+    "must_have": [
+      "heavy_attack_efficiency"
+    ],
+    "priority": [
+      "fire_rate_/_attack_speed",
+      "range",
+      "critical_damage",
+      "electricity",
+      "puncture",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | PUNC > SLIDE / FIN / EFF* / SL(infl) | * -EFF not ideal for Heavy Attack spam"
+  },
+  "proboscis_cernos": {
+    "display": "Proboscis Cernos",
+    "must_have": [
+      "multishot",
+      "fire_rate_/_attack_speed"
+    ],
+    "priority": [
+      "base_damage_/_melee_damage",
+      "critical_damage",
+      "electricity",
+      "heat",
+      "status_chance",
+      "impact",
+      "magazine_capacity",
+      "recoil",
+      "critical_chance"
+    ],
+    "raw_text": "MS | FR / DMG > CD | ELEC / HEAT / DMG / SC | IMP > Z / MAG > REC"
+  },
+  "prova": {
+    "display": "Prova",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF"
+  },
+  "pulmonars": {
+    "display": "Pulmonars",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF"
+  },
+  "pupacyst": {
+    "display": "Pupacyst",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "impact",
+      "puncture",
+      "slash",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | IMP > PUNC(0%) / SL(0%) > SLIDE / FIN / EFF"
+  },
+  "purgator_1": {
+    "display": "Purgator 1",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | IMP / PUNC > Z > REC"
+  },
+  "pyrana": {
+    "display": "Pyrana",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | Z > REC"
+  },
+  "quanta": {
+    "display": "Quanta",
+    "must_have": [
+      "electricity"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "punch_through",
+      "status_chance",
+      "projectile_speed",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / ELEC* / DMG / PT / SC | Z / PFS > REC"
+  },
+  "quartakk": {
+    "display": "Quartakk",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | IMP > Z > PUNC > REC"
+  },
+  "quassus": {
+    "display": "Quassus",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "critical_chance",
+      "base_damage_/_melee_damage"
+    ],
+    "raw_text": "ASRNGCD > ELEC(infl) | CCCDDMG"
+  },
+  "quatz": {
+    "display": "Quatz",
+    "must_have": [
+      "critical_chance"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "projectile_speed",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC* > FR / TOX / DMG / SC | IMP > Z / PFS > PUNC > REC"
+  },
+  "quellor": {
+    "display": "Quellor",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | IMP > PUNC > Z > REC | Alt-fire is usable for [Internal Bleeding] and has forced impact proc"
+  },
+  "rabvee": {
+    "display": "Rabvee",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "impact",
+      "puncture",
+      "heavy_attack_efficiency"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | IMP > PUNC | * -EFF not ideal for Heavy Attack spam"
+  },
+  "rauta": {
+    "display": "Rauta",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "magazine_capacity",
+      "reload_speed"
+    ],
+    "raw_text": "MSCDCC > FR / TOX / DMG / SC | MAGFRRLS / SC / MS"
+  },
+  "rattleguts": {
+    "display": "Rattleguts",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "puncture",
+      "recoil",
+      "finisher_damage"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | IMP / PUNC > Z > REC > AMMO*"
+  },
+  "reaper_prime": {
+    "display": "Reaper Prime",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE > FIN / EFF / SL(infl)"
+  },
+  "reconifex": {
+    "display": "Reconifex",
+    "must_have": [
+      "heat"
+    ],
+    "priority": [
+      "multishot",
+      "critical_chance",
+      "critical_damage",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "puncture",
+      "recoil",
+      "initial_combo"
+    ],
+    "raw_text": "MS | CC / CD | CC > TOX / HEAT* / FR / DMG / SC | IMP / Z > PUNC > REC"
+  },
+  "redeemer": {
+    "display": "Redeemer",
+    "must_have": [
+      "heavy_attack_efficiency"
+    ],
+    "priority": [
+      "critical_chance",
+      "base_damage_/_melee_damage",
+      "critical_damage",
+      "initial_combo",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "slash"
+    ],
+    "raw_text": "CC | DMG | CD / IC | SLIDE > FIN / EFF* / SL(infl) | * -EFF not ideal for Heavy Attack spam"
+  },
+  "riot848": {
+    "display": "Riot-848",
+    "must_have": [
+      "puncture"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "recoil",
+      "magazine_capacity"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | PUNC* / Z > REC > AMMO | * -PUNC removes most of the base damage but sells well"
+  },
+  "ripkas": {
+    "display": "Ripkas",
+    "must_have": [
+      "slash"
+    ],
+    "priority": [
+      "fire_rate_/_attack_speed",
+      "range",
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)* | * -SL bad for arena endo farm"
+  },
+  "rubico": {
+    "display": "Rubico",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "base_damage_/_melee_damage",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "status_chance",
+      "impact",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > DMG / FR > TOX / SC | Z / IMP > REC"
+  },
+  "rumblejack": {
+    "display": "Rumblejack",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "impact",
+      "puncture",
+      "slash",
+      "slide_attack_critical_chance",
+      "heavy_attack_efficiency",
+      "finisher_damage"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | IMP > PUNC(0%) / SL(0%) > SLIDE / EFF / FIN"
+  },
+  "ruvox": {
+    "display": "Ruvox",
+    "must_have": [
+      "heavy_attack_efficiency"
+    ],
+    "priority": [
+      "fire_rate_/_attack_speed",
+      "range",
+      "critical_damage",
+      "electricity",
+      "impact",
+      "slide_attack_critical_chance",
+      "finisher_damage"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | IMP > SLIDE > FIN / EFF* | * -EFF not ideal for Heavy Attack spam"
+  },
+  "sagek_prime": {
+    "display": "Sagek Prime",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | IMP > Z > PUNC > REC"
+  },
+  "sampotes": {
+    "display": "Sampotes",
+    "must_have": [
+      "heavy_attack_efficiency"
+    ],
+    "priority": [
+      "critical_chance",
+      "critical_damage",
+      "base_damage_/_melee_damage",
+      "electricity",
+      "impact",
+      "slide_attack_critical_chance",
+      "finisher_damage"
+    ],
+    "raw_text": "CC | CD / DMG | CD > ELEC(infl) | IMP > SLIDE > FIN / EFF* | * -EFF not ideal for Heavy Attack spam"
+  },
+  "sarofang": {
+    "display": "Sarofang",
+    "must_have": [
+      "heavy_attack_efficiency"
+    ],
+    "priority": [
+      "fire_rate_/_attack_speed",
+      "range",
+      "critical_damage",
+      "electricity",
+      "impact",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | IMP > SLIDE / FIN / EFF* / SL(infl) | * -EFF not ideal for Heavy Attack spam"
+  },
+  "sarpa": {
+    "display": "Sarpa",
+    "must_have": [
+      "heavy_attack_efficiency"
+    ],
+    "priority": [
+      "critical_chance",
+      "base_damage_/_melee_damage",
+      "critical_damage",
+      "initial_combo",
+      "slide_attack_critical_chance",
+      "finisher_damage"
+    ],
+    "raw_text": "CC | DMG | CD / IC | SLIDE > FIN / EFF* | * -EFF not ideal for Heavy Attack spam"
+  },
+  "scindo": {
+    "display": "Scindo",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "scoliac": {
+    "display": "Scoliac",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "scourge": {
+    "display": "Scourge",
+    "must_have": [
+      "critical_chance"
+    ],
+    "priority": [
+      "multishot",
+      "fire_rate_/_attack_speed",
+      "reload_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "critical_damage",
+      "toxin"
+    ],
+    "raw_text": "MSFRRLS | MSDMG / FRSC | MSCD | CC* / FR / DMG / TOX / SC / R"
+  },
+  "scyotid": {
+    "display": "Scyotid",
+    "must_have": [
+      "multishot",
+      "status_chance"
+    ],
+    "priority": [
+      "magazine_capacity",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "critical_damage",
+      "critical_chance"
+    ],
+    "raw_text": "MSSCMAG / FR / TOX / DMG | MSCDCC > FR / TOX / DMG / SC"
+  },
+  "seer": {
+    "display": "Seer",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "impact",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | PUNC / IMP > Z > REC"
+  },
+  "sepfahn": {
+    "display": "Sepfahn",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "puncture",
+      "impact",
+      "slash",
+      "heavy_attack_efficiency"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | PUNC > IMP > SL(infl) | * -EFF not ideal for Heavy Attack spam"
+  },
+  "sepulcrum": {
+    "display": "Sepulcrum",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "reload_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / RLS / TOX / DMG / SC | PUNC > Z > REC"
+  },
+  "serro": {
+    "display": "Serro",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF"
+  },
+  "shaku": {
+    "display": "Shaku",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "impact",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | IMP > SLIDE / FIN / EFF"
+  },
+  "shedu": {
+    "display": "Shedu",
+    "must_have": [
+      "multishot",
+      "critical_chance"
+    ],
+    "priority": [
+      "critical_damage",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "recoil",
+      "finisher_damage"
+    ],
+    "raw_text": "MS | CC > CD | CC / TOX > FR / DMG / SC | Z > REC > AMMO*"
+  },
+  "sheev": {
+    "display": "Sheev",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "heavy_attack_efficiency",
+      "finisher_damage",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / EFF / FIN / SL(infl)"
+  },
+  "sibear": {
+    "display": "Sibear",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "critical_chance",
+      "base_damage_/_melee_damage",
+      "initial_combo"
+    ],
+    "raw_text": "ASRNGCD > ELEC(infl) | CCCDDMG / AS / IC"
+  },
+  "sicarus": {
+    "display": "Sicarus",
+    "must_have": [
+      "projectile_speed"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "critical_chance",
+      "punch_through",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > PT / FR / TOX / DMG / SC | IMP > Z / PFS* > REC"
+  },
+  "sigma_and_octantis": {
+    "display": "Sigma & Octantis",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "silva_and_aegis": {
+    "display": "Silva & Aegis",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency"
+    ],
+    "raw_text": "AS | RNG | CD / ELEC(infl) | SLIDE / FIN / EFF"
+  },
+  "simulor": {
+    "display": "Simulor",
+    "must_have": [
+      "multishot"
+    ],
+    "priority": [
+      "critical_chance",
+      "critical_damage",
+      "toxin",
+      "electricity",
+      "base_damage_/_melee_damage",
+      "fire_rate_/_attack_speed",
+      "status_chance",
+      "impact",
+      "recoil"
+    ],
+    "raw_text": "MS* | CC > CD | CC > TOX / ELEC / DMG / FR / SC | IMP / Z / REC"
+  },
+  "skana": {
+    "display": "Skana",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "skiajati": {
+    "display": "Skiajati",
+    "must_have": [
+      "finisher_damage"
+    ],
+    "priority": [
+      "fire_rate_/_attack_speed",
+      "range",
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "heavy_attack_efficiency",
+      "slash",
+      "initial_combo"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / EFF / FIN* / SL(infl) | * -FIN harmful for invisibility on finishers gimmick"
+  },
+  "slaytra": {
+    "display": "Slaytra",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "puncture",
+      "heavy_attack_efficiency",
+      "finisher_damage",
+      "slide_attack_critical_chance",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | PUNC > EFF / FIN / SLIDE / SL(infl)"
+  },
+  "snipetron": {
+    "display": "Snipetron",
+    "must_have": [
+      "multishot",
+      "critical_chance"
+    ],
+    "priority": [
+      "critical_damage",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CC > CD | CC > TOX / FR / DMG / SC | Z > PUNC > REC"
+  },
+  "sobek": {
+    "display": "Sobek",
+    "must_have": [
+      "multishot",
+      "fire_rate_/_attack_speed"
+    ],
+    "priority": [
+      "critical_damage",
+      "base_damage_/_melee_damage",
+      "electricity",
+      "toxin",
+      "damage_vs_grineer",
+      "damage_vs_corpus",
+      "damage_vs_infested",
+      "critical_chance",
+      "status_chance"
+    ],
+    "raw_text": "MSFRNONE > CD / DMG > ELEC | MSTOXDMG / FR | TOXNONE > MSDTG / DTC / DTI | MSCDCC / FR / TOX / DMG / SC"
+  },
+  "soma": {
+    "display": "Soma",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "recoil",
+      "magazine_capacity"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | PUNC > Z > REC > AMMO(inc) > MAG(inc)"
+  },
+  "sonicor": {
+    "display": "Sonicor",
+    "must_have": [
+      "multishot",
+      "fire_rate_/_attack_speed"
+    ],
+    "priority": [
+      "status_chance",
+      "base_damage_/_melee_damage",
+      "impact",
+      "recoil",
+      "critical_chance"
+    ],
+    "raw_text": "MS | FR | SC / DMG | IMP > Z > REC"
+  },
+  "spectra": {
+    "display": "Spectra",
+    "must_have": [
+      "multishot",
+      "critical_chance"
+    ],
+    "priority": [
+      "critical_damage",
+      "fire_rate_/_attack_speed",
+      "punch_through",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "toxin",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CC > CD | CC > FR / PT / DMG / SC / TOX | PUNC > Z > REC"
+  },
+  "spinnerex": {
+    "display": "Spinnerex",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF"
+  },
+  "spira": {
+    "display": "Spira",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | PUNC > Z >REC"
+  },
+  "sporelacer": {
+    "display": "Sporelacer",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "puncture",
+      "slash",
+      "recoil",
+      "finisher_damage"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | IMP > PUNC(0%) / Z / SL(0%) > REC > AMMO*"
+  },
+  "sporothrix": {
+    "display": "Sporothrix",
+    "must_have": [
+      "multishot",
+      "fire_rate_/_attack_speed"
+    ],
+    "priority": [
+      "status_chance",
+      "electricity",
+      "base_damage_/_melee_damage",
+      "reload_speed",
+      "impact",
+      "puncture",
+      "slash",
+      "recoil",
+      "critical_chance"
+    ],
+    "raw_text": "MS | FR / SC | ELEC / SC / DMG > RLS | IMP / Z > PUNC > SL / REC"
+  },
+  "stahlta": {
+    "display": "Stahlta",
+    "must_have": [
+      "puncture",
+      "slash"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "recoil",
+      "magazine_capacity"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | PUNC* / Z > REC > SL* | * -PUNC and -SL are less damage for Alt-fire"
+  },
+  "staticor": {
+    "display": "Staticor",
+    "must_have": [
+      "multishot",
+      "fire_rate_/_attack_speed"
+    ],
+    "priority": [
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "recoil",
+      "critical_chance"
+    ],
+    "raw_text": "MS | FR | DMG / SC | Z > REC"
+  },
+  "steflos": {
+    "display": "Steflos",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | IMP > REC > AMMO"
+  },
+  "stinger": {
+    "display": "Stinger",
+    "must_have": [
+      "multishot",
+      "fire_rate_/_attack_speed"
+    ],
+    "priority": [
+      "status_chance",
+      "punch_through",
+      "cold",
+      "damage_vs_infested",
+      "damage_vs_corpus"
+    ],
+    "raw_text": "MS | FR / SC | SC / PT / COLD | DTI > DTC"
+  },
+  "stradavar": {
+    "display": "Stradavar",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | IMP > PUNC / Z > REC"
+  },
+  "stropha": {
+    "display": "Stropha",
+    "must_have": [
+      "impact"
+    ],
+    "priority": [
+      "critical_chance",
+      "base_damage_/_melee_damage",
+      "critical_damage",
+      "initial_combo",
+      "puncture",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency"
+    ],
+    "raw_text": "CC | DMG | CD / IC | IMP* / PUNC > SLIDE / FIN / EFF | * -IMP is better for the projectile"
+  },
+  "strun": {
+    "display": "Strun",
+    "must_have": [
+      "critical_chance"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "status_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "electricity",
+      "base_damage_/_melee_damage",
+      "impact",
+      "recoil",
+      "slash"
+    ],
+    "raw_text": "MS | CD | CC* / SC / FR / TOX / ELEC / DMG | IMP > REC > SL(inc) > AMMO(inc)"
+  },
+  "stubba": {
+    "display": "Stubba",
+    "must_have": [
+      "projectile_speed"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | IMP > Z / PFS* > REC"
+  },
+  "stug": {
+    "display": "Stug",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "recoil",
+      "magazine_capacity"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | Z > REC / AMMO(inc) / MAG(inc)"
+  },
+  "sun_and_moon": {
+    "display": "Sun & Moon",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "supra": {
+    "display": "Supra",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | PUNC > Z > REC"
+  },
+  "sweeper": {
+    "display": "Sweeper",
+    "must_have": [
+      "multishot",
+      "fire_rate_/_attack_speed"
+    ],
+    "priority": [
+      "status_chance",
+      "punch_through",
+      "base_damage_/_melee_damage",
+      "impact",
+      "damage_vs_infested",
+      "damage_vs_corpus"
+    ],
+    "raw_text": "MS | FR | SC / PT / DMG | IMP > DTI > DTC"
+  },
+  "syam": {
+    "display": "Syam",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "puncture",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash",
+      "status_chance"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | PUNC > SLIDE / FIN / EFF / SL(infl) | * +SC / ELEC on second row for Heavy Attack influence"
+  },
+  "sybaris": {
+    "display": "Sybaris",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "puncture",
+      "recoil",
+      "slash",
+      "magazine_capacity"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | IMP > Z / PUNC > AMMO(inc) / REC / SL > MAG(inc)"
+  },
+  "sydon": {
+    "display": "Sydon",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "puncture",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | PUNC > SLIDE / FIN / EFF / SL(infl)"
+  },
+  "synapse": {
+    "display": "Synapse",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | Z > REC"
+  },
+  "tak_and_lug": {
+    "display": "Tak & Lug",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "talons": {
+    "display": "Talons",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | IMP > Z > REC"
+  },
+  "tatsu": {
+    "display": "Tatsu",
+    "must_have": [
+      "heavy_attack_efficiency"
+    ],
+    "priority": [
+      "fire_rate_/_attack_speed",
+      "range",
+      "critical_damage",
+      "electricity",
+      "puncture",
+      "impact",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | PUNC > IMP > SLIDE > FIN / EFF* / SL(infl) | * -EFF not ideal for Heavy Attack spam"
+  },
+  "tazicor": {
+    "display": "Tazicor",
+    "must_have": [
+      "multishot",
+      "punch_through"
+    ],
+    "priority": [
+      "status_chance",
+      "fire_rate_/_attack_speed",
+      "damage_vs_infested",
+      "damage_vs_corpus",
+      "critical_chance",
+      "critical_damage",
+      "damage_vs_grineer"
+    ],
+    "raw_text": "MS | PT > SC | SC / FR | DTI > DTC > CC / CD > DTG | Primer"
+  },
+  "tekko": {
+    "display": "Tekko",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "tenet_agendus": {
+    "display": "Tenet Agendus",
+    "must_have": [
+      "heavy_attack_efficiency"
+    ],
+    "priority": [
+      "fire_rate_/_attack_speed",
+      "range",
+      "critical_damage",
+      "electricity",
+      "impact",
+      "puncture",
+      "slash",
+      "slide_attack_critical_chance",
+      "finisher_damage"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | IMP > PUNC(0%) / SL(0%) > SLIDE / FIN / EFF* | * -EFF not ideal for Heavy Attack spam"
+  },
+  "tenet_diplos": {
+    "display": "Tenet Diplos",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | IMP > Z > PUNC > REC"
+  },
+  "tenet_envoy": {
+    "display": "Tenet Envoy",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | IMP > Z > REC"
+  },
+  "tenet_exec": {
+    "display": "Tenet Exec",
+    "must_have": [
+      "impact"
+    ],
+    "priority": [
+      "fire_rate_/_attack_speed",
+      "range",
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash",
+      "magazine_capacity"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | IMP* > SLIDE / FIN / EFF > SL(infl) | * -IMP is harmful to Heavy Slam damage"
+  },
+  "tenet_grigori": {
+    "display": "Tenet Grigori",
+    "must_have": [
+      "heavy_attack_efficiency"
+    ],
+    "priority": [
+      "fire_rate_/_attack_speed",
+      "range",
+      "critical_damage",
+      "electricity",
+      "puncture",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | PUNC > SLIDE / FIN / EFF* > SL(infl) | Launches an energy disk on certain heavy attacks."
+  },
+  "tenet_livia": {
+    "display": "Tenet Livia",
+    "must_have": [
+      "heavy_attack_efficiency"
+    ],
+    "priority": [
+      "fire_rate_/_attack_speed",
+      "range",
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF* / SL(infl) | * -EFF not ideal for Heavy Attack spam"
+  },
+  "tenet_spirex": {
+    "display": "Tenet Spirex",
+    "must_have": [
+      "fire_rate_/_attack_speed"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "critical_chance",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "puncture",
+      "slash",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / DMG / FR* / SC | IMP > PUNC / Z / SL(0%) > REC | * +FR bad for [Hemorrhage] | weapon has forced impact"
+  },
+  "tenora": {
+    "display": "Tenora",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | IMP > PUNC / Z > REC"
+  },
+  "tetra": {
+    "display": "Tetra",
+    "must_have": [
+      "magazine_capacity"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | PUNC > Z > MAG* > REC | * -MAG is best negative for Tenet alt-fire spam"
+  },
+  "thalys": {
+    "display": "Thalys",
+    "must_have": [
+      "heavy_attack_efficiency"
+    ],
+    "priority": [
+      "fire_rate_/_attack_speed",
+      "range",
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF* / SL(infl) | * -EFF not ideal for Heavy Attack spam"
+  },
+  "thornbak": {
+    "display": "Thornbak",
+    "must_have": [
+      "multishot",
+      "base_damage_/_melee_damage"
+    ],
+    "priority": [
+      "fire_rate_/_attack_speed",
+      "status_chance",
+      "impact",
+      "puncture",
+      "recoil",
+      "critical_chance"
+    ],
+    "raw_text": "MS | DMG | FR / SC | IMP > PUNC / Z > REC"
+  },
+  "tiberon": {
+    "display": "Tiberon",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "recoil",
+      "initial_combo"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | PUNC > Z > REC | Has unique mod [Critical Precision], but CC roll still sells well"
+  },
+  "tigris": {
+    "display": "Tigris",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "punch_through",
+      "status_chance",
+      "fire_rate_/_attack_speed",
+      "recoil",
+      "slash"
+    ],
+    "raw_text": "MS | CD | CC > TOX / DMG / PT > SC / FR | REC > SL > AMMO"
+  },
+  "tipedo": {
+    "display": "Tipedo",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "tombfinger": {
+    "display": "Tombfinger",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "puncture",
+      "slash",
+      "recoil",
+      "finisher_damage"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | IMP > PUNC > Z / SL(0%) > REC > AMMO*"
+  },
+  "tonbo": {
+    "display": "Tonbo",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "heavy_attack_efficiency",
+      "finisher_damage",
+      "slide_attack_critical_chance",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | EFF / FIN / SLIDE / SL(infl)"
+  },
+  "tonkkatt": {
+    "display": "Tonkkatt",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "tonkor": {
+    "display": "Tonkor",
+    "must_have": [
+      "magazine_capacity"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "critical_chance",
+      "reload_speed",
+      "base_damage_/_melee_damage",
+      "toxin",
+      "status_chance",
+      "puncture",
+      "recoil",
+      "fire_rate_/_attack_speed"
+    ],
+    "raw_text": "MS | CD | CC > RLS / DMG / TOX / SC | PUNC > Z / MAG* > REC > FR | * single shot magazine -MAG harmless"
+  },
+  "torid": {
+    "display": "Torid",
+    "must_have": [
+      "multishot"
+    ],
+    "priority": [
+      "critical_damage",
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "cold",
+      "toxin",
+      "magazine_capacity",
+      "recoil"
+    ],
+    "raw_text": "MS* | CD | CC > FR / DMG / COLD / TOX | Z > MAG(inc) / REC / AMMO(inc)"
+  },
+  "trumna": {
+    "display": "Trumna",
+    "must_have": [
+      "multishot"
+    ],
+    "priority": [
+      "critical_damage",
+      "toxin",
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "reload_speed",
+      "status_chance",
+      "projectile_speed",
+      "recoil"
+    ],
+    "raw_text": "MS* | CD | TOX / CC > FR / DMG / RLS / SC | Z / PFS >> REC"
+  },
+  "twin_basolk": {
+    "display": "Twin Basolk",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF"
+  },
+  "twin_grakatas": {
+    "display": "Twin Grakatas",
+    "must_have": [
+      "projectile_speed"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | IMP > Z / PFS* > PUNC > REC"
+  },
+  "twin_gremlins": {
+    "display": "Twin Gremlins",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | IMP / PUNC > Z > REC"
+  },
+  "twin_kohmak": {
+    "display": "Twin Kohmak",
+    "must_have": [
+      "critical_chance"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "projectile_speed",
+      "slash",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC* > FR / TOX / DMG / SC | Z / PFS > SL > REC"
+  },
+  "twin_krohkur": {
+    "display": "Twin Krohkur",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "twin_rogga": {
+    "display": "Twin Rogga",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "punch_through",
+      "status_chance",
+      "impact",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / PT / SC | IMP > Z > PUNC > REC | rivens won't save this"
+  },
+  "twin_vipers": {
+    "display": "Twin Vipers",
+    "must_have": [
+      "projectile_speed"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | IMP > Z / PFS* > REC"
+  },
+  "tysis": {
+    "display": "Tysis",
+    "must_have": [
+      "multishot",
+      "fire_rate_/_attack_speed"
+    ],
+    "priority": [
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "toxin",
+      "impact",
+      "puncture",
+      "recoil",
+      "critical_chance"
+    ],
+    "raw_text": "MS | FR / DMG | SC / DMG / TOX | IMP > PUNC / Z > REC"
+  },
+  "vadarya_prime": {
+    "display": "Vadarya Prime",
+    "must_have": [
+      "projectile_speed"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "critical_chance",
+      "status_chance",
+      "base_damage_/_melee_damage",
+      "fire_rate_/_attack_speed",
+      "electricity",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC / SC > DMG / FR > ELEC | Z / PFS* > REC"
+  },
+  "vastilok": {
+    "display": "Vastilok",
+    "must_have": [
+      "heavy_attack_efficiency"
+    ],
+    "priority": [
+      "critical_chance",
+      "base_damage_/_melee_damage",
+      "critical_damage",
+      "initial_combo",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "slash"
+    ],
+    "raw_text": "CC | DMG | CD / IC | SLIDE > FIN / EFF* / SL(infl) | * -EFF not ideal for Heavy Attack spam"
+  },
+  "vasto": {
+    "display": "Vasto",
+    "must_have": [
+      "projectile_speed"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "recoil",
+      "magazine_capacity"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | Z > PFS* / REC > AMMO(inc) / SC(inc) / MAG(inc)"
+  },
+  "vectis": {
+    "display": "Vectis",
+    "must_have": [
+      "multishot",
+      "critical_chance"
+    ],
+    "priority": [
+      "critical_damage",
+      "base_damage_/_melee_damage",
+      "fire_rate_/_attack_speed",
+      "heat",
+      "toxin",
+      "status_chance",
+      "magazine_capacity",
+      "impact",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CC / CD | CC > DMG / FR / HEAT / TOX / SC | MAG > Z / IMP > PUNC > REC / AMMO(inc)"
+  },
+  "veldt": {
+    "display": "Veldt",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | IMP > Z / PUNC > REC"
+  },
+  "velocitus": {
+    "display": "Velocitus",
+    "must_have": [
+      "critical_chance",
+      "fire_rate_/_attack_speed"
+    ],
+    "priority": [
+      "critical_damage",
+      "damage_vs_corpus",
+      "electricity",
+      "cold",
+      "status_chance",
+      "status_duration",
+      "damage_vs_infested",
+      "damage_vs_grineer"
+    ],
+    "raw_text": "CC | FR | CD / DTC / ELEC / COLD | Z > AMMO / SC / SD / DTI / DTG | Profit Taker rolls that sell well"
+  },
+  "velox": {
+    "display": "Velox",
+    "must_have": [
+      "projectile_speed"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | PUNC > Z / PFS* > REC"
+  },
+  "venato": {
+    "display": "Venato",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "puncture",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | PUNC > SLIDE / FIN / EFF"
+  },
+  "venka": {
+    "display": "Venka",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "verdilac": {
+    "display": "Verdilac",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "puncture",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | PUNC > SLIDE / FIN / EFF / SL(infl)"
+  },
+  "verglas": {
+    "display": "Verglas",
+    "must_have": [
+      "multishot",
+      "base_damage_/_melee_damage"
+    ],
+    "priority": [
+      "heat",
+      "fire_rate_/_attack_speed",
+      "critical_chance",
+      "damage_vs_infested"
+    ],
+    "raw_text": "MS | DMG | HEAT > FR | CC / DTI | * +CC minimum 257.2% breakpoint for [Tenacious Bond]"
+  },
+  "vericres": {
+    "display": "Vericres",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF / SL(infl)"
+  },
+  "vermisplicer": {
+    "display": "Vermisplicer",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "puncture",
+      "recoil",
+      "slash",
+      "finisher_damage"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | IMP / PUNC > Z > REC > AMMO* > SL"
+  },
+  "vesper_77": {
+    "display": "Vesper 77",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | IMP > PUNC > Z > REC"
+  },
+  "vinquibus": {
+    "display": "Vinquibus",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance"
+    ],
+    "raw_text": "(Rifle) | MSCDCC > TOX / FR / DMG / SC | CCCDDMG"
+  },
+  "viper": {
+    "display": "Viper",
+    "must_have": [
+      "projectile_speed"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | IMP > Z / PFS* > REC"
+  },
+  "vitrica": {
+    "display": "Vitrica",
+    "must_have": [
+      "heavy_attack_efficiency"
+    ],
+    "priority": [
+      "fire_rate_/_attack_speed",
+      "range",
+      "critical_damage",
+      "electricity",
+      "impact",
+      "puncture",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | IMP > PUNC > SLIDE > FIN / EFF* / SL(infl) | * -EFF not ideal for Heavy Attack spam"
+  },
+  "volnus": {
+    "display": "Volnus",
+    "must_have": [
+      "heavy_attack_efficiency"
+    ],
+    "priority": [
+      "fire_rate_/_attack_speed",
+      "range",
+      "critical_damage",
+      "electricity",
+      "puncture",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | PUNC > SLIDE > FIN / EFF* / SL(infl) | * -EFF not ideal for Heavy Attack spam"
+  },
+  "vulcax": {
+    "display": "Vulcax",
+    "must_have": [
+      "multishot"
+    ],
+    "priority": [
+      "critical_damage",
+      "critical_chance",
+      "magazine_capacity",
+      "damage_vs_infested",
+      "damage_vs_corpus",
+      "recoil"
+    ],
+    "raw_text": "MS* | CD | CC | MAG > DTI > DTC"
+  },
+  "vulkar": {
+    "display": "Vulkar",
+    "must_have": [
+      "critical_chance"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "recoil"
+    ],
+    "raw_text": "MS | CC* | CD > TOX / FR / DMG / SC | Z > IMP > REC"
+  },
+  "vulklok": {
+    "display": "Vulklok",
+    "must_have": [
+      "multishot",
+      "critical_chance"
+    ],
+    "priority": [
+      "critical_damage",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "damage_vs_infested",
+      "damage_vs_corpus"
+    ],
+    "raw_text": "MS | CC > CD | CC > TOX / FR / DMG / SC | DTI > DTC"
+  },
+  "war": {
+    "display": "War",
+    "must_have": [
+      "fire_rate_/_attack_speed",
+      "range"
+    ],
+    "priority": [
+      "critical_damage",
+      "electricity",
+      "impact",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "heavy_attack_efficiency"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | IMP > SLIDE / FIN / EFF"
+  },
+  "wolf_sledge": {
+    "display": "Wolf Sledge",
+    "must_have": [
+      "heavy_attack_efficiency"
+    ],
+    "priority": [
+      "fire_rate_/_attack_speed",
+      "range",
+      "critical_damage",
+      "electricity",
+      "impact",
+      "slide_attack_critical_chance",
+      "finisher_damage"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | IMP > SLIDE > FIN / EFF* | * -EFF not ideal for Heavy Attack spam"
+  },
+  "wrath": {
+    "display": "Wrath",
+    "must_have": [
+      "heavy_attack_efficiency"
+    ],
+    "priority": [
+      "fire_rate_/_attack_speed",
+      "range",
+      "critical_damage",
+      "electricity",
+      "slide_attack_critical_chance",
+      "finisher_damage",
+      "slash"
+    ],
+    "raw_text": "AS | RNG | CD > ELEC(infl) | SLIDE / FIN / EFF* / SL(infl) | * -EFF not ideal for Heavy Attack spam"
+  },
+  "xoris": {
+    "display": "Xoris",
+    "must_have": [
+      "heavy_attack_efficiency"
+    ],
+    "priority": [
+      "critical_chance",
+      "electricity",
+      "base_damage_/_melee_damage",
+      "critical_damage",
+      "initial_combo",
+      "puncture",
+      "slide_attack_critical_chance",
+      "slash",
+      "finisher_damage"
+    ],
+    "raw_text": "CC | ELEC(infl) | DMG / CD / IC / NONE | PUNC / SLIDE > SL(infl) / FIN / EFF* | * -EFF not ideal for Heavy Attack spam"
+  },
+  "zakti": {
+    "display": "Zakti",
+    "must_have": [
+      "multishot",
+      "base_damage_/_melee_damage"
+    ],
+    "priority": [
+      "status_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "impact",
+      "puncture",
+      "recoil",
+      "critical_chance"
+    ],
+    "raw_text": "MS | DMG / SC | SC / TOX / FR | IMP > PUNC / Z > REC"
+  },
+  "zarr": {
+    "display": "Zarr",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > FR / TOX / DMG / SC | IMP > Z > REC"
+  },
+  "zenistar": {
+    "display": "Zenistar",
+    "must_have": [
+      "heavy_attack_efficiency"
+    ],
+    "priority": [
+      "fire_rate_/_attack_speed",
+      "range",
+      "critical_damage",
+      "electricity",
+      "initial_combo",
+      "slide_attack_critical_chance",
+      "finisher_damage"
+    ],
+    "raw_text": "AS | RNG | CD / ELEC(infl) / IC / NONE | SLIDE / FIN / EFF* | * -EFF not ideal for Heavy Attack spam"
+  },
+  "zenith": {
+    "display": "Zenith",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | Z > REC"
+  },
+  "zhuge": {
+    "display": "Zhuge",
+    "must_have": [
+      "multishot",
+      "critical_damage"
+    ],
+    "priority": [
+      "critical_chance",
+      "toxin",
+      "fire_rate_/_attack_speed",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC > TOX / FR / DMG / SC | PUNC > Z > REC"
+  },
+  "zylok": {
+    "display": "Zylok",
+    "must_have": [
+      "multishot"
+    ],
+    "priority": [
+      "critical_damage",
+      "critical_chance",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "punch_through",
+      "impact",
+      "projectile_speed",
+      "recoil"
+    ],
+    "raw_text": "MS* | CD | CC > FR / TOX / DMG / SC / PT | IMP > Z / PFS / REC / AMMO(inc)"
+  },
+  "zymos": {
+    "display": "Zymos",
+    "must_have": [
+      "critical_chance"
+    ],
+    "priority": [
+      "multishot",
+      "critical_damage",
+      "fire_rate_/_attack_speed",
+      "toxin",
+      "base_damage_/_melee_damage",
+      "status_chance",
+      "impact",
+      "puncture",
+      "recoil"
+    ],
+    "raw_text": "MS | CD | CC* > FR / TOX / DMG / SC | IMP / PUNC > Z > REC"
+  }
+}
