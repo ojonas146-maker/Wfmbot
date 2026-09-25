@@ -389,6 +389,112 @@ function formatStatsBlock(gradedStats, title) {
   return out
 }
 
+// Prefixos e sufixos usados para detectar variantes da mesma família
+const VARIANT_PREFIXES = [
+  'mk1-', 'mk1 ', 'prisma ', 'kuva ', 'tenet ', 'coda ',
+  'dex ', 'mara ', 'secura ', 'synoid ', 'vaykor ', 'sancti ', 'telos '
+]
+const VARIANT_SUFFIXES = [' prime', ' wraith', ' vandal', ' prisma']
+
+/**
+ * Normaliza o nome da arma para achar a "raiz" da família
+ * (remove Mk1/Prisma/Kuva/Tenet/Coda/Prime/Wraith/Vandal/Syndicate etc.)
+ */
+function weaponFamilyKey(name) {
+  let n = String(name || '').toLowerCase().trim()
+  // url_name style: bo_prime → bo prime
+  n = n.replace(/_/g, ' ')
+  for (const p of VARIANT_PREFIXES) {
+    if (n.startsWith(p)) {
+      n = n.slice(p.length)
+      break
+    }
+  }
+  for (const s of VARIANT_SUFFIXES) {
+    if (n.endsWith(s)) {
+      n = n.slice(0, -s.length)
+      break
+    }
+  }
+  return n.trim()
+}
+
+/**
+ * Encontra todas as variantes da mesma família no array de dispositions.
+ *
+ * @param {string} weaponNameOrUrl  - nome ou url_name da arma do anúncio (ex: "Bo", "bo", "bo_prime")
+ * @param {Array} dispositionsList  - array completo do dispositions.json
+ * @returns {Array} variantes com disposition diferente da arma atual
+ *                  [{ name, disposition, category, type }, ...]
+ */
+function findVariants(weaponNameOrUrl, dispositionsList) {
+  if (!dispositionsList || !dispositionsList.length) return []
+
+  const key = weaponFamilyKey(weaponNameOrUrl)
+  if (!key) return []
+
+  // Disposition da arma atual (para pular a si mesma e as com mesmo dispo)
+  const current = dispositionsList.find(d => {
+    const dn = String(d.name || '').toLowerCase().replace(/_/g, ' ')
+    const un = String(weaponNameOrUrl || '').toLowerCase().replace(/_/g, ' ')
+    return dn === un || weaponFamilyKey(d.name) === key && dn === un
+  })
+  const currentDispo = current ? current.disposition : null
+  const currentName = current ? current.name : String(weaponNameOrUrl)
+
+  const variants = []
+  const seen = new Set()
+
+  for (const d of dispositionsList) {
+    if (weaponFamilyKey(d.name) !== key) continue
+    if (d.name === currentName) continue
+    // só mostra se o disposition for diferente
+    if (currentDispo != null && d.disposition === currentDispo) continue
+    const id = d.name + '|' + d.disposition
+    if (seen.has(id)) continue
+    seen.add(id)
+    variants.push(d)
+  }
+
+  // ordena: Prime primeiro, depois Mk1, Prisma, Wraith, etc.
+  const order = ['prime', 'mk1', 'prisma', 'wraith', 'vandal', 'kuva', 'tenet', 'coda']
+  variants.sort((a, b) => {
+    const an = a.name.toLowerCase()
+    const bn = b.name.toLowerCase()
+    const ai = order.findIndex(o => an.includes(o))
+    const bi = order.findIndex(o => bn.includes(o))
+    return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi)
+  })
+
+  return variants
+}
+
+/**
+ * Gera os blocos de texto de todas as variantes com dispo diferente.
+ * Pronto para concatenar na mensagem do /grade.
+ *
+ * @param {Array} attrs
+ * @param {number} fromDispo
+ * @param {string} weaponNameOrUrl
+ * @param {Array} dispositionsList
+ * @param {string|object} weaponOrCategory
+ * @param {string} configKey
+ * @param {number} [modRank]
+ * @param {number} [maxRank]
+ * @returns {string} texto com todos os blocos *Stats VARIANT:*
+ */
+function formatVariantBlocks(attrs, fromDispo, weaponNameOrUrl, dispositionsList, weaponOrCategory, configKey, modRank, maxRank) {
+  const variants = findVariants(weaponNameOrUrl, dispositionsList)
+  if (!variants.length) return ''
+
+  let out = ''
+  for (const v of variants) {
+    const graded = gradeForVariant(attrs, fromDispo, v.disposition, weaponOrCategory || v, configKey, modRank, maxRank)
+    out += formatStatsBlock(graded, `Stats ${v.name} (${v.disposition})`)
+  }
+  return out
+}
+
 module.exports = {
   RIVEN_STAT_LABEL,
   RIVEN_STAT_ALIASES,
@@ -401,6 +507,9 @@ module.exports = {
   gradeOneStat,
   gradeForVariant,
   formatStatsBlock,
+  findVariants,
+  formatVariantBlocks,
+  weaponFamilyKey,
   analyzeRivenMeta,
   formatMetaBlock
 }
