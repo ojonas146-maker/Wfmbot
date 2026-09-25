@@ -331,6 +331,64 @@ function formatMetaBlock(analysis) {
   return reply
 }
 
+/**
+ * Recalcula os stats de um Riven para outro disposition (ex: variante Prime).
+ * Os valores "base" do roll são recuperados dividindo pelo dispo original,
+ * depois multiplicados pelo dispo da variante.
+ *
+ * @param {Array} attrs            - atributos originais do anúncio
+ * @param {number} fromDispo       - disposition da arma do anúncio
+ * @param {number} toDispo         - disposition da variante alvo
+ * @param {string|object} weaponOrCategory - categoria base ou objeto arma
+ * @param {string} configKey       - '2P' | '2P1N' | '3P' | '3P1N'
+ * @param {number} [modRank=8]
+ * @param {number} [maxRank=8]
+ * @returns {Array} lista de resultados de gradeOneStat com value já escalado
+ */
+function gradeForVariant(attrs, fromDispo, toDispo, weaponOrCategory, configKey, modRank, maxRank) {
+  if (!fromDispo || fromDispo <= 0) return []
+  const scale = toDispo / fromDispo
+
+  return (attrs || []).map(attr => {
+    const scaled = {
+      ...attr,
+      value: Number(attr.value) * scale
+    }
+    // Para faction damage (x0.79 etc.) o value é multiplicador final.
+    // Escalamos o desvio em relação a 1.0:
+    //   bonus = value - 1  →  newValue = 1 + bonus * scale
+    const url = String(attr.url_name || '').toLowerCase()
+    if (url.includes('damage_vs_') || url.includes('dmg_to_') || url.includes('damage_to_')) {
+      const bonus = Number(attr.value) - 1
+      scaled.value = 1 + bonus * scale
+    }
+
+    return gradeOneStat(scaled, weaponOrCategory, toDispo, configKey, modRank, maxRank)
+  })
+}
+
+/**
+ * Formata um bloco de stats já gradeados (usado tanto pro anúncio quanto pro variante).
+ */
+function formatStatsBlock(gradedStats, title) {
+  if (!gradedStats || !gradedStats.length) return ''
+  let out = title ? `*${title}:*\n` : ''
+  for (const s of gradedStats) {
+    if (s.grade == null) {
+      out += `• ${s.value} ${s.label} → _sem grade_\n`
+      continue
+    }
+    const sign = s.positive === false ? '' : (Number(s.value) >= 0 ? '+' : '')
+    const unit = s.unit === 'x' ? '' : (s.unit === 'm' || s.unit === 's' || s.unit === 'flat' ? s.unit : '%')
+    const valStr = s.unit === 'x'
+      ? `x${Number(s.value).toFixed(2)}`
+      : `${sign}${Number(s.value).toFixed(1)}${unit}`
+    const devStr = (s.dev >= 0 ? '+' : '') + s.dev.toFixed(1) + '%'
+    out += `• ${valStr} ${s.label} → *${s.grade}* (${devStr})\n`
+  }
+  return out
+}
+
 module.exports = {
   RIVEN_STAT_LABEL,
   RIVEN_STAT_ALIASES,
@@ -341,6 +399,8 @@ module.exports = {
   getConfigKey,
   resolveBaseCategory,
   gradeOneStat,
+  gradeForVariant,
+  formatStatsBlock,
   analyzeRivenMeta,
   formatMetaBlock
 }
