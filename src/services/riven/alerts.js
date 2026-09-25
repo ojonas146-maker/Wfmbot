@@ -6,10 +6,11 @@ const axios = require('axios')
 const { RIVEN_ALERTS_FILE, RIVEN_SEEN_FILE } = require('../../config/env')
 const { jidToNumber } = require('../../utils/text')
 const { getRivenAlertLimit, canUseRivenSnipe, isAdmin } = require('../../core/adminAuth')
-const { getWeaponMeta, findDisposition, resolveCategoryFromDisp } = require('./baseData')
+const { getWeaponMeta, findDisposition, resolveCategoryFromDisp, getDispositionsList } = require('./baseData')
 const {
   RIVEN_STAT_LABEL, RIVEN_STAT_ALIASES, resolveRivenStat, getConfigKey,
-  gradeOneStat, gradeRank, analyzeRivenMeta, formatMetaBlock
+  gradeOneStat, gradeRank, analyzeRivenMeta, formatMetaBlock,
+  formatVariantBlocks
 } = require('./grading')
 const { searchRivenAuctions, searchRivenAuctionsBroad } = require('./auctionSearch')
 const { getOfficialRivenMedian, fmtPlat, getTopWeeklyWeapons } = require('./weekly')
@@ -597,6 +598,25 @@ async function getRivenGradeMessage(rawInput) {
         line += ' _(' + g.note + ')_'
       }
       reply += line + '\n'
+    }
+
+    // Variantes da mesma família com disposition diferente (Prime, Mk1, Wraith, etc.)
+    if (disposition != null) {
+      try {
+        const variantsText = formatVariantBlocks(
+          attrs,
+          disposition,
+          (disp && disp.name) || weapon,
+          getDispositionsList(),
+          category,
+          configKey,
+          modRankNum,
+          maxRankNum
+        )
+        if (variantsText) reply += variantsText
+      } catch (e) {
+        console.error('!grade variants:', e.message)
+      }
     }
 
     const analysis = analyzeRivenMeta(weapon, attrs, getWeaponMeta)
