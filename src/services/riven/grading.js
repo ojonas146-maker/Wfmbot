@@ -218,7 +218,11 @@ function gradeOneStat(attr, weaponOrCategory, disposition, configKey, modRank, m
   let actual = Number(attr.value)
   if (!isPos) actual = Math.abs(actual)
 
-  const dev = expected ? ((actual - expected) / expected) * 100 : 0
+  // Positivos: actual > expected = melhor
+  // Negativos: actual > expected (curse mais forte) = melhor  →  inverte o sinal
+  let dev = expected ? ((actual - expected) / expected) * 100 : 0
+  if (!isPos) dev = -dev
+
   const grade = letterGrade(dev)
 
   return {
