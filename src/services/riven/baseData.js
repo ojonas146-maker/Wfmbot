@@ -6,6 +6,7 @@ const { normDispKey, normalizeWeaponKey } = require('../../utils/text')
 
 let _baseValuesCache = null
 let _dispositionsCache = null
+let _dispositionsListCache = null
 let _rivenMetaCache = null
 
 function loadBaseValues() {
@@ -28,6 +29,17 @@ function loadDispositions() {
   }
   _dispositionsCache = map
   return _dispositionsCache
+}
+
+/** Retorna o array bruto de dispositions (para busca de variantes). */
+function getDispositionsList() {
+  if (_dispositionsListCache) return _dispositionsListCache
+  try {
+    _dispositionsListCache = JSON.parse(fs.readFileSync(DISPOSITIONS_FILE, 'utf8'))
+  } catch (e) {
+    _dispositionsListCache = []
+  }
+  return _dispositionsListCache
 }
 
 function loadRivenMeta() {
@@ -106,6 +118,7 @@ function resolveCategoryFromDisp(disp) {
 module.exports = {
   loadBaseValues,
   loadDispositions,
+  getDispositionsList,
   loadRivenMeta,
   getWeaponMeta,
   findDisposition,
