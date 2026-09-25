@@ -24,14 +24,20 @@
     "type": "Rifle"
   },
   {
+    "name": "Afentis Prime",
+    "disposition": 0.65,
+    "category": "Primary",
+    "type": "Rifle"
+  },
+  {
     "name": "Alternox",
-    "disposition": 1.15,
+    "disposition": 1.2,
     "category": "Primary",
     "type": "Rifle"
   },
   {
     "name": "Alternox Prime",
-    "disposition": 0.8,
+    "disposition": 0.95,
     "category": "Primary",
     "type": "Rifle"
   },
@@ -180,6 +186,12 @@
     "type": "Launcher"
   },
   {
+    "name": "Catchmoon (Primary)",
+    "disposition": 1.1,
+    "category": "Primary",
+    "type": "Kitgun"
+  },
+  {
     "name": "Cedo",
     "disposition": 0.65,
     "category": "Primary",
@@ -217,13 +229,13 @@
   },
   {
     "name": "Coda Bubonico",
-    "disposition": 0.55,
+    "disposition": 0.6,
     "category": "Primary",
     "type": "Rifle"
   },
   {
     "name": "Coda Hema",
-    "disposition": 0.95,
+    "disposition": 1,
     "category": "Primary",
     "type": "Rifle"
   },
@@ -265,7 +277,7 @@
   },
   {
     "name": "Daikyu Prime",
-    "disposition": 0.9,
+    "disposition": 1,
     "category": "Primary",
     "type": "Bow"
   },
@@ -307,7 +319,7 @@
   },
   {
     "name": "Enkaus",
-    "disposition": 0.7,
+    "disposition": 0.8,
     "category": "Primary",
     "type": "Rifle"
   },
@@ -354,6 +366,12 @@
     "type": "Rifle"
   },
   {
+    "name": "Gaze (Primary)",
+    "disposition": 1.1,
+    "category": "Primary",
+    "type": "Kitgun"
+  },
+  {
     "name": "Glaxion",
     "disposition": 1.3,
     "category": "Primary",
@@ -392,6 +410,12 @@
   {
     "name": "Grinlok",
     "disposition": 1.3,
+    "category": "Primary",
+    "type": "Rifle"
+  },
+  {
+    "name": "Haalvu",
+    "disposition": 0.6,
     "category": "Primary",
     "type": "Rifle"
   },
@@ -469,7 +493,7 @@
   },
   {
     "name": "Kuva Bramma",
-    "disposition": 0.65,
+    "disposition": 0.7,
     "category": "Primary",
     "type": "Bow"
   },
@@ -624,6 +648,12 @@
     "type": "Bow"
   },
   {
+    "name": "Nunchasa",
+    "disposition": 1.0,
+    "category": "Primary",
+    "type": "Bow"
+  },
+  {
     "name": "Ogris",
     "disposition": 1.3,
     "category": "Primary",
@@ -685,7 +715,7 @@
   },
   {
     "name": "Perigale Prime",
-    "disposition": 0.65,
+    "disposition": 0.8,
     "category": "Primary",
     "type": "Rifle"
   },
@@ -751,7 +781,7 @@
   },
   {
     "name": "Purgator 1",
-    "disposition": 1.15,
+    "disposition": 1.2,
     "category": "Primary",
     "type": "Rifle"
   },
@@ -784,6 +814,12 @@
     "disposition": 1.25,
     "category": "Primary",
     "type": "Bow"
+  },
+  {
+    "name": "Rattleguts (Primary)",
+    "disposition": 1.0,
+    "category": "Primary",
+    "type": "Kitgun"
   },
   {
     "name": "Rauta",
@@ -882,6 +918,12 @@
     "type": "Rifle"
   },
   {
+    "name": "Sporelacer (Primary)",
+    "disposition": 1.15,
+    "category": "Primary",
+    "type": "Kitgun"
+  },
+  {
     "name": "Sporothrix",
     "disposition": 1.3,
     "category": "Primary",
@@ -973,7 +1015,7 @@
   },
   {
     "name": "Tenet Arca Plasmor",
-    "disposition": 0.55,
+    "disposition": 0.6,
     "category": "Primary",
     "type": "Shotgun"
   },
@@ -1003,7 +1045,7 @@
   },
   {
     "name": "Tenet Quanta",
-    "disposition": 0.75,
+    "disposition": 0.85,
     "category": "Primary",
     "type": "Rifle"
   },
@@ -1033,7 +1075,7 @@
   },
   {
     "name": "Thornbak",
-    "disposition": 1.1,
+    "disposition": 1.2,
     "category": "Primary",
     "type": "Rifle"
   },
@@ -1062,6 +1104,12 @@
     "type": "Shotgun"
   },
   {
+    "name": "Tombfinger (Primary)",
+    "disposition": 1.0,
+    "category": "Primary",
+    "type": "Kitgun"
+  },
+  {
     "name": "Tonkor",
     "disposition": 1.3,
     "category": "Primary",
@@ -1087,7 +1135,7 @@
   },
   {
     "name": "Vadarya Prime",
-    "disposition": 0.75,
+    "disposition": 0.8,
     "category": "Primary",
     "type": "Sniper"
   },
@@ -1116,8 +1164,14 @@
     "type": "Rifle"
   },
   {
+    "name": "Vermisplicer (Primary)",
+    "disposition": 0.9,
+    "category": "Primary",
+    "type": "Kitgun"
+  },
+  {
     "name": "Vinquibus",
-    "disposition": 0.6,
+    "disposition": 0.7,
     "category": "Primary",
     "type": "Rifle"
   },
@@ -1267,9 +1321,15 @@
   },
   {
     "name": "Aksomati Prime",
-    "disposition": 1.05,
+    "disposition": 1.1,
     "category": "Secondary",
     "type": "Pistol"
+  },
+  {
+    "name": "Aksondol",
+    "disposition": 1.0,
+    "category": "Secondary",
+    "type": "Dual Pistols"
   },
   {
     "name": "Akstiletto",
@@ -1316,6 +1376,12 @@
   {
     "name": "Athodai",
     "disposition": 1.05,
+    "category": "Secondary",
+    "type": "Pistol"
+  },
+  {
+    "name": "Athodai Prime",
+    "disposition": 0.65,
     "category": "Secondary",
     "type": "Pistol"
   },
@@ -1386,6 +1452,12 @@
     "type": "Pistol"
   },
   {
+    "name": "Catchmoon (Secondary)",
+    "disposition": 0.75,
+    "category": "Secondary",
+    "type": "Kitgun"
+  },
+  {
     "name": "Cestra",
     "disposition": 1.52,
     "category": "Secondary",
@@ -1393,13 +1465,13 @@
   },
   {
     "name": "Coda Catabolyst",
-    "disposition": 0.65,
+    "disposition": 0.7,
     "category": "Secondary",
     "type": "Pistol"
   },
   {
     "name": "Coda Pox",
-    "disposition": 1,
+    "disposition": 1.05,
     "category": "Secondary",
     "type": "Pistol"
   },
@@ -1506,10 +1578,10 @@
     "type": "Pistol"
   },
   {
-    "name": "Grimoire",
-    "disposition": 0.6,
-    "category": "Pistols",
-    "type": "Pistol"
+    "name": "Gaze (Secondary)",
+    "disposition": 1.05,
+    "category": "Secondary",
+    "type": "Kitgun"
   },
   {
     "name": "Grimoire",
@@ -1537,7 +1609,7 @@
   },
   {
     "name": "Hystrix Prime",
-    "disposition": 1,
+    "disposition": 1.05,
     "category": "Secondary",
     "type": "Pistol"
   },
@@ -1705,7 +1777,7 @@
   },
   {
     "name": "Onos",
-    "disposition": 0.8,
+    "disposition": 0.85,
     "category": "Secondary",
     "type": "Pistol"
   },
@@ -1770,6 +1842,12 @@
     "type": "Pistol"
   },
   {
+    "name": "Rattleguts (Secondary)",
+    "disposition": 1.0,
+    "category": "Secondary",
+    "type": "Kitgun"
+  },
+  {
     "name": "Riot-848",
     "disposition": 1,
     "category": "Secondary",
@@ -1777,7 +1855,7 @@
   },
   {
     "name": "Sagek Prime",
-    "disposition": 0.8,
+    "disposition": 0.9,
     "category": "Secondary",
     "type": "Pistol"
   },
@@ -1789,7 +1867,7 @@
   },
   {
     "name": "Scyotid",
-    "disposition": 0.7,
+    "disposition": 0.75,
     "category": "Secondary",
     "type": "Throwing"
   },
@@ -1852,6 +1930,12 @@
     "disposition": 1.25,
     "category": "Secondary",
     "type": "Throwing"
+  },
+  {
+    "name": "Sporelacer (Secondary)",
+    "disposition": 0.6,
+    "category": "Secondary",
+    "type": "Kitgun"
   },
   {
     "name": "Staticor",
@@ -1918,6 +2002,12 @@
     "disposition": 1.05,
     "category": "Secondary",
     "type": "Pistol"
+  },
+  {
+    "name": "Tombfinger (Secondary)",
+    "disposition": 0.9,
+    "category": "Secondary",
+    "type": "Kitgun"
   },
   {
     "name": "Twin Grakatas",
@@ -1992,6 +2082,12 @@
     "type": "Pistol"
   },
   {
+    "name": "Vermisplicer (Secondary)",
+    "disposition": 1.15,
+    "category": "Secondary",
+    "type": "Kitgun"
+  },
+  {
     "name": "Vesper 77",
     "disposition": 0.8,
     "category": "Secondary",
@@ -2029,7 +2125,7 @@
   },
   {
     "name": "Zylok Prime",
-    "disposition": 0.9,
+    "disposition": 0.95,
     "category": "Secondary",
     "type": "Pistol"
   },
@@ -2104,12 +2200,6 @@
     "disposition": 1.1,
     "category": "Melee",
     "type": "Melee"
-  },
-  {
-    "name": "Balla",
-    "disposition": 0.8,
-    "category": "Pistols",
-    "type": "Zaw Component"
   },
   {
     "name": "Balla",
@@ -2239,13 +2329,7 @@
   },
   {
     "name": "Cyath",
-    "disposition": 1,
-    "category": "Pistols",
-    "type": "Zaw Component"
-  },
-  {
-    "name": "Cyath",
-    "disposition": 1,
+    "disposition": 1.05,
     "category": "Melee",
     "type": "Zaw Component"
   },
@@ -2272,12 +2356,6 @@
     "disposition": 1.48,
     "category": "Melee",
     "type": "Melee"
-  },
-  {
-    "name": "Dehtat",
-    "disposition": 1.25,
-    "category": "Pistols",
-    "type": "Zaw Component"
   },
   {
     "name": "Dehtat",
@@ -2401,7 +2479,7 @@
   },
   {
     "name": "Dual Zoren Prime",
-    "disposition": 0.9,
+    "disposition": 0.95,
     "category": "Melee",
     "type": "Melee"
   },
@@ -2521,7 +2599,7 @@
   },
   {
     "name": "Galariak Prime",
-    "disposition": 0.8,
+    "disposition": 0.9,
     "category": "Melee",
     "type": "Melee"
   },
@@ -2575,7 +2653,7 @@
   },
   {
     "name": "Gram Prime",
-    "disposition": 0.75,
+    "disposition": 0.8,
     "category": "Melee",
     "type": "Melee"
   },
@@ -2737,7 +2815,7 @@
   },
   {
     "name": "Kestrel Prime",
-    "disposition": 0.75,
+    "disposition": 0.85,
     "category": "Melee",
     "type": "Melee"
   },
@@ -2798,12 +2876,6 @@
   {
     "name": "Kronsh",
     "disposition": 1.3,
-    "category": "Pistols",
-    "type": "Zaw Component"
-  },
-  {
-    "name": "Kronsh",
-    "disposition": 1.3,
     "category": "Melee",
     "type": "Zaw Component"
   },
@@ -2815,13 +2887,13 @@
   },
   {
     "name": "Kuva Ghoulsaw",
-    "disposition": 0.7,
+    "disposition": 0.8,
     "category": "Melee",
     "type": "Melee"
   },
   {
     "name": "Kuva Shildeg",
-    "disposition": 0.8,
+    "disposition": 0.85,
     "category": "Melee",
     "type": "Melee"
   },
@@ -2884,12 +2956,6 @@
     "disposition": 1,
     "category": "Melee",
     "type": "Melee"
-  },
-  {
-    "name": "Mewan",
-    "disposition": 1.15,
-    "category": "Pistols",
-    "type": "Zaw Component"
   },
   {
     "name": "Mewan",
@@ -2996,12 +3062,6 @@
   {
     "name": "Ooltha",
     "disposition": 1.3,
-    "category": "Pistols",
-    "type": "Zaw Component"
-  },
-  {
-    "name": "Ooltha",
-    "disposition": 1.3,
     "category": "Melee",
     "type": "Zaw Component"
   },
@@ -3073,20 +3133,8 @@
   },
   {
     "name": "Plague Keewar",
-    "disposition": 0.85,
-    "category": "Pistols",
-    "type": "Zaw Component"
-  },
-  {
-    "name": "Plague Keewar",
-    "disposition": 0.85,
+    "disposition": 0.9,
     "category": "Melee",
-    "type": "Zaw Component"
-  },
-  {
-    "name": "Plague Kripath",
-    "disposition": 0.65,
-    "category": "Pistols",
     "type": "Zaw Component"
   },
   {
@@ -3104,6 +3152,12 @@
   {
     "name": "Praedos",
     "disposition": 0.6,
+    "category": "Melee",
+    "type": "Melee"
+  },
+  {
+    "name": "Pride",
+    "disposition": 0.7,
     "category": "Melee",
     "type": "Melee"
   },
@@ -3253,7 +3307,7 @@
   },
   {
     "name": "Sarofang Prime",
-    "disposition": 0.65,
+    "disposition": 0.75,
     "category": "Melee",
     "type": "Melee"
   },
@@ -3373,7 +3427,7 @@
   },
   {
     "name": "Spinnerex",
-    "disposition": 0.75,
+    "disposition": 0.85,
     "category": "Melee",
     "type": "Melee"
   },
@@ -3409,7 +3463,7 @@
   },
   {
     "name": "Tak & Lug",
-    "disposition": 0.95,
+    "disposition": 1.05,
     "category": "Melee",
     "type": "Melee"
   },
@@ -3469,7 +3523,7 @@
   },
   {
     "name": "Thalys",
-    "disposition": 0.6,
+    "disposition": 0.65,
     "category": "Melee",
     "type": "Melee"
   },
@@ -3493,7 +3547,7 @@
   },
   {
     "name": "Tonkkatt",
-    "disposition": 0.85,
+    "disposition": 0.95,
     "category": "Melee",
     "type": "Melee"
   },
@@ -3565,7 +3619,7 @@
   },
   {
     "name": "Venato Prime",
-    "disposition": 0.6,
+    "disposition": 0.65,
     "category": "Melee",
     "type": "Melee"
   },
@@ -3618,8 +3672,20 @@
     "type": "Melee"
   },
   {
+    "name": "War Prime",
+    "disposition": 0.65,
+    "category": "Melee",
+    "type": "Melee"
+  },
+  {
     "name": "Wolf Sledge",
     "disposition": 1.25,
+    "category": "Melee",
+    "type": "Melee"
+  },
+  {
+    "name": "Wrath",
+    "disposition": 0.7,
     "category": "Melee",
     "type": "Melee"
   },
@@ -3655,7 +3721,7 @@
   },
   {
     "name": "Corvas Prime",
-    "disposition": 0.95,
+    "disposition": 1,
     "category": "Arch-Gun",
     "type": "Arch-Gun"
   },
@@ -3804,39 +3870,147 @@
     "type": "Arch-Melee"
   },
   {
-    "name": "Afentis Prime",
-    "disposition": 0.5,
-    "category": "Primary",
+    "name": "Artax",
+    "disposition": 1.0,
+    "category": "Robotic",
     "type": "Rifle"
   },
   {
-    "name": "Athodai Prime",
-    "disposition": 0.5,
-    "category": "Secondary",
-    "type": "Pistol"
-  },
-  {
-    "name": "Pride",
-    "disposition": 0.5,
-    "category": "Melee",
-    "type": "Melee"
-  },
-  {
-    "name": "War Prime",
-    "disposition": 0.5,
-    "category": "Melee",
-    "type": "Melee"
-  },
-  {
-    "name": "Wrath",
-    "disposition": 0.5,
-    "category": "Melee",
-    "type": "Melee"
-  },
-  {
-    "name": "Haalvu",
-    "disposition": 0.5,
-    "category": "Primary",
+    "name": "Burst Laser",
+    "disposition": 1.45,
+    "category": "Robotic",
     "type": "Rifle"
+  },
+  {
+    "name": "Burst Laser Prime",
+    "disposition": 1.45,
+    "category": "Robotic",
+    "type": "Rifle"
+  },
+  {
+    "name": "Cryotra",
+    "disposition": 1.0,
+    "category": "Robotic",
+    "type": "Rifle"
+  },
+  {
+    "name": "Deconstructor",
+    "disposition": 1.25,
+    "category": "Robotic",
+    "type": "Melee"
+  },
+  {
+    "name": "Deconstructor Prime",
+    "disposition": 1.25,
+    "category": "Robotic",
+    "type": "Melee"
+  },
+  {
+    "name": "Deth Machine Rifle",
+    "disposition": 1.455,
+    "category": "Robotic",
+    "type": "Rifle"
+  },
+  {
+    "name": "Deth Machine Rifle Prime",
+    "disposition": 1.455,
+    "category": "Robotic",
+    "type": "Rifle"
+  },
+  {
+    "name": "Helstrum",
+    "disposition": 1.0,
+    "category": "Robotic",
+    "type": "Rifle"
+  },
+  {
+    "name": "Laser Rifle",
+    "disposition": 1.21,
+    "category": "Robotic",
+    "type": "Rifle"
+  },
+  {
+    "name": "Multron",
+    "disposition": 1.0,
+    "category": "Robotic",
+    "type": "Rifle"
+  },
+  {
+    "name": "Prime Laser Rifle",
+    "disposition": 1.21,
+    "category": "Robotic",
+    "type": "Rifle"
+  },
+  {
+    "name": "Prisma Burst Laser",
+    "disposition": 1.45,
+    "category": "Robotic",
+    "type": "Rifle"
+  },
+  {
+    "name": "Stinger",
+    "disposition": 1.315,
+    "category": "Robotic",
+    "type": "Rifle"
+  },
+  {
+    "name": "Sweeper",
+    "disposition": 1.0,
+    "category": "Robotic",
+    "type": "Rifle"
+  },
+  {
+    "name": "Sweeper Prime",
+    "disposition": 1.0,
+    "category": "Robotic",
+    "type": "Rifle"
+  },
+  {
+    "name": "Tazicor",
+    "disposition": 1.0,
+    "category": "Robotic",
+    "type": "Rifle"
+  },
+  {
+    "name": "Verglas",
+    "disposition": 1.3,
+    "category": "Robotic",
+    "type": "Rifle"
+  },
+  {
+    "name": "Verglas Prime",
+    "disposition": 1.3,
+    "category": "Robotic",
+    "type": "Rifle"
+  },
+  {
+    "name": "Vulcax",
+    "disposition": 1.0,
+    "category": "Robotic",
+    "type": "Rifle"
+  },
+  {
+    "name": "Vulklok",
+    "disposition": 1.245,
+    "category": "Robotic",
+    "type": "Rifle"
+  },
+  {
+    "name": "Akaten",
+    "disposition": 1.0,
+    "category": "Hound",
+    "type": "Melee"
+  },
+  {
+    "name": "Batoten",
+    "disposition": 1.0,
+    "category": "Hound",
+    "type": "Melee"
+  },
+  {
+    "name": "Lacerten",
+    "disposition": 1.0,
+    "category": "Hound",
+    "type": "Melee"
   }
 ]
