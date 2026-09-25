@@ -215,11 +215,19 @@ function gradeOneStat(attr, weaponOrCategory, disposition, configKey, modRank, m
   const rankScale = (mr + 1) / (mx + 1)
   const expected = expectedMax * rankScale
 
+  const unit = entry.unit || '%'
   let actual = Number(attr.value)
-  if (!isPos) actual = Math.abs(actual)
+
+  // Faction damage (unit "x") arrives as the final multiplier (x0.79 or x1.25).
+  // Convert to the magnitude of the bonus/malus so it matches the base 0.45 scale.
+  if (unit === 'x') {
+    actual = Math.abs(actual - 1)
+  } else if (!isPos) {
+    actual = Math.abs(actual)
+  }
 
   // Positivos: actual > expected = melhor
-  // Negativos: actual > expected (curse mais forte) = melhor  →  inverte o sinal
+  // Negativos: actual > expected (curse mais forte) = melhor → inverte o sinal
   let dev = expected ? ((actual - expected) / expected) * 100 : 0
   if (!isPos) dev = -dev
 
@@ -234,7 +242,7 @@ function gradeOneStat(attr, weaponOrCategory, disposition, configKey, modRank, m
     expected,
     expectedMax,
     rankScale,
-    unit: entry.unit || '%'
+    unit
   }
 }
 
