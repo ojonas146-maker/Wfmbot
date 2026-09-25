@@ -654,12 +654,6 @@
     "type": "Bow"
   },
   {
-    "name": "Nunchasa",
-    "disposition": 1.0,
-    "category": "Primary",
-    "type": "Bow"
-  },
-  {
     "name": "Ogris",
     "disposition": 1.3,
     "category": "Primary",
