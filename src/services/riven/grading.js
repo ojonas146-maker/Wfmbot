@@ -392,18 +392,22 @@ function formatStatsBlock(gradedStats, title) {
 // Prefixos e sufixos usados para detectar variantes da mesma família
 const VARIANT_PREFIXES = [
   'mk1-', 'mk1 ', 'prisma ', 'kuva ', 'tenet ', 'coda ',
-  'dex ', 'mara ', 'secura ', 'synoid ', 'vaykor ', 'sancti ', 'telos '
+  'dex ', 'mara ', 'secura ', 'synoid ', 'vaykor ', 'sancti ', 'telos ', 'rakta '
 ]
-const VARIANT_SUFFIXES = [' prime', ' wraith', ' vandal', ' prisma']
+const VARIANT_SUFFIXES = [
+  ' prime', ' wraith', ' vandal', ' prisma'
+]
 
 /**
  * Normaliza o nome da arma para achar a "raiz" da família
- * (remove Mk1/Prisma/Kuva/Tenet/Coda/Prime/Wraith/Vandal/Syndicate etc.)
+ * (remove Mk1/Prisma/Kuva/Tenet/Coda/Prime/Wraith/Vandal/Syndicate).
+ * Mantém (Primary)/(Secondary)/(Melee) para NÃO misturar Kitguns de slots diferentes.
  */
 function weaponFamilyKey(name) {
   let n = String(name || '').toLowerCase().trim()
   // url_name style: bo_prime → bo prime
   n = n.replace(/_/g, ' ')
+
   for (const p of VARIANT_PREFIXES) {
     if (n.startsWith(p)) {
       n = n.slice(p.length)
@@ -421,11 +425,7 @@ function weaponFamilyKey(name) {
 
 /**
  * Encontra todas as variantes da mesma família no array de dispositions.
- *
- * @param {string} weaponNameOrUrl  - nome ou url_name da arma do anúncio (ex: "Bo", "bo", "bo_prime")
- * @param {Array} dispositionsList  - array completo do dispositions.json
- * @returns {Array} variantes com disposition diferente da arma atual
- *                  [{ name, disposition, category, type }, ...]
+ * Só retorna armas com disposition diferente da atual.
  */
 function findVariants(weaponNameOrUrl, dispositionsList) {
   if (!dispositionsList || !dispositionsList.length) return []
@@ -433,12 +433,20 @@ function findVariants(weaponNameOrUrl, dispositionsList) {
   const key = weaponFamilyKey(weaponNameOrUrl)
   if (!key) return []
 
-  // Disposition da arma atual (para pular a si mesma e as com mesmo dispo)
-  const current = dispositionsList.find(d => {
-    const dn = String(d.name || '').toLowerCase().replace(/_/g, ' ')
-    const un = String(weaponNameOrUrl || '').toLowerCase().replace(/_/g, ' ')
-    return dn === un || weaponFamilyKey(d.name) === key && dn === un
+  const normalizedInput = String(weaponNameOrUrl || '')
+    .toLowerCase()
+    .replace(/_/g, ' ')
+    .trim()
+
+  // Encontra a arma atual (nome exato primeiro, depois family key)
+  let current = dispositionsList.find(d => {
+    const dn = String(d.name || '').toLowerCase().replace(/_/g, ' ').trim()
+    return dn === normalizedInput
   })
+  if (!current) {
+    current = dispositionsList.find(d => weaponFamilyKey(d.name) === key)
+  }
+
   const currentDispo = current ? current.disposition : null
   const currentName = current ? current.name : String(weaponNameOrUrl)
 
@@ -449,15 +457,19 @@ function findVariants(weaponNameOrUrl, dispositionsList) {
     if (weaponFamilyKey(d.name) !== key) continue
     if (d.name === currentName) continue
     // só mostra se o disposition for diferente
-    if (currentDispo != null && d.disposition === currentDispo) continue
+    if (currentDispo != null && Math.abs(d.disposition - currentDispo) < 0.001) continue
     const id = d.name + '|' + d.disposition
     if (seen.has(id)) continue
     seen.add(id)
     variants.push(d)
   }
 
-  // ordena: Prime primeiro, depois Mk1, Prisma, Wraith, etc.
-  const order = ['prime', 'mk1', 'prisma', 'wraith', 'vandal', 'kuva', 'tenet', 'coda']
+  // Ordena: Prime → Mk1 → Prisma → Wraith → Vandal → Kuva → Tenet → Coda...
+  const order = [
+    'prime', 'mk1', 'prisma', 'wraith', 'vandal',
+    'kuva', 'tenet', 'coda', 'dex', 'mara',
+    'secura', 'synoid', 'vaykor', 'sancti', 'telos', 'rakta'
+  ]
   variants.sort((a, b) => {
     const an = a.name.toLowerCase()
     const bn = b.name.toLowerCase()
@@ -471,17 +483,7 @@ function findVariants(weaponNameOrUrl, dispositionsList) {
 
 /**
  * Gera os blocos de texto de todas as variantes com dispo diferente.
- * Pronto para concatenar na mensagem do /grade.
- *
- * @param {Array} attrs
- * @param {number} fromDispo
- * @param {string} weaponNameOrUrl
- * @param {Array} dispositionsList
- * @param {string|object} weaponOrCategory
- * @param {string} configKey
- * @param {number} [modRank]
- * @param {number} [maxRank]
- * @returns {string} texto com todos os blocos *Stats VARIANT:*
+ * Pronto para concatenar na mensagem do !grade.
  */
 function formatVariantBlocks(attrs, fromDispo, weaponNameOrUrl, dispositionsList, weaponOrCategory, configKey, modRank, maxRank) {
   const variants = findVariants(weaponNameOrUrl, dispositionsList)
@@ -489,8 +491,16 @@ function formatVariantBlocks(attrs, fromDispo, weaponNameOrUrl, dispositionsList
 
   let out = ''
   for (const v of variants) {
-    const graded = gradeForVariant(attrs, fromDispo, v.disposition, weaponOrCategory || v, configKey, modRank, maxRank)
-    out += formatStatsBlock(graded, `Stats ${v.name} (${v.disposition})`)
+    const graded = gradeForVariant(
+      attrs,
+      fromDispo,
+      v.disposition,
+      weaponOrCategory || v,
+      configKey,
+      modRank,
+      maxRank
+    )
+    out += '\n' + formatStatsBlock(graded, `Stats ${v.name} (${v.disposition})`)
   }
   return out
 }
