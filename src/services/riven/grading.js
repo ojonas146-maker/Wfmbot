@@ -105,12 +105,70 @@ function getConfigKey(attrs) {
 }
 
 /**
+ * Resolve a categoria base (Rifle / Shotgun / Pistol / Archgun / Melee)
+ * a partir do objeto da arma (vindo do dispositions JSON).
+ *
+ * Regras:
+ * - Kitgun Primary  → Rifle
+ * - Kitgun Secondary → Pistol
+ * - Robotic          → Rifle  (exceto Deconstructor que já tem type: Melee)
+ * - Hound            → Melee
+ * - Restante         → usa type_to_category do base_values
+ */
+function resolveBaseCategory(weapon, baseValues) {
+  if (!weapon) return null
+
+  const type = String(weapon.type || '').trim()
+  const cat  = String(weapon.category || '').trim()
+
+  // Kitgun: decide pelo slot (Primary/Secondary)
+  if (type === 'Kitgun' || type.toLowerCase() === 'kitgun') {
+    if (cat === 'Secondary') return 'Pistol'
+    return 'Rifle' // Primary ou fallback
+  }
+
+  // Deconstructor já vem com type: Melee no dispositions
+  // Robotic genérico → Rifle (já mapeado no type_to_category)
+  // Hound → Melee (já mapeado)
+
+  const map = (baseValues && baseValues.type_to_category) || {}
+  return map[type] || map[cat] || null
+}
+
+/**
  * Grade de um stat individual.
  * base_values.json guarda valores no RANK MÁXIMO (8). Anúncios unranked
  * mostram ~1/9 do valor — por isso a escala por rank abaixo.
+ *
+ * @param {object} attr          - atributo do riven { url_name, value, positive }
+ * @param {string|object} weaponOrCategory - string da categoria base OU objeto arma (com type + category)
+ * @param {number} disposition
+ * @param {string} configKey     - '2P' | '2P1N' | '3P' | '3P1N'
+ * @param {number} [modRank]
+ * @param {number} [maxRank]
  */
-function gradeOneStat(attr, category, disposition, configKey, modRank, maxRank) {
+function gradeOneStat(attr, weaponOrCategory, disposition, configKey, modRank, maxRank) {
   const bv = loadBaseValues()
+
+  // Aceita tanto string (categoria antiga) quanto objeto arma
+  let category
+  if (typeof weaponOrCategory === 'string') {
+    category = weaponOrCategory
+  } else {
+    category = resolveBaseCategory(weaponOrCategory, bv)
+  }
+
+  if (!category) {
+    return {
+      label: RIVEN_STAT_LABEL[String(attr.url_name || '').toLowerCase()] || attr.url_name,
+      value: attr.value,
+      positive: attr.positive !== false,
+      grade: null,
+      dev: null,
+      note: 'categoria desconhecida'
+    }
+  }
+
   const url = String(attr.url_name || '').toLowerCase()
   let baseName = WFM_TO_BASE_STAT[url]
   if (!baseName) {
@@ -118,12 +176,27 @@ function gradeOneStat(attr, category, disposition, configKey, modRank, maxRank) 
     baseName = WFM_TO_BASE_STAT[alt] || WFM_TO_BASE_STAT[url.replace(/__/g, '_')]
   }
   if (!baseName || !bv.stats[baseName]) {
-    return { label: RIVEN_STAT_LABEL[url] || attr.url_name, value: attr.value, positive: attr.positive !== false, grade: null, dev: null, note: 'sem base' }
+    return {
+      label: RIVEN_STAT_LABEL[url] || attr.url_name,
+      value: attr.value,
+      positive: attr.positive !== false,
+      grade: null,
+      dev: null,
+      note: 'sem base'
+    }
   }
+
   const entry = bv.stats[baseName]
   const base = entry[category]
   if (base == null) {
-    return { label: baseName, value: attr.value, positive: attr.positive !== false, grade: null, dev: null, note: 'não rola nesta categoria' }
+    return {
+      label: baseName,
+      value: attr.value,
+      positive: attr.positive !== false,
+      grade: null,
+      dev: null,
+      note: 'não rola nesta categoria'
+    }
   }
 
   const mults = bv.count_multipliers[configKey] || bv.count_multipliers['3P1N']
@@ -138,6 +211,7 @@ function gradeOneStat(attr, category, disposition, configKey, modRank, maxRank) 
   if (mx < 1) mx = 8
   if (mr < 0) mr = 0
   if (mr > mx) mr = mx
+
   const rankScale = (mr + 1) / (mx + 1)
   const expected = expectedMax * rankScale
 
@@ -147,13 +221,35 @@ function gradeOneStat(attr, category, disposition, configKey, modRank, maxRank) 
   const dev = expected ? ((actual - expected) / expected) * 100 : 0
   const grade = letterGrade(dev)
 
-  return { label: baseName, value: attr.value, positive: isPos, grade, dev, expected, expectedMax, rankScale, unit: entry.unit || '%' }
+  return {
+    label: baseName,
+    value: attr.value,
+    positive: isPos,
+    grade,
+    dev,
+    expected,
+    expectedMax,
+    rankScale,
+    unit: entry.unit || '%'
+  }
 }
 
 function analyzeRivenMeta(weaponUrlName, attrs, getWeaponMeta) {
   const meta = getWeaponMeta(weaponUrlName)
   if (!meta) {
-    return { hasMeta: false, label: null, mustHaveHit: 0, mustHaveTotal: 0, priorityHit: 0, priorityTotal: 0, score: 0, mustHave: [], priority: [], raw: null, display: weaponUrlName }
+    return {
+      hasMeta: false,
+      label: null,
+      mustHaveHit: 0,
+      mustHaveTotal: 0,
+      priorityHit: 0,
+      priorityTotal: 0,
+      score: 0,
+      mustHave: [],
+      priority: [],
+      raw: null,
+      display: weaponUrlName
+    }
   }
 
   const positive = {}
@@ -163,8 +259,10 @@ function analyzeRivenMeta(weaponUrlName, attrs, getWeaponMeta) {
 
   const must = meta.must_have || []
   const prio = meta.priority || []
+
   let mustHit = 0
   for (const m of must) if (positive[m]) mustHit++
+
   let prioHit = 0
   for (let p = 0; p < prio.length; p++) if (positive[prio[p]]) prioHit++
 
@@ -184,23 +282,34 @@ function analyzeRivenMeta(weaponUrlName, attrs, getWeaponMeta) {
   }
 
   return {
-    hasMeta: true, label, mustHaveHit: mustHit, mustHaveTotal: must.length,
-    priorityHit: prioHit, priorityTotal: prio.length, score: Math.round(score),
-    mustHave: must, priority: prio, raw: meta.raw_text || null, display: meta.display || weaponUrlName
+    hasMeta: true,
+    label,
+    mustHaveHit: mustHit,
+    mustHaveTotal: must.length,
+    priorityHit: prioHit,
+    priorityTotal: prio.length,
+    score: Math.round(score),
+    mustHave: must,
+    priority: prio,
+    raw: meta.raw_text || null,
+    display: meta.display || weaponUrlName
   }
 }
 
 function formatMetaBlock(analysis) {
   if (!analysis || !analysis.hasMeta) return '_Sem meta cadastrada para esta arma._\n'
+
   let reply = '🎯 *Análise Meta (' + analysis.display + ')*\n'
   reply += '*' + analysis.label + '*  ·  score ' + analysis.score + '\n'
   reply += 'Must-have: *' + analysis.mustHaveHit + '/' + analysis.mustHaveTotal + '*'
+
   if (analysis.mustHaveTotal) {
     const mh = analysis.mustHave.map(s => RIVEN_STAT_LABEL[s] || s).join(', ')
     reply += '  (' + mh + ')'
   }
   reply += '\n'
   reply += 'Priority: *' + analysis.priorityHit + '/' + Math.min(analysis.priorityTotal, 5) + '*'
+
   if (analysis.priority && analysis.priority.length) {
     const top = analysis.priority.slice(0, 5).map(s => RIVEN_STAT_LABEL[s] || s).join(' › ')
     reply += '\n  ' + top
@@ -211,7 +320,15 @@ function formatMetaBlock(analysis) {
 }
 
 module.exports = {
-  RIVEN_STAT_LABEL, RIVEN_STAT_ALIASES, WFM_TO_BASE_STAT,
-  resolveRivenStat, letterGrade, gradeRank, getConfigKey,
-  gradeOneStat, analyzeRivenMeta, formatMetaBlock
+  RIVEN_STAT_LABEL,
+  RIVEN_STAT_ALIASES,
+  WFM_TO_BASE_STAT,
+  resolveRivenStat,
+  letterGrade,
+  gradeRank,
+  getConfigKey,
+  resolveBaseCategory,
+  gradeOneStat,
+  analyzeRivenMeta,
+  formatMetaBlock
 }
