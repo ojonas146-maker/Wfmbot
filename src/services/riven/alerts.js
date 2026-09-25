@@ -304,6 +304,12 @@ async function formatRivenAuctionMessage(auction, alert) {
 }
 
 // ---------------------------------------------------------------- seen/dedupe
+// Guarda IDs + fingerprints com timestamp. Evita re-ping do mesmo leilão
+// quando a lista antiga era cortada em 600 e o fingerprint mudava por float.
+const SEEN_TTL_MS = 7 * 24 * 60 * 60 * 1000 // 7 dias
+const SEEN_MAX_PER_USER = 2000
+const MAX_PINGS_PER_USER_PER_CYCLE = 3 // anti-flood no Zap
+
 function rivenSeenKey(userJid) {
   const raw = String(userJid || '')
   const num = jidToNumber(raw)
@@ -328,15 +334,61 @@ function saveRivenSeen(data) {
   }
 }
 
+/** Normaliza lista legada (array de strings) → mapa { id: timestamp }. */
+function normalizeSeenBucket(bucket) {
+  const now = Date.now()
+  const map = {}
+  if (Array.isArray(bucket)) {
+    for (const id of bucket) {
+      if (id != null) map[String(id)] = now
+    }
+    return map
+  }
+  if (bucket && typeof bucket === 'object') {
+    for (const [k, v] of Object.entries(bucket)) {
+      const ts = typeof v === 'number' ? v : now
+      map[String(k)] = ts
+    }
+  }
+  return map
+}
+
+function pruneSeenMap(map) {
+  const now = Date.now()
+  const entries = Object.entries(map)
+    .filter(([, ts]) => now - ts < SEEN_TTL_MS)
+    .sort((a, b) => a[1] - b[1]) // mais antigos primeiro
+  if (entries.length > SEEN_MAX_PER_USER) {
+    return Object.fromEntries(entries.slice(-SEEN_MAX_PER_USER))
+  }
+  return Object.fromEntries(entries)
+}
+
+/**
+ * Fingerprint estável do leilão.
+ * Arredonda valores dos stats (1 casa) para não mudar por float da API.
+ */
 function rivenAuctionFingerprint(auction) {
   if (!auction || !auction.item) return null
   const item = auction.item
-  const weapon = String(item.weapon_url_name || '').toLowerCase()
+  const weapon = String(item.weapon_url_name || '').toLowerCase().trim()
   let owner = ''
-  if (auction.owner) owner = String(auction.owner.ingame_name || auction.owner.ingameName || auction.owner.slug || '').toLowerCase()
-  const attrs = (item.attributes || []).slice().map((a) => (a.positive === false ? '-' : '+') + a.url_name + ':' + a.value)
+  if (auction.owner) {
+    owner = String(
+      auction.owner.ingame_name || auction.owner.ingameName || auction.owner.slug || ''
+    ).toLowerCase().trim()
+  }
+  const attrs = (item.attributes || []).slice().map((a) => {
+    const sign = a.positive === false ? '-' : '+'
+    const name = String(a.url_name || '').toLowerCase()
+    const raw = Number(a.value)
+    // 1 casa decimal → estável entre respostas da API
+    const val = isNaN(raw) ? String(a.value) : raw.toFixed(1)
+    return sign + name + ':' + val
+  })
   attrs.sort()
-  const name = String(item.name || '').toLowerCase()
+  const name = String(item.name || '').toLowerCase().trim()
+  // Não inclui preço (pode mudar) nem rank (pode upar) — só identidade do roll
   return [weapon, name, owner, attrs.join('|')].join('::')
 }
 
@@ -344,8 +396,12 @@ function hasSeenRiven(userJid, auctionIdOrFp) {
   if (!auctionIdOrFp) return false
   const store = loadRivenSeen()
   const key = rivenSeenKey(userJid)
-  const list = store[key] || store[userJid] || []
-  return list.indexOf(String(auctionIdOrFp)) !== -1
+  const map = normalizeSeenBucket(store[key] || store[userJid])
+  const id = String(auctionIdOrFp)
+  if (!map[id]) return false
+  // Expirado?
+  if (Date.now() - map[id] > SEEN_TTL_MS) return false
+  return true
 }
 
 function markSeenRiven(userJid, auctionIdOrFp) {
@@ -353,18 +409,21 @@ function markSeenRiven(userJid, auctionIdOrFp) {
   const id = String(auctionIdOrFp)
   const store = loadRivenSeen()
   const key = rivenSeenKey(userJid)
-  if (!store[key]) store[key] = []
-  if (store[userJid] && userJid !== key && Array.isArray(store[userJid])) {
-    for (const old of store[userJid]) {
-      if (store[key].indexOf(old) === -1) store[key].push(old)
+
+  let map = normalizeSeenBucket(store[key])
+  // Merge chave legada (JID completo) se existir
+  if (store[userJid] && userJid !== key) {
+    const legacy = normalizeSeenBucket(store[userJid])
+    for (const [k, ts] of Object.entries(legacy)) {
+      if (!map[k] || map[k] < ts) map[k] = ts
     }
     delete store[userJid]
   }
-  if (store[key].indexOf(id) === -1) {
-    store[key].push(id)
-    if (store[key].length > 600) store[key] = store[key].slice(-600)
-    saveRivenSeen(store)
-  }
+
+  map[id] = Date.now()
+  map = pruneSeenMap(map)
+  store[key] = map
+  saveRivenSeen(store)
 }
 
 function markAuctionSeenForUser(userJid, auction, alertNotified) {
@@ -416,6 +475,7 @@ async function checkRivenAlerts(sock) {
     let changed = false
     const weapons = Object.keys(byWeapon)
     const sentThisCycle = {}
+    const pingsThisCycle = {} // userKey → quantas msgs enviadas neste ciclo
 
     for (const weapon of weapons) {
       const alerts = byWeapon[weapon]
@@ -437,6 +497,18 @@ async function checkRivenAlerts(sock) {
 
         const candidates = []
         const userKey = rivenSeenKey(alert.userJid)
+
+        // Anti-flood: no máximo N pings por usuário por ciclo
+        if ((pingsThisCycle[userKey] || 0) >= MAX_PINGS_PER_USER_PER_CYCLE) {
+          // Ainda marca candidatos como seen para não floodar no próximo ciclo
+          for (const auction of auctions) {
+            if (!auction || auction.id == null) continue
+            if (!rivenMatchesAlert(auction, alert)) continue
+            markAuctionSeenForUser(alert.userJid, auction, alert.notified)
+          }
+          changed = true
+          continue
+        }
 
         for (const auction of auctions) {
           if (!auction || auction.id == null) continue
@@ -493,17 +565,19 @@ async function checkRivenAlerts(sock) {
             continue
           }
 
+          // Marca TODOS os candidatos como seen ANTES de enviar (evita re-ping se crashar)
           markAuctionSeenForUser(alert.userJid, top, alert.notified)
           sentThisCycle[userKey + '|' + topId] = true
           if (topFp) sentThisCycle[userKey + '|' + topFp] = true
           for (let k = 1; k < candidates.length; k++) markAuctionSeenForUser(alert.userJid, candidates[k], alert.notified)
-          if (alert.notified.length > 120) alert.notified = alert.notified.slice(-120)
+          if (alert.notified.length > 300) alert.notified = alert.notified.slice(-300)
           changed = true
           saveRivenAlerts(store)
 
           try {
             const msg = await formatRivenAuctionMessage(top, alert)
             await sock.sendMessage(alert.userJid, { text: msg })
+            pingsThisCycle[userKey] = (pingsThisCycle[userKey] || 0) + 1
           } catch (e) {
             console.error('Erro envio alerta riven:', e.message)
           }
