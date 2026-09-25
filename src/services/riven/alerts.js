@@ -10,7 +10,7 @@ const { getWeaponMeta, findDisposition, resolveCategoryFromDisp, getDispositions
 const {
   RIVEN_STAT_LABEL, RIVEN_STAT_ALIASES, resolveRivenStat, getConfigKey,
   gradeOneStat, gradeRank, analyzeRivenMeta, formatMetaBlock,
-  formatVariantBlocks
+  formatVariantBlocks, projectToMaxRank
 } = require('./grading')
 const { searchRivenAuctions, searchRivenAuctionsBroad } = require('./auctionSearch')
 const { getOfficialRivenMedian, fmtPlat, getTopWeeklyWeapons } = require('./weekly')
@@ -585,12 +585,43 @@ async function getRivenGradeMessage(rawInput) {
     reply += '💰 *' + (price != null ? price + 'p' : '?') + '* | ' + seller + ' (' + status + ')\n\n'
 
     reply += '*Stats:*\n'
+    const showProj = modRankNum < maxRankNum
     for (const a of attrs) {
       const g = disposition != null
         ? gradeOneStat(a, category, disposition, configKey, modRankNum, maxRankNum)
         : { label: RIVEN_STAT_LABEL[a.url_name] || a.url_name, value: a.value, positive: a.positive !== false, grade: null, dev: null }
-      const sign = g.positive ? '+' : ''
-      let line = '• ' + sign + g.value + ' ' + g.label
+      const isPos = g.positive !== false
+      const numVal = Number(g.value)
+      // Positivos: +12.8 | Negativos: -7 (usa o sinal do value se vier negativo, senão força -)
+      let valDisp
+      if (isPos) {
+        valDisp = (numVal >= 0 ? '+' : '') + numVal
+      } else {
+        valDisp = numVal < 0 ? String(numVal) : ('-' + Math.abs(numVal))
+      }
+      let line = '• ' + valDisp + ' ' + g.label
+
+      // Projeção para rank máximo (R0 → R8 etc.)
+      if (showProj && g.grade != null) {
+        const url = String(a.url_name || '').toLowerCase()
+        const isFaction = url.includes('damage_vs_') || url.includes('dmg_to_') || url.includes('damage_to_')
+        if (isFaction) {
+          const bonus = numVal - 1
+          const projBonus = projectToMaxRank(bonus, modRankNum, maxRankNum)
+          if (projBonus != null) {
+            line += ' → x' + (1 + projBonus).toFixed(2) + ' R' + maxRankNum
+          }
+        } else {
+          const proj = projectToMaxRank(numVal, modRankNum, maxRankNum)
+          if (proj != null) {
+            const pDisp = isPos
+              ? ((proj >= 0 ? '+' : '') + proj.toFixed(1))
+              : (proj < 0 ? proj.toFixed(1) : ('-' + Math.abs(proj).toFixed(1)))
+            line += ' → ' + pDisp + '% R' + maxRankNum
+          }
+        }
+      }
+
       if (g.grade) {
         const devStr = (g.dev >= 0 ? '+' : '') + g.dev.toFixed(1) + '%'
         line += ' → *' + g.grade + '* (' + devStr + ')'
