@@ -527,6 +527,12 @@
     "category": "Primary",
     "type": "Rifle"
   },
+    {
+    "name": "Nunchasa",
+    "disposition": 0.5,
+    "category": "Primary",
+    "type": "bow"
+  },
   {
     "name": "Kuva Kohm",
     "disposition": 0.9,
@@ -941,6 +947,12 @@
     "category": "Primary",
     "type": "Shotgun"
   },
+ {
+    "name": "Steflos",
+    "disposition": 0.5,
+    "category": "Primary",
+    "type": "rifle"
+  },
   {
     "name": "Stradavar",
     "disposition": 1.1,
@@ -1327,7 +1339,7 @@
   },
   {
     "name": "Aksondol",
-    "disposition": 1.0,
+    "disposition": 0.6,
     "category": "Secondary",
     "type": "Dual Pistols"
   },
