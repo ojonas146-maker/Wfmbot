@@ -368,23 +368,69 @@ function gradeForVariant(attrs, fromDispo, toDispo, weaponOrCategory, configKey,
 }
 
 /**
- * Formata um bloco de stats já gradeados (usado tanto pro anúncio quanto pro variante).
+ * Projeta o valor do stat do rank atual para o rank máximo.
+ * Rivens escalam linearmente: valor_Rmax = valor_R * (maxRank+1) / (modRank+1)
  */
-function formatStatsBlock(gradedStats, title) {
+function projectToMaxRank(value, modRank, maxRank) {
+  const mr = modRank != null && !isNaN(Number(modRank)) ? Number(modRank) : 8
+  const mx = maxRank != null && !isNaN(Number(maxRank)) ? Number(maxRank) : 8
+  if (mx <= 0 || mr >= mx) return null
+  const scale = (mx + 1) / (mr + 1)
+  return Number(value) * scale
+}
+
+/**
+ * Formata um bloco de stats já gradeados (usado tanto pro anúncio quanto pro variante).
+ * Se modRank < maxRank, mostra também o valor projetado no rank máximo.
+ *
+ * @param {Array} gradedStats
+ * @param {string} [title]
+ * @param {number} [modRank]
+ * @param {number} [maxRank]
+ */
+function formatStatsBlock(gradedStats, title, modRank, maxRank) {
   if (!gradedStats || !gradedStats.length) return ''
   let out = title ? `*${title}:*\n` : ''
+  const showProj = modRank != null && maxRank != null && Number(modRank) < Number(maxRank)
+
   for (const s of gradedStats) {
     if (s.grade == null) {
       out += `• ${s.value} ${s.label} → _sem grade_\n`
       continue
     }
-    const sign = s.positive === false ? '' : (Number(s.value) >= 0 ? '+' : '')
+    const isPos = s.positive !== false
+    const sign = isPos ? (Number(s.value) >= 0 ? '+' : '') : (Number(s.value) > 0 ? '-' : '')
     const unit = s.unit === 'x' ? '' : (s.unit === 'm' || s.unit === 's' || s.unit === 'flat' ? s.unit : '%')
-    const valStr = s.unit === 'x'
-      ? `x${Number(s.value).toFixed(2)}`
-      : `${sign}${Number(s.value).toFixed(1)}${unit}`
+
+    let valStr
+    if (s.unit === 'x') {
+      valStr = `x${Number(s.value).toFixed(2)}`
+    } else {
+      const absVal = Math.abs(Number(s.value))
+      valStr = `${sign}${absVal.toFixed(1)}${unit}`
+    }
+
+    // Projeção Rmax (ex: R0 → R8)
+    let projStr = ''
+    if (showProj && s.unit !== 'x') {
+      const proj = projectToMaxRank(s.value, modRank, maxRank)
+      if (proj != null) {
+        const pSign = isPos ? (proj >= 0 ? '+' : '') : (proj > 0 ? '-' : '')
+        const pAbs = Math.abs(proj)
+        projStr = ` → ${pSign}${pAbs.toFixed(1)}${unit} R${maxRank}`
+      }
+    } else if (showProj && s.unit === 'x') {
+      // Faction: value é multiplicador final; projeta o bonus
+      const bonus = Number(s.value) - 1
+      const projBonus = projectToMaxRank(bonus, modRank, maxRank)
+      if (projBonus != null) {
+        const projVal = 1 + projBonus
+        projStr = ` → x${projVal.toFixed(2)} R${maxRank}`
+      }
+    }
+
     const devStr = (s.dev >= 0 ? '+' : '') + s.dev.toFixed(1) + '%'
-    out += `• ${valStr} ${s.label} → *${s.grade}* (${devStr})\n`
+    out += `• ${valStr}${projStr} ${s.label} → *${s.grade}* (${devStr})\n`
   }
   return out
 }
@@ -500,7 +546,7 @@ function formatVariantBlocks(attrs, fromDispo, weaponNameOrUrl, dispositionsList
       modRank,
       maxRank
     )
-    out += '\n' + formatStatsBlock(graded, `Stats ${v.name} (${v.disposition})`)
+    out += '\n' + formatStatsBlock(graded, `Stats ${v.name} (${v.disposition})`, modRank, maxRank)
   }
   return out
 }
@@ -517,6 +563,7 @@ module.exports = {
   gradeOneStat,
   gradeForVariant,
   formatStatsBlock,
+  projectToMaxRank,
   findVariants,
   formatVariantBlocks,
   weaponFamilyKey,
