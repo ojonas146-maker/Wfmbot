@@ -45,8 +45,10 @@ const HIGHEST_CATEGORIES = {
   6: { id: 'arcanes_maxed', label: 'Arcanes (Maxed)', type: 'arcane', rank: 'max' },
   7: { id: 'arcanes_unranked', label: 'Arcanes (Unranked)', type: 'arcane', rank: 0 },
   8: { id: 'warframe_sets', label: 'Warframes (Prime Sets)', type: 'warframe_set' },
-  9: { id: 'augments', label: 'Augments', type: 'augment' }
+  9: { id: 'augments', label: 'Augments', type: 'augment' },
+  10: { id: 'relics', label: 'Relíquias', type: 'relic' } 
 }
+
 
 const FISS_INTEREST_DEFENSE = [
   'helene', 'hydron', 'casta', 'stephano', 'io', 'seimeni',
