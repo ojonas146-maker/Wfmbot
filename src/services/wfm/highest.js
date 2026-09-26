@@ -93,7 +93,7 @@ function isWarframePrimeSet(name) {
     'Frost', 'Gara', 'Garuda', 'Gauss', 'Grendel', 'Harrow', 'Hildryn', 'Hydroid', 'Inaros', 'Ivara',
     'Khora', 'Limbo', 'Loki', 'Mag', 'Mesa', 'Mirage', 'Nekros', 'Nezha', 'Nidus', 'Nova', 'Nyx', 'Oberon',
     'Octavia', 'Protea', 'Revenant', 'Rhino', 'Saryn', 'Sevagoth', 'Titania', 'Trinity', 'Valkyr',
-    'Vauban', 'Volt', 'Wisp', 'Wukong', 'Yareli', 'Zephyr']
+    'Vauban', 'Volt', 'Wisp', 'Wukong', 'Yareli', 'Zephyr', 'Citrine']
   const lower = name.toLowerCase()
   return warframes.some((w) => lower.includes(w.toLowerCase()))
 }
