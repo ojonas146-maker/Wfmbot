@@ -15,6 +15,8 @@ const {
   rememberWfmDesiredStatus, stopWfmStatusRefresh, notifyWfmMessage, sendToWfmMarket
 } = require('../services/wfm/statusChat')
 const { runHighestUpdater } = require('../services/wfm/highest')
+const { HIGHEST_CACHE_FILE } = require('../config/env')
+const fs = require('fs')
 const { chatHistory } = require('../services/ai/groqClient')
 const { jidToNumber } = require('../utils/text')
 
@@ -301,6 +303,23 @@ register(/^!highestnow$/i, async ({ sock, from }) => {
   await sock.sendMessage(from, { text: '🏆 Iniciando Highest updater...' })
   runHighestUpdater()
     .then(() => sock.sendMessage(from, { text: '✅ Highest updater terminou.' }).catch(() => {}))
+    .catch((e) => sock.sendMessage(from, { text: '❌ Highest: ' + e.message }).catch(() => {}))
+}, { adminOnly: true })
+
+register(/^!highestwipe$/i, async ({ sock, from }) => {
+  try {
+    if (fs.existsSync(HIGHEST_CACHE_FILE)) {
+      fs.unlinkSync(HIGHEST_CACHE_FILE)
+      await sock.sendMessage(from, { text: '🗑️ Cache do Highest apagado. Rodando updater do zero...' })
+    } else {
+      await sock.sendMessage(from, { text: 'ℹ️ Não havia cache pra apagar. Rodando updater do zero...' })
+    }
+  } catch (e) {
+    await sock.sendMessage(from, { text: '❌ Erro ao apagar cache: ' + e.message })
+    return
+  }
+  runHighestUpdater()
+    .then(() => sock.sendMessage(from, { text: '✅ Highest updater terminou (dados frescos).' }).catch(() => {}))
     .catch((e) => sock.sendMessage(from, { text: '❌ Highest: ' + e.message }).catch(() => {}))
 }, { adminOnly: true })
 
