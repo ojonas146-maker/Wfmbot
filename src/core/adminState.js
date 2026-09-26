@@ -16,34 +16,57 @@ const adminState = {
 
 function adminHelpText() {
   return (
-    '🔐 *PAINEL ADMIN*\n\n' +
-    '*Identidade*\n' +
-    '• `!meujid` — seu JID/LID\n' +
-    '• `!lid <numero>` — tenta achar JID/LID pelo número\n\n' +
-    '*Mute*\n' +
-    '• `!mute` / `!unmute` — mute GLOBAL (não-admins)\n' +
-    '• `!muteuser <num|jid>` — silencia 1 pessoa\n' +
-    '• `!unmuteuser <num|jid>`\n' +
-    '• `!mutelist`\n\n' +
-    '*Riven sniper*\n' +
-    '• `!rivensnipe on|off` — liga/desliga p/ não-admin\n' +
-    '• `!rivenlimit <n>` — limite p/ usuários (padrão 10)\n' +
-    '• `!vip <num|jid>` / `!unvip <num|jid>` / `!viplist`\n' +
-    '• `!rivenall` / `!delrivenall`\n' +
-    '• `!delrivenuser <num|jid>`\n\n' +
-    '*Alertas preço*\n' +
-    '• `!alertasall` / `!delalertaall`\n' +
-    '• `!delalertauser <num|jid>`\n\n' +
-    '*WFM (Market)*\n' +
-    '• `!wfmhelp` — comandos de status/chat do Market\n\n' +
-    '*Controle*\n' +
-    '• `!pause` / `!resume`\n' +
-    '• `!forcacheck` / `!highestnow`\n' +
-    '• `!statusbot` / `!stats` / `!users`\n' +
-    '• `!say [destino] <texto>` / `!bc <texto>`\n' +
-    '• `!blockcmd <nome>` / `!unblockcmd <nome>` / `!blocklist`\n' +
-    '• `!limparhist` [jid]\n' +
-    '• `!eval <js>`\n' +
+    '🔐 *PAINEL ADMIN*\n' +
+    '_`<obrigatório>` · `[opcional]`_\n\n' +
+
+    '━━━━━━━━━━━━━━━━━\n' +
+    '🪪 *IDENTIDADE*\n' +
+    '━━━━━━━━━━━━━━━━━\n' +
+    '• `!meujid` — mostra seu JID/LID atual\n' +
+    '• `!lid <numero>` — tenta achar o JID/LID de um número\n\n' +
+
+    '━━━━━━━━━━━━━━━━━\n' +
+    '🔇 *MUTE*\n' +
+    '━━━━━━━━━━━━━━━━━\n' +
+    '• `!mute` / `!unmute` — muta/desmuta o bot pra TODO MUNDO (menos admin)\n' +
+    '• `!muteuser <num|jid>` / `!unmuteuser <num|jid>` — muta só 1 pessoa\n' +
+    '• `!mutelist` — lista quem está mutado\n\n' +
+
+    '━━━━━━━━━━━━━━━━━\n' +
+    '🔫 *RIVEN SNIPER*\n' +
+    '━━━━━━━━━━━━━━━━━\n' +
+    '• `!rivensnipe on|off` — liga/desliga o sniper pra não-admin\n' +
+    '• `!rivenlimit <n>` — quantos alertas de riven cada um pode ter (padrão 10)\n' +
+    '• `!vip <num|jid>` / `!unvip <num|jid>` / `!viplist` — VIP tem limite maior\n' +
+    '• `!rivenall` — lista alertas de riven de todo mundo\n' +
+    '• `!delrivenall` / `!delrivenuser <num|jid>` — apaga alertas de riven\n\n' +
+
+    '━━━━━━━━━━━━━━━━━\n' +
+    '🔔 *ALERTAS DE PREÇO*\n' +
+    '━━━━━━━━━━━━━━━━━\n' +
+    '• `!alertasall` — lista alertas de preço de todo mundo\n' +
+    '• `!delalertaall` / `!delalertauser <num|jid>` — apaga alertas de preço\n\n' +
+
+    '━━━━━━━━━━━━━━━━━\n' +
+    '🛒 *WFM (MARKET)*\n' +
+    '━━━━━━━━━━━━━━━━━\n' +
+    '• `!wfmhelp` — comandos de status/chat do Market (`!online`, `!start`...)\n\n' +
+
+    '━━━━━━━━━━━━━━━━━\n' +
+    '⚙️ *CONTROLE GERAL*\n' +
+    '━━━━━━━━━━━━━━━━━\n' +
+    '• `!pause` / `!resume` — pausa/retoma os checks automáticos\n' +
+    '• `!forcacheck` — roda uma checagem de alertas na hora\n' +
+    '• `!highestnow` — atualiza o ranking Highest agora (respeita cache)\n' +
+    '• `!highestwipe` — apaga o cache do Highest e recatalonga do zero\n' +
+    '• `!statusbot` — status técnico (uptime, RAM, contadores)\n' +
+    '• `!stats` / `!users` — estatísticas de uso\n' +
+    '• `!say [destino] <texto>` — manda uma mensagem como o bot\n' +
+    '• `!bc <texto>` — broadcast pra todo mundo conhecido\n' +
+    '• `!blockcmd <nome>` / `!unblockcmd <nome>` — bloqueia comando p/ não-admin\n' +
+    '• `!blocklist` — lista comandos bloqueados\n' +
+    '• `!limparhist [jid]` — limpa histórico de IA (de 1 pessoa ou geral)\n' +
+    '• `!eval <js>` — roda código JS na hora ⚠️ (cuidado)\n' +
     '• `!admin` — este menu'
   )
 }
