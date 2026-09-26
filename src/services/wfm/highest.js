@@ -1,5 +1,5 @@
 // src/services/wfm/highest.js
-// Ranking "Highest" de preços por categoria (prime sets, mods, arcanes...).
+// Ranking "Highest" de preços por categoria (prime sets, mods, arcanes, relíquias...).
 const fs = require('fs')
 const axios = require('axios')
 const {
@@ -131,6 +131,17 @@ function classifyHighestItems(catalog) {
     const name = (item.i18n && item.i18n.en && item.i18n.en.name) ? item.i18n.en.name : slug
     if (!slug) continue
     const tags = item.tags || []
+
+    // ===== Relíquias =====
+    if (
+      slug.endsWith('_relic') ||
+      tags.indexOf('relic') !== -1 ||
+      /\brelic\b/i.test(name)
+    ) {
+      result.relics.push({ slug, name, maxRank: 0 })
+      continue
+    }
+    // ====================
 
     if (isArcaneItem(slug, name, tags)) {
       result.arcanes_maxed.push({ slug, name, maxRank: item.maxRank || 0 })
