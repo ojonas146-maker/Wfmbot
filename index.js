@@ -20,6 +20,7 @@ require('./src/commands/ai')
 require('./src/commands/price')
 require('./src/commands/riven')
 require('./src/commands/worldstate')
+require('./src/commands/mcp')
 require('./src/commands/admin')
 
 let globalSock = null
