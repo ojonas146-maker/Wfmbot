@@ -30,15 +30,22 @@ async function getFullCatalog() {
   return inFlight
 }
 
+// BUG CORRIGIDO: antes a checagem era só `uniqueNameIndexCache && fullCatalogCache`
+// (as duas truthy), o que devolvia o índice antigo pra sempre depois do
+// primeiro build — mesmo quando getFullCatalog() já tinha renovado o
+// catálogo após as 24h de TTL. Agora o índice guarda o timestamp do
+// catálogo que o gerou e é reconstruído sempre que esse timestamp mudar.
 let uniqueNameIndexCache = null
+let uniqueNameIndexBuiltAt = 0
 async function getUniqueNameIndex() {
-  if (uniqueNameIndexCache && fullCatalogCache) return uniqueNameIndexCache
   const catalog = await getFullCatalog()
+  if (uniqueNameIndexCache && uniqueNameIndexBuiltAt === fullCatalogAt) return uniqueNameIndexCache
   const idx = {}
   for (const it of catalog) {
     if (it.uniqueName) idx[it.uniqueName] = it
   }
   uniqueNameIndexCache = idx
+  uniqueNameIndexBuiltAt = fullCatalogAt
   return idx
 }
 
