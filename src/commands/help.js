@@ -67,6 +67,21 @@ function getHelp() {
     '📋 *!alertasinvasao* · ❌ *!delalertainvasao <id|all>*\n\n' +
 
     '━━━━━━━━━━━━━━━━━\n' +
+    '🧭 *BUILDS, FARM & CRAFT*\n' +
+    '━━━━━━━━━━━━━━━━━\n' +
+    '🛠️ *!builds <item>* — top builds da comunidade (Overframe.gg)\n' +
+    '   Ex: `!builds wisp prime`\n' +
+    '🗺️ *!farm <recurso1, recurso2, ...>* — melhores nodes p/ farmar vários recursos\n' +
+    '   Ex: `!farm plastids, orokin cell`\n' +
+    '🧭 *!sinergia* — cruza Nightwave com fissuras/invasões/sortie\n' +
+    '🔬 *!simaris* — alvo de síntese de hoje + onde escanear\n' +
+    '👾 *!spawn <inimigo>* — onde encontrar um inimigo específico\n' +
+    '   Ex: `!spawn nox sp`\n' +
+    '🛠️ *!receita <item>* — o que precisa pra craftar (componentes/credits/tempo)\n' +
+    '📦 *!usadoem <recurso>* — em quais receitas esse recurso entra (seguro vender?)\n' +
+    '🔐 *!vault <prime>* — vaulted? Varzia? farmável via relíquia agora?\n\n' +
+
+    '━━━━━━━━━━━━━━━━━\n' +
     '🧠 *IA & UTILIDADES*\n' +
     '━━━━━━━━━━━━━━━━━\n' +
     '📜 *!i <item>* — informações detalhadas do item\n' +
