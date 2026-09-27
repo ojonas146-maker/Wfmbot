@@ -71,17 +71,12 @@ async function checkOne(name) {
   const displayName = (item && item.name) || clean
   let out = '🔐 *' + displayName + '*\n'
 
+  // Removido a pedido do usuário: a lista de relíquias com % de drop não
+  // agregava valor (a % de relíquia não é a % de peça, já que ainda tem a
+  // chance de rarity dentro da relíquia). `findRelicsFor` continua sendo
+  // usada só como sinal auxiliar (farmável ou não) na branch de fallback
+  // abaixo, quando o item não é encontrado no catálogo oficial.
   const relics = await findRelicsFor(displayName)
-  if (relics.length) {
-    out += '\n♻️ *Onde farmar (relíquias ao vivo):*\n'
-    const byRelic = {}
-    for (const r of relics) {
-      const place = r.place || '?'
-      if (byRelic[place] === undefined) byRelic[place] = r.chance
-    }
-    const list = Object.entries(byRelic).sort((a, b) => (b[1] || 0) - (a[1] || 0)).slice(0, 6)
-    for (const [place, chance] of list) out += '• ' + place + ' — ' + (chance != null ? chance + '%' : '?') + '\n'
-  }
 
   let inVarzia = false
   let varziaWindow = ''
@@ -105,7 +100,7 @@ async function checkOne(name) {
   // foi encontrado no catálogo oficial — ex: nome digitado errado.
   if (item && item.vaulted != null) {
     if (!item.vaulted) {
-      out += '\n\n🟢 *Status: NÃO vaulted.* Farmável normalmente pelas relíquias listadas acima.'
+      out += '\n\n🟢 *Status: NÃO vaulted.* Farmável normalmente pelas relíquias em rotação (use !usadoem ou o app pra achar qual relíquia).'
     } else if (inVarzia) {
       out += '\n\n🟡 *Status: VAULTED*, mas disponível AGORA via Varzia — aproveite a janela.'
     } else {
