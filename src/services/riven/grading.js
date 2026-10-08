@@ -17,7 +17,24 @@ const RIVEN_STAT_LABEL = {
   recoil: 'Recoil', weapon_recoil: 'Recoil', zoom: 'Zoom', initial_combo: 'Initial Combo',
   heavy_attack_efficiency: 'Heavy Efficiency', combo_chance: 'Combo Chance',
   chance_to_gain_combo_count: 'Combo Gain (curse)', additional_combo_count_chance: 'Extra Combo Chance',
-  chance_to_gain_extra_combo_count: 'Extra Combo Chance', combo_count_chance: 'Extra Combo Chance'
+  chance_to_gain_extra_combo_count: 'Extra Combo Chance', combo_count_chance: 'Extra Combo Chance',
+  // --- Riven Splicing (Glacial Defiance) ---
+  ammo_efficiency: 'Ammo Efficiency',
+  blast_damage: 'Blast', blast: 'Blast',
+  corrosive_damage: 'Corrosive', corrosive: 'Corrosive',
+  damage_vs_orokin: 'Dmg Orokin', damage_vs_scaldra: 'Dmg Scaldra', damage_vs_techrot: 'Dmg Techrot',
+  gas_damage: 'Gas', gas: 'Gas',
+  heavy_attack_wind_up_speed: 'Heavy Wind Up', wind_up_speed: 'Heavy Wind Up',
+  magnetic_damage: 'Magnetic', magnetic: 'Magnetic',
+  melee_damage_on_heavy_attack: 'Heavy Attack Dmg', heavy_attack_damage: 'Heavy Attack Dmg',
+  parry_angle: 'Parry Angle',
+  radiation_damage: 'Radiation', radiation: 'Radiation',
+  reload_while_holstered: 'Reload Holstered', magazine_reload_while_holstered: 'Reload Holstered',
+  slam_attack_damage: 'Slam Damage', slam_damage: 'Slam Damage',
+  status_damage: 'Status Damage',
+  viral_damage: 'Viral', viral: 'Viral',
+  weakpoint_damage: 'Weakpoint Dmg', weak_point_damage: 'Weakpoint Dmg',
+  weakpoint_critical_chance: 'Weakpoint Crit', weak_point_critical_chance: 'Weakpoint Crit'
 }
 
 const RIVEN_STAT_ALIASES = {
@@ -41,7 +58,26 @@ const RIVEN_STAT_ALIASES = {
   sd: 'status_duration', recoil: 'recoil', rec: 'recoil', wr: 'recoil', zoom: 'zoom', z: 'zoom',
   initc: 'initial_combo', initial: 'initial_combo', ic: 'initial_combo',
   comboefficiency: 'heavy_attack_efficiency', heavy: 'heavy_attack_efficiency', eff: 'heavy_attack_efficiency',
-  combogainextra: 'combo_chance', combogainlost: 'combo_chance', combochance: 'combo_chance'
+  combogainextra: 'combo_chance', combogainlost: 'combo_chance', combochance: 'combo_chance',
+  // --- Riven Splicing aliases (para !alertariven / parse) ---
+  ammoe: 'ammo_efficiency', ammoeff: 'ammo_efficiency', efficiency: 'ammo_efficiency',
+  blast: 'blast_damage',
+  corrosive: 'corrosive_damage', corr: 'corrosive_damage',
+  orokin: 'damage_vs_orokin', dto: 'damage_vs_orokin',
+  scaldra: 'damage_vs_scaldra', dts: 'damage_vs_scaldra',
+  techrot: 'damage_vs_techrot', dtt: 'damage_vs_techrot',
+  gas: 'gas_damage',
+  windup: 'heavy_attack_wind_up_speed', wind: 'heavy_attack_wind_up_speed',
+  magnetic: 'magnetic_damage', magdmg: 'magnetic_damage',
+  heavydmg: 'melee_damage_on_heavy_attack', heavyatk: 'melee_damage_on_heavy_attack',
+  parry: 'parry_angle',
+  radiation: 'radiation_damage', rad: 'radiation_damage',
+  holster: 'reload_while_holstered', reloadholster: 'reload_while_holstered',
+  slam: 'slam_attack_damage',
+  statusdmg: 'status_damage', sdam: 'status_damage',
+  viral: 'viral_damage',
+  weakpoint: 'weakpoint_damage', wp: 'weakpoint_damage', wpd: 'weakpoint_damage',
+  weakcrit: 'weakpoint_critical_chance', wpc: 'weakpoint_critical_chance', wpcc: 'weakpoint_critical_chance'
 }
 
 const WFM_TO_BASE_STAT = {
@@ -63,7 +99,30 @@ const WFM_TO_BASE_STAT = {
   chance_to_gain_combo_count: 'Chance to Gain Combo Count',
   additional_combo_count_chance: 'Additional Combo Count Chance',
   chance_to_gain_extra_combo_count: 'Additional Combo Count Chance',
-  combo_count_chance: 'Additional Combo Count Chance'
+  combo_count_chance: 'Additional Combo Count Chance',
+  // --- Riven Splicing → base_values.json keys ---
+  ammo_efficiency: 'Ammo Efficiency',
+  blast_damage: 'Blast Damage', blast: 'Blast Damage',
+  corrosive_damage: 'Corrosive Damage', corrosive: 'Corrosive Damage',
+  damage_vs_orokin: 'Damage vs. Orokin',
+  damage_vs_scaldra: 'Damage vs. Scaldra',
+  damage_vs_techrot: 'Damage vs. Techrot',
+  gas_damage: 'Gas Damage', gas: 'Gas Damage',
+  heavy_attack_wind_up_speed: 'Heavy Attack Wind Up Speed',
+  wind_up_speed: 'Heavy Attack Wind Up Speed',
+  magnetic_damage: 'Magnetic Damage', magnetic: 'Magnetic Damage',
+  melee_damage_on_heavy_attack: 'Melee Damage On Heavy Attack',
+  heavy_attack_damage: 'Melee Damage On Heavy Attack',
+  parry_angle: 'Parry Angle',
+  radiation_damage: 'Radiation Damage', radiation: 'Radiation Damage',
+  reload_while_holstered: 'Reload While Holstered',
+  magazine_reload_while_holstered: 'Reload While Holstered',
+  slam_attack_damage: 'Slam Attack Damage', slam_damage: 'Slam Attack Damage',
+  status_damage: 'Status Damage',
+  viral_damage: 'Viral Damage', viral: 'Viral Damage',
+  weakpoint_damage: 'Weakpoint Damage', weak_point_damage: 'Weakpoint Damage',
+  weakpoint_critical_chance: 'Weakpoint Critical Chance',
+  weak_point_critical_chance: 'Weakpoint Critical Chance'
 }
 
 function resolveRivenStat(token) {
@@ -410,7 +469,7 @@ function formatStatsBlock(gradedStats, title, modRank, maxRank) {
       valStr = `${sign}${absVal.toFixed(1)}${unit}`
     }
 
-    // Projeção Rmax (ex: R0 → R8)
+// Projeção Rmax (ex: R0 → R8)
     let projStr = ''
     if (showProj && s.unit !== 'x') {
       const proj = projectToMaxRank(s.value, modRank, maxRank)
