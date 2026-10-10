@@ -77,12 +77,11 @@ function detectMime(buf) {
 const VISION_PROMPT = [
   'You are reading a screenshot of a Warframe Riven mod card. Extract the data and answer with ONE JSON object and nothing else (no markdown, no comments).',
   'Schema:',
-  '{"riven_name": string, "mod_rank": number|null, "mastery_rank": number|null, "rerolls": number|null, "stats": [{"name": string, "value": number}]}',
+  '{"riven_name": string, "mastery_rank": number|null, "rerolls": number|null, "stats": [{"name": string, "value": number}]}',
   'Rules:',
   '- riven_name: the full title printed on the card, e.g. "Sobek Deci-calican".',
   '- stats: one entry per stat line, in the order printed. "name" is the stat text WITHOUT the number, sign, % or icons (e.g. "Multishot", "Gas", "Status Duration", "Reload Speed", "Critical Damage", "Damage to Grineer").',
   '- value: the number exactly as printed, KEEPING its sign (e.g. -50.3 for a curse). For faction damage printed like "x1.35 Damage to Grineer" use 1.35.',
-  '- mod_rank: count the FILLED rank pips at the bottom of the card (0-8). Use null if you cannot tell.',
   '- mastery_rank: the number next to "MR". rerolls: the number next to the reroll (circular arrow) icon. Use null if not visible.',
   '- Do not invent stats. If the image is not a Riven card, answer {"error":"not_a_riven"}.'
 ].join('\n')
@@ -109,28 +108,39 @@ async function extractRivenFromImage(buf) {
   }
 
   const dataUrl = 'data:' + detectMime(buf) + ';base64,' + buf.toString('base64')
-  try {
-    const res = await axios.post(
-      env.GROQ_API_URL,
+  const body = {
+    model: VISION_MODEL,
+    temperature: 0,
+    max_tokens: 3000, // folga p/ modelos com raciocínio
+    messages: [
       {
-        model: VISION_MODEL,
-        temperature: 0,
-        max_tokens: 3000, // folga p/ modelos com raciocínio
-        messages: [
-          {
-            role: 'user',
-            content: [
-              { type: 'text', text: VISION_PROMPT },
-              { type: 'image_url', image_url: { url: dataUrl } }
-            ]
-          }
+        role: 'user',
+        content: [
+          { type: 'text', text: VISION_PROMPT },
+          { type: 'image_url', image_url: { url: dataUrl } }
         ]
-      },
-      {
-        headers: { Authorization: 'Bearer ' + env.GROQ_API_KEY, 'Content-Type': 'application/json' },
-        timeout: 60000
       }
-    )
+    ]
+  }
+  const reqCfg = {
+    headers: { Authorization: 'Bearer ' + env.GROQ_API_KEY, 'Content-Type': 'application/json' },
+    timeout: 60000
+  }
+
+  try {
+    let res
+    try {
+      res = await axios.post(env.GROQ_API_URL, body, reqCfg)
+    } catch (e1) {
+      // limite por minuto: se a Groq pede espera curta, espera e tenta mais uma vez
+      const retryAfter = e1.response && e1.response.status === 429 && Number(e1.response.headers && e1.response.headers['retry-after'])
+      if (retryAfter && retryAfter <= 20) {
+        await new Promise((r) => setTimeout(r, (retryAfter + 1) * 1000))
+        res = await axios.post(env.GROQ_API_URL, body, reqCfg)
+      } else {
+        throw e1
+      }
+    }
     const content = res.data && res.data.choices && res.data.choices[0] && res.data.choices[0].message && res.data.choices[0].message.content
     const data = parseJsonLoose(content)
     if (!data) return { error: 'Não consegui interpretar a resposta do modelo de visão. Tente outro print.' }
@@ -148,7 +158,10 @@ async function extractRivenFromImage(buf) {
       }
       return { error: 'A Groq recusou a imagem: ' + (detail || e.message) }
     }
-    if (status === 429) return { error: 'Limite da Groq atingido. Tente de novo em instantes.' }
+    if (status === 429) {
+      const d429 = e.response && e.response.data && e.response.data.error && e.response.data.error.message
+      return { error: 'Limite da Groq atingido. Tente de novo em instantes.' + (d429 ? '\n' + d429 : '') }
+    }
     return { error: 'Erro ao ler a imagem: ' + e.message }
   }
 }
@@ -209,6 +222,8 @@ function getStatLookup() {
 
 function resolveBaseStat(name) {
   const map = getStatLookup()
+  // a carta traz textos extras entre parênteses, ex: "Fire Rate (x2 for Bows)"
+  name = String(name || '').replace(/\([^)]*\)/g, ' ')
   const key = normKey(name)
   if (map[key]) return map[key]
   // o modelo às vezes devolve "+121.1% Gas" inteiro: tira números e tenta de novo
@@ -248,7 +263,7 @@ function fmtValue(base, unit, v) {
   return sign + Math.abs(n).toFixed(1)
 }
 
-function gradeExtracted(data) {
+function gradeExtracted(data, opts) {
   const bv = loadBaseValues()
   const title = String(data.riven_name || '').trim()
   const weapon = findWeaponFromTitle(title, data.weapon)
@@ -288,12 +303,14 @@ function gradeExtracted(data) {
   const attrs = parsed.map((p) => p.attr)
   const configKey = getConfigKey(attrs)
 
+  // O modelo de visão erra a contagem das bolinhas de rank (lia 4 em riven rank 8),
+  // então o padrão é rank 8. Para outro rank: legenda "/grade r5".
   const maxRank = 8
-  let modRank = Number(data.mod_rank)
-  let rankAssumed = false
-  if (isNaN(modRank) || data.mod_rank == null || modRank < 0 || modRank > maxRank) {
-    modRank = maxRank
-    rankAssumed = true
+  let modRank = maxRank
+  let rankNote = null
+  if (opts && opts.rank != null && !isNaN(Number(opts.rank))) {
+    modRank = Math.max(0, Math.min(maxRank, Number(opts.rank)))
+    if (modRank < maxRank) rankNote = 'Rank ' + modRank
   }
 
   const rows = parsed.map((p) => {
@@ -321,7 +338,7 @@ function gradeExtracted(data) {
     category,
     configKey,
     modRank,
-    rankAssumed,
+    rankNote,
     mastery: data.mastery_rank,
     rerolls: data.rerolls,
     rows
@@ -414,9 +431,9 @@ function buildCardSvg(result, imgBuf) {
     svg += '<line x1="' + RX + '" y1="' + Math.round(y) + '" x2="' + RR + '" y2="' + Math.round(y) + '" stroke="#2a2a31" stroke-width="1.5"/>'
   }
 
-  // só avisa no rodapé quando o rank não pôde ser lido (afeta as notas)
-  if (result.rankAssumed) {
-    svg += '<text x="' + RX + '" y="' + (H - 14) + '" font-family="DejaVu Sans" font-size="14" fill="#6f6f7a">' + esc('Rank ' + result.modRank + ' (assumido)') + '</text>'
+  // rodapé só quando o rank foi informado e é menor que o máximo (ex: /grade r5)
+  if (result.rankNote) {
+    svg += '<text x="' + RX + '" y="' + (H - 14) + '" font-family="DejaVu Sans" font-size="14" fill="#6f6f7a">' + esc(result.rankNote) + '</text>'
   }
 
   svg += '</svg>'
@@ -443,7 +460,7 @@ function renderPng(svg) {
 /**
  * @returns {{ error: string } | { png: Buffer }}
  */
-async function gradeRivenFromMessage(sock, msg) {
+async function gradeRivenFromMessage(sock, msg, opts) {
   let buf
   try {
     buf = await getImageBuffer(sock, msg)
@@ -459,7 +476,7 @@ async function gradeRivenFromMessage(sock, msg) {
   const ext = await extractRivenFromImage(buf)
   if (ext.error) return { error: '❌ ' + ext.error }
 
-  const result = gradeExtracted(ext.data)
+  const result = gradeExtracted(ext.data, opts)
   if (result.error) return { error: '❌ ' + result.error }
 
   try {
@@ -478,5 +495,6 @@ module.exports = {
   buildCardSvg,
   renderPng,
   resolveBaseStat,
+  extractRivenFromImage,
   findImageNode
 }
