@@ -14,7 +14,7 @@ const { loadBaseValues, findDisposition, getDispositionsList, resolveCategoryFro
 const { gradeOneStat, gradeRank, getConfigKey } = require('./grading')
 
 // Modelo de visão da Groq. Se a Groq aposentar este, troque via variável de ambiente.
-const VISION_MODEL = process.env.GROQ_VISION_MODEL || 'qwen/qwen3.6-27b'
+const VISION_MODEL = process.env.GROQ_VISION_MODEL || 'qwen/qwen3.8-27b'
 const MAX_IMAGE_BYTES = 3.5 * 1024 * 1024 // limite do base64 da Groq é ~4MB
 
 const FONT_DIR = path.join(__dirname, '..', '..', '..', 'assets', 'fonts')
