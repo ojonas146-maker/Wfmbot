@@ -1,0 +1,658 @@
+// src/services/riven/grading.js
+const { loadBaseValues } = require('./baseData')
+
+const RIVEN_STAT_LABEL = {
+  'base_damage_/_melee_damage': 'Damage', damage: 'Damage', multishot: 'Multishot',
+  'fire_rate_/_attack_speed': 'Fire Rate', fire_rate: 'Fire Rate', attack_speed: 'Attack Speed',
+  damage_vs_corpus: 'Dmg Corpus', damage_vs_grineer: 'Dmg Grineer', damage_vs_infested: 'Dmg Infested',
+  impact: 'Impact', impact_damage: 'Impact', puncture: 'Puncture', puncture_damage: 'Puncture',
+  slash: 'Slash', slash_damage: 'Slash', cold: 'Cold', cold_damage: 'Cold',
+  electricity: 'Electric', electricity_damage: 'Electric', electric_damage: 'Electric',
+  heat: 'Heat', heat_damage: 'Heat', toxin: 'Toxin', toxin_damage: 'Toxin',
+  combo_duration: 'Combo Duration', critical_chance: 'Crit Chance',
+  slide_attack_critical_chance: 'Slide Crit', critical_damage: 'Crit Damage',
+  finisher_damage: 'Finisher', projectile_speed: 'Flight Speed', ammo_maximum: 'Ammo Max',
+  magazine_capacity: 'Magazine', punch_through: 'Punch Through', reload_speed: 'Reload',
+  range: 'Range', status_chance: 'Status Chance', status_duration: 'Status Duration',
+  recoil: 'Recoil', weapon_recoil: 'Recoil', zoom: 'Zoom', initial_combo: 'Initial Combo',
+  heavy_attack_efficiency: 'Heavy Efficiency', combo_chance: 'Combo Chance',
+  chance_to_gain_combo_count: 'Combo Gain (curse)', additional_combo_count_chance: 'Extra Combo Chance',
+  chance_to_gain_extra_combo_count: 'Extra Combo Chance', combo_count_chance: 'Extra Combo Chance',
+  // --- Riven Splicing (Glacial Defiance) ---
+  ammo_efficiency: 'Ammo Efficiency',
+  blast_damage: 'Blast', blast: 'Blast',
+  corrosive_damage: 'Corrosive', corrosive: 'Corrosive',
+  damage_vs_orokin: 'Dmg Orokin', damage_vs_scaldra: 'Dmg Scaldra', damage_vs_techrot: 'Dmg Techrot',
+  gas_damage: 'Gas', gas: 'Gas',
+  heavy_attack_wind_up_speed: 'Heavy Wind Up', wind_up_speed: 'Heavy Wind Up',
+  magnetic_damage: 'Magnetic', magnetic: 'Magnetic',
+  melee_damage_on_heavy_attack: 'Heavy Attack Dmg', heavy_attack_damage: 'Heavy Attack Dmg',
+  parry_angle: 'Parry Angle',
+  radiation_damage: 'Radiation', radiation: 'Radiation',
+  reload_while_holstered: 'Reload Holstered', magazine_reload_while_holstered: 'Reload Holstered',
+  slam_attack_damage: 'Slam Damage', slam_damage: 'Slam Damage',
+  status_damage: 'Status Damage',
+  viral_damage: 'Viral', viral: 'Viral',
+  weakpoint_damage: 'Weakpoint Dmg', weak_point_damage: 'Weakpoint Dmg',
+  weakpoint_critical_chance: 'Weakpoint Crit', weak_point_critical_chance: 'Weakpoint Crit'
+}
+
+const RIVEN_STAT_ALIASES = {
+  damage: 'base_damage_/_melee_damage', dmg: 'base_damage_/_melee_damage', md: 'base_damage_/_melee_damage',
+  multi: 'multishot', ms: 'multishot', as: 'fire_rate_/_attack_speed', fr: 'fire_rate_/_attack_speed',
+  speed: 'fire_rate_/_attack_speed', corpus: 'damage_vs_corpus', corp: 'damage_vs_corpus', dtc: 'damage_vs_corpus',
+  grineer: 'damage_vs_grineer', grin: 'damage_vs_grineer', dtg: 'damage_vs_grineer',
+  infested: 'damage_vs_infested', inf: 'damage_vs_infested', dti: 'damage_vs_infested',
+  impact: 'impact', imp: 'impact', puncture: 'puncture', pun: 'puncture', slash: 'slash', sl: 'slash',
+  cold: 'cold_damage', cold_damage: 'cold_damage',
+  electric: 'electric_damage', elec: 'electric_damage', ele: 'electric_damage',
+  electricity: 'electric_damage', electricity_damage: 'electric_damage', electric_damage: 'electric_damage',
+  heat: 'heat_damage', fire: 'heat_damage', heat_damage: 'heat_damage',
+  toxin: 'toxin_damage', tox: 'toxin_damage', toxin_damage: 'toxin_damage',
+  combo: 'combo_duration', critchance: 'critical_chance', cc: 'critical_chance',
+  slide: 'slide_attack_critical_chance', critdmg: 'critical_damage', cd: 'critical_damage',
+  finisher: 'finisher_damage', fin: 'finisher_damage', flight: 'projectile_speed', pfs: 'projectile_speed',
+  ps: 'projectile_speed', ammo: 'ammo_maximum', magazine: 'magazine_capacity', mag: 'magazine_capacity',
+  punch: 'punch_through', pt: 'punch_through', reload: 'reload_speed', rld: 'reload_speed', rs: 'reload_speed',
+  range: 'range', rng: 'range', statusc: 'status_chance', sc: 'status_chance', statusd: 'status_duration',
+  sd: 'status_duration', recoil: 'recoil', rec: 'recoil', wr: 'recoil', zoom: 'zoom', z: 'zoom',
+  initc: 'initial_combo', initial: 'initial_combo', ic: 'initial_combo',
+  comboefficiency: 'heavy_attack_efficiency', heavy: 'heavy_attack_efficiency', eff: 'heavy_attack_efficiency',
+  combogainextra: 'combo_chance', combogainlost: 'combo_chance', combochance: 'combo_chance',
+  // --- Riven Splicing aliases (para !alertariven / parse) ---
+  ammoe: 'ammo_efficiency', ammoeff: 'ammo_efficiency', efficiency: 'ammo_efficiency',
+  blast: 'blast_damage',
+  corrosive: 'corrosive_damage', corr: 'corrosive_damage',
+  orokin: 'damage_vs_orokin', dto: 'damage_vs_orokin',
+  scaldra: 'damage_vs_scaldra', dts: 'damage_vs_scaldra',
+  techrot: 'damage_vs_techrot', dtt: 'damage_vs_techrot',
+  gas: 'gas_damage',
+  windup: 'heavy_attack_wind_up_speed', wind: 'heavy_attack_wind_up_speed',
+  magnetic: 'magnetic_damage', magdmg: 'magnetic_damage',
+  heavydmg: 'melee_damage_on_heavy_attack', heavyatk: 'melee_damage_on_heavy_attack',
+  parry: 'parry_angle',
+  radiation: 'radiation_damage', rad: 'radiation_damage',
+  holster: 'reload_while_holstered', reloadholster: 'reload_while_holstered',
+  slam: 'slam_attack_damage',
+  statusdmg: 'status_damage', sdam: 'status_damage',
+  viral: 'viral',
+  weakpoint: 'weakpoint_damage', wp: 'weakpoint_damage', wpd: 'weakpoint_damage',
+  weakcrit: 'weakpoint_critical_chance', wpc: 'weakpoint_critical_chance', wpcc: 'weakpoint_critical_chance'
+}
+
+const WFM_TO_BASE_STAT = {
+  multishot: 'Multishot', critical_chance: 'Critical Chance', critical_damage: 'Critical Damage',
+  'base_damage_/_melee_damage': 'Damage', damage: 'Damage', status_chance: 'Status Chance',
+  status_duration: 'Status Duration', 'fire_rate_/_attack_speed': 'Fire Rate / Attack Speed',
+  fire_rate: 'Fire Rate / Attack Speed', attack_speed: 'Fire Rate / Attack Speed',
+  reload_speed: 'Reload Speed', magazine_capacity: 'Magazine Capacity', ammo_maximum: 'Ammo Maximum',
+  punch_through: 'Punch Through', projectile_speed: 'Projectile Speed', recoil: 'Weapon Recoil',
+  weapon_recoil: 'Weapon Recoil', zoom: 'Zoom', impact: 'Impact Damage', impact_damage: 'Impact Damage',
+  puncture: 'Puncture Damage', puncture_damage: 'Puncture Damage', slash: 'Slash Damage',
+  slash_damage: 'Slash Damage', cold: 'Cold Damage', cold_damage: 'Cold Damage', heat: 'Heat Damage',
+  heat_damage: 'Heat Damage', electricity: 'Electricity Damage', electricity_damage: 'Electricity Damage',
+  electric_damage: 'Electricity Damage', toxin: 'Toxin Damage', toxin_damage: 'Toxin Damage',
+  damage_vs_corpus: 'Damage vs. Corpus', damage_vs_grineer: 'Damage vs. Grineer',
+  damage_vs_infested: 'Damage vs. Infested', range: 'Range', initial_combo: 'Initial Combo',
+  combo_duration: 'Combo Duration', heavy_attack_efficiency: 'Heavy Attack Efficiency',
+  finisher_damage: 'Finisher Damage', slide_attack_critical_chance: 'Critical Chance for Slide Attack',
+  chance_to_gain_combo_count: 'Chance to Gain Combo Count',
+  additional_combo_count_chance: 'Additional Combo Count Chance',
+  chance_to_gain_extra_combo_count: 'Additional Combo Count Chance',
+  combo_count_chance: 'Additional Combo Count Chance',
+  // --- Riven Splicing → base_values.json keys ---
+  ammo_efficiency: 'Ammo Efficiency',
+  blast_damage: 'Blast Damage', blast: 'Blast Damage',
+  corrosive_damage: 'Corrosive Damage', corrosive: 'Corrosive Damage',
+  damage_vs_orokin: 'Damage vs. Orokin',
+  damage_vs_scaldra: 'Damage vs. Scaldra',
+  damage_vs_techrot: 'Damage vs. Techrot',
+  gas_damage: 'Gas Damage', gas: 'Gas Damage',
+  heavy_attack_wind_up_speed: 'Heavy Attack Wind Up Speed',
+  wind_up_speed: 'Heavy Attack Wind Up Speed',
+  magnetic_damage: 'Magnetic Damage', magnetic: 'Magnetic Damage',
+  melee_damage_on_heavy_attack: 'Melee Damage On Heavy Attack',
+  heavy_attack_damage: 'Melee Damage On Heavy Attack',
+  parry_angle: 'Parry Angle',
+  radiation_damage: 'Radiation Damage', radiation: 'Radiation Damage',
+  reload_while_holstered: 'Reload While Holstered',
+  magazine_reload_while_holstered: 'Reload While Holstered',
+  slam_attack_damage: 'Slam Attack Damage', slam_damage: 'Slam Attack Damage',
+  status_damage: 'Status Damage',
+  viral_damage: 'Viral Damage', viral: 'Viral Damage',
+  weakpoint_damage: 'Weakpoint Damage', weak_point_damage: 'Weakpoint Damage',
+  weakpoint_critical_chance: 'Weakpoint Critical Chance',
+  weak_point_critical_chance: 'Weakpoint Critical Chance'
+}
+
+// Stats novos (Riven Splicing): o url_name real no warframe.market pode vir com ou
+// sem o sufixo "_damage" (ex: "viral"). Compara tolerando essa diferença.
+const SPLICE_STATS = new Set([
+  'ammo_efficiency', 'blast_damage', 'blast', 'corrosive_damage', 'corrosive',
+  'damage_vs_orokin', 'damage_vs_scaldra', 'damage_vs_techrot', 'gas_damage', 'gas',
+  'heavy_attack_wind_up_speed', 'wind_up_speed', 'magnetic_damage', 'magnetic',
+  'melee_damage_on_heavy_attack', 'heavy_attack_damage', 'parry_angle',
+  'radiation_damage', 'radiation', 'reload_while_holstered', 'magazine_reload_while_holstered',
+  'slam_attack_damage', 'slam_damage', 'status_damage', 'viral_damage', 'viral',
+  'weakpoint_damage', 'weak_point_damage', 'weakpoint_critical_chance', 'weak_point_critical_chance'
+])
+
+function normStat(s) {
+  return String(s || '').toLowerCase().replace(/_/g, '').replace(/damage$/, '')
+}
+
+function statMatches(a, b) {
+  if (a === b) return true
+  return normStat(a) !== '' && normStat(a) === normStat(b)
+}
+
+function isSpliceStat(s) {
+  return SPLICE_STATS.has(String(s || '').toLowerCase())
+}
+
+function resolveRivenStat(token) {
+  const t = String(token || '').toLowerCase().trim()
+  return RIVEN_STAT_ALIASES[t] || null
+}
+
+function letterGrade(dev) {
+  if (dev >= 9.5) return 'S'
+  if (dev >= 7.5) return '+A'
+  if (dev >= 5.5) return 'A'
+  if (dev >= 3.5) return '-A'
+  if (dev >= 1.5) return '+B'
+  if (dev >= -1.5) return 'B'
+  if (dev >= -3.5) return '-B'
+  if (dev >= -5.5) return '+C'
+  if (dev >= -7.5) return 'C'
+  if (dev >= -9.5) return '-C'
+  return 'F'
+}
+
+function gradeRank(g) {
+  const order = { S: 10, '+A': 9, A: 8, '-A': 7, '+B': 6, B: 5, '-B': 4, '+C': 3, C: 2, '-C': 1, F: 0 }
+  return order[g] != null ? order[g] : -1
+}
+
+function getConfigKey(attrs) {
+  let pos = 0, neg = 0
+  for (const a of attrs || []) {
+    if (a.positive === false) neg++
+    else pos++
+  }
+  if (pos === 2 && neg === 0) return '2P'
+  if (pos === 2 && neg === 1) return '2P1N'
+  if (pos === 3 && neg === 0) return '3P'
+  if (pos === 3 && neg === 1) return '3P1N'
+  if (pos >= 3) return neg ? '3P1N' : '3P'
+  return neg ? '2P1N' : '2P'
+}
+
+/**
+ * Resolve a categoria base (Rifle / Shotgun / Pistol / Archgun / Melee)
+ * a partir do objeto da arma (vindo do dispositions JSON).
+ *
+ * Regras:
+ * - Kitgun Primary  → Rifle
+ * - Kitgun Secondary → Pistol
+ * - Robotic          → Rifle  (exceto Deconstructor que já tem type: Melee)
+ * - Hound            → Melee
+ * - Restante         → usa type_to_category do base_values
+ */
+function resolveBaseCategory(weapon, baseValues) {
+  if (!weapon) return null
+
+  const type = String(weapon.type || '').trim()
+  const cat  = String(weapon.category || '').trim()
+
+  // Kitgun: decide pelo slot (Primary/Secondary)
+  if (type === 'Kitgun' || type.toLowerCase() === 'kitgun') {
+    if (cat === 'Secondary') return 'Pistol'
+    return 'Rifle' // Primary ou fallback
+  }
+
+  // Deconstructor já vem com type: Melee no dispositions
+  // Robotic genérico → Rifle (já mapeado no type_to_category)
+  // Hound → Melee (já mapeado)
+
+  const map = (baseValues && baseValues.type_to_category) || {}
+  return map[type] || map[cat] || null
+}
+
+/**
+ * Grade de um stat individual.
+ * base_values.json guarda valores no RANK MÁXIMO (8). Anúncios unranked
+ * mostram ~1/9 do valor — por isso a escala por rank abaixo.
+ *
+ * @param {object} attr          - atributo do riven { url_name, value, positive }
+ * @param {string|object} weaponOrCategory - string da categoria base OU objeto arma (com type + category)
+ * @param {number} disposition
+ * @param {string} configKey     - '2P' | '2P1N' | '3P' | '3P1N'
+ * @param {number} [modRank]
+ * @param {number} [maxRank]
+ */
+function gradeOneStat(attr, weaponOrCategory, disposition, configKey, modRank, maxRank) {
+  const bv = loadBaseValues()
+
+  // Aceita tanto string (categoria antiga) quanto objeto arma
+  let category
+  if (typeof weaponOrCategory === 'string') {
+    category = weaponOrCategory
+  } else {
+    category = resolveBaseCategory(weaponOrCategory, bv)
+  }
+
+  if (!category) {
+    return {
+      label: RIVEN_STAT_LABEL[String(attr.url_name || '').toLowerCase()] || attr.url_name,
+      value: attr.value,
+      positive: attr.positive !== false,
+      grade: null,
+      dev: null,
+      note: 'categoria desconhecida'
+    }
+  }
+
+  const url = String(attr.url_name || '').toLowerCase()
+  let baseName = attr.base_name || WFM_TO_BASE_STAT[url]
+  if (!baseName) {
+    const alt = url.replace(/_damage$/, '').replace(/_chance$/, '')
+    baseName = WFM_TO_BASE_STAT[alt] || WFM_TO_BASE_STAT[url.replace(/__/g, '_')]
+  }
+  if (!baseName || !bv.stats[baseName]) {
+    return {
+      label: RIVEN_STAT_LABEL[url] || attr.url_name,
+      value: attr.value,
+      positive: attr.positive !== false,
+      grade: null,
+      dev: null,
+      note: 'sem base'
+    }
+  }
+
+  const entry = bv.stats[baseName]
+  const base = entry[category]
+  if (base == null) {
+    return {
+      label: baseName,
+      value: attr.value,
+      positive: attr.positive !== false,
+      grade: null,
+      dev: null,
+      note: 'não rola nesta categoria'
+    }
+  }
+
+  const mults = bv.count_multipliers[configKey] || bv.count_multipliers['3P1N']
+  const isPos = attr.positive !== false
+  let mult = isPos ? mults.positive : mults.negative
+  if (mult == null) mult = isPos ? 1 : -0.75
+
+  const expectedMax = base * disposition * Math.abs(mult)
+
+  let mr = modRank != null && !isNaN(Number(modRank)) ? Number(modRank) : 8
+  let mx = maxRank != null && !isNaN(Number(maxRank)) ? Number(maxRank) : 8
+  if (mx < 1) mx = 8
+  if (mr < 0) mr = 0
+  if (mr > mx) mr = mx
+
+  const rankScale = (mr + 1) / (mx + 1)
+  const expected = expectedMax * rankScale
+
+  const unit = entry.unit || '%'
+  let actual = Number(attr.value)
+
+  // Faction damage (unit "x") arrives as the final multiplier (x0.79 or x1.25).
+  // Convert to the magnitude of the bonus/malus so it matches the base 0.45 scale.
+  if (unit === 'x') {
+    actual = Math.abs(actual - 1)
+  } else if (!isPos) {
+    actual = Math.abs(actual)
+  }
+
+  // Positivos: actual > expected = melhor
+  // Negativos: actual > expected (curse mais forte) = melhor → inverte o sinal
+  let dev = expected ? ((actual - expected) / expected) * 100 : 0
+  if (!isPos) dev = -dev
+
+  const grade = letterGrade(dev)
+
+  return {
+    label: baseName,
+    value: attr.value,
+    positive: isPos,
+    grade,
+    dev,
+    expected,
+    expectedMax,
+    rankScale,
+    unit
+  }
+}
+
+function analyzeRivenMeta(weaponUrlName, attrs, getWeaponMeta) {
+  const meta = getWeaponMeta(weaponUrlName)
+  if (!meta) {
+    return {
+      hasMeta: false,
+      label: null,
+      mustHaveHit: 0,
+      mustHaveTotal: 0,
+      priorityHit: 0,
+      priorityTotal: 0,
+      score: 0,
+      mustHave: [],
+      priority: [],
+      raw: null,
+      display: weaponUrlName
+    }
+  }
+
+  const positive = {}
+  for (const a of attrs || []) {
+    if (a.positive !== false) positive[a.url_name] = true
+  }
+
+  const must = meta.must_have || []
+  const prio = meta.priority || []
+
+  let mustHit = 0
+  for (const m of must) if (positive[m]) mustHit++
+
+  let prioHit = 0
+  for (let p = 0; p < prio.length; p++) if (positive[prio[p]]) prioHit++
+
+  let score = 0
+  if (must.length) score += (mustHit / must.length) * 60
+  for (let j = 0; j < prio.length; j++) {
+    if (positive[prio[j]]) score += Math.max(2, 12 - j * 1.5)
+  }
+
+  let label = 'MEH'
+  if (mustHit === must.length && must.length > 0) {
+    if (prioHit >= 3 || score >= 85) label = 'GOD ROLL'
+    else if (prioHit >= 2 || score >= 70) label = 'META'
+    else label = 'BOM'
+  } else if (mustHit > 0) {
+    label = 'PARCIAL'
+  }
+
+  return {
+    hasMeta: true,
+    label,
+    mustHaveHit: mustHit,
+    mustHaveTotal: must.length,
+    priorityHit: prioHit,
+    priorityTotal: prio.length,
+    score: Math.round(score),
+    mustHave: must,
+    priority: prio,
+    raw: meta.raw_text || null,
+    display: meta.display || weaponUrlName
+  }
+}
+
+function formatMetaBlock(analysis) {
+  if (!analysis || !analysis.hasMeta) return '_Sem meta cadastrada para esta arma._\n'
+
+  let reply = '🎯 *Análise Meta (' + analysis.display + ')*\n'
+  reply += '*' + analysis.label + '*  ·  score ' + analysis.score + '\n'
+  reply += 'Must-have: *' + analysis.mustHaveHit + '/' + analysis.mustHaveTotal + '*'
+
+  if (analysis.mustHaveTotal) {
+    const mh = analysis.mustHave.map(s => RIVEN_STAT_LABEL[s] || s).join(', ')
+    reply += '  (' + mh + ')'
+  }
+  reply += '\n'
+  reply += 'Priority: *' + analysis.priorityHit + '/' + Math.min(analysis.priorityTotal, 5) + '*'
+
+  if (analysis.priority && analysis.priority.length) {
+    const top = analysis.priority.slice(0, 5).map(s => RIVEN_STAT_LABEL[s] || s).join(' › ')
+    reply += '\n  ' + top
+  }
+  reply += '\n'
+  if (analysis.raw) reply += 'Formato: `' + analysis.raw + '`\n'
+  return reply
+}
+
+/**
+ * Recalcula os stats de um Riven para outro disposition (ex: variante Prime).
+ * Os valores "base" do roll são recuperados dividindo pelo dispo original,
+ * depois multiplicados pelo dispo da variante.
+ *
+ * @param {Array} attrs            - atributos originais do anúncio
+ * @param {number} fromDispo       - disposition da arma do anúncio
+ * @param {number} toDispo         - disposition da variante alvo
+ * @param {string|object} weaponOrCategory - categoria base ou objeto arma
+ * @param {string} configKey       - '2P' | '2P1N' | '3P' | '3P1N'
+ * @param {number} [modRank=8]
+ * @param {number} [maxRank=8]
+ * @returns {Array} lista de resultados de gradeOneStat com value já escalado
+ */
+function gradeForVariant(attrs, fromDispo, toDispo, weaponOrCategory, configKey, modRank, maxRank) {
+  if (!fromDispo || fromDispo <= 0) return []
+  const scale = toDispo / fromDispo
+
+  return (attrs || []).map(attr => {
+    const scaled = {
+      ...attr,
+      value: Number(attr.value) * scale
+    }
+    // Para faction damage (x0.79 etc.) o value é multiplicador final.
+    // Escalamos o desvio em relação a 1.0:
+    //   bonus = value - 1  →  newValue = 1 + bonus * scale
+    const url = String(attr.url_name || '').toLowerCase()
+    if (url.includes('damage_vs_') || url.includes('dmg_to_') || url.includes('damage_to_')) {
+      const bonus = Number(attr.value) - 1
+      scaled.value = 1 + bonus * scale
+    }
+
+    return gradeOneStat(scaled, weaponOrCategory, toDispo, configKey, modRank, maxRank)
+  })
+}
+
+/**
+ * Projeta o valor do stat do rank atual para o rank máximo.
+ * Rivens escalam linearmente: valor_Rmax = valor_R * (maxRank+1) / (modRank+1)
+ */
+function projectToMaxRank(value, modRank, maxRank) {
+  const mr = modRank != null && !isNaN(Number(modRank)) ? Number(modRank) : 8
+  const mx = maxRank != null && !isNaN(Number(maxRank)) ? Number(maxRank) : 8
+  if (mx <= 0 || mr >= mx) return null
+  const scale = (mx + 1) / (mr + 1)
+  return Number(value) * scale
+}
+
+/**
+ * Formata um bloco de stats já gradeados (usado tanto pro anúncio quanto pro variante).
+ * Se modRank < maxRank, mostra também o valor projetado no rank máximo.
+ *
+ * @param {Array} gradedStats
+ * @param {string} [title]
+ * @param {number} [modRank]
+ * @param {number} [maxRank]
+ */
+function formatStatsBlock(gradedStats, title, modRank, maxRank) {
+  if (!gradedStats || !gradedStats.length) return ''
+  let out = title ? `*${title}:*\n` : ''
+  const showProj = modRank != null && maxRank != null && Number(modRank) < Number(maxRank)
+
+  for (const s of gradedStats) {
+    if (s.grade == null) {
+      out += `• ${s.value} ${s.label} → _sem grade_\n`
+      continue
+    }
+    const isPos = s.positive !== false
+    const sign = isPos ? (Number(s.value) >= 0 ? '+' : '') : (Number(s.value) > 0 ? '-' : '')
+    const unit = s.unit === 'x' ? '' : (s.unit === 'm' || s.unit === 's' || s.unit === 'flat' ? s.unit : '%')
+
+    let valStr
+    if (s.unit === 'x') {
+      valStr = `x${Number(s.value).toFixed(2)}`
+    } else {
+      const absVal = Math.abs(Number(s.value))
+      valStr = `${sign}${absVal.toFixed(1)}${unit}`
+    }
+
+// Projeção Rmax (ex: R0 → R8)
+    let projStr = ''
+    if (showProj && s.unit !== 'x') {
+      const proj = projectToMaxRank(s.value, modRank, maxRank)
+      if (proj != null) {
+        const pSign = isPos ? (proj >= 0 ? '+' : '') : (proj > 0 ? '-' : '')
+        const pAbs = Math.abs(proj)
+        projStr = ` → ${pSign}${pAbs.toFixed(1)}${unit} R${maxRank}`
+      }
+    } else if (showProj && s.unit === 'x') {
+      // Faction: value é multiplicador final; projeta o bonus
+      const bonus = Number(s.value) - 1
+      const projBonus = projectToMaxRank(bonus, modRank, maxRank)
+      if (projBonus != null) {
+        const projVal = 1 + projBonus
+        projStr = ` → x${projVal.toFixed(2)} R${maxRank}`
+      }
+    }
+
+    const devStr = (s.dev >= 0 ? '+' : '') + s.dev.toFixed(1) + '%'
+    out += `• ${valStr}${projStr} ${s.label} → *${s.grade}* (${devStr})\n`
+  }
+  return out
+}
+
+// Prefixos e sufixos usados para detectar variantes da mesma família
+const VARIANT_PREFIXES = [
+  'mk1-', 'mk1 ', 'prisma ', 'kuva ', 'tenet ', 'coda ',
+  'dex ', 'mara ', 'secura ', 'synoid ', 'vaykor ', 'sancti ', 'telos ', 'rakta '
+]
+const VARIANT_SUFFIXES = [
+  ' prime', ' wraith', ' vandal', ' prisma'
+]
+
+/**
+ * Normaliza o nome da arma para achar a "raiz" da família
+ * (remove Mk1/Prisma/Kuva/Tenet/Coda/Prime/Wraith/Vandal/Syndicate).
+ * Mantém (Primary)/(Secondary)/(Melee) para NÃO misturar Kitguns de slots diferentes.
+ */
+function weaponFamilyKey(name) {
+  let n = String(name || '').toLowerCase().trim()
+  // url_name style: bo_prime → bo prime
+  n = n.replace(/_/g, ' ')
+
+  for (const p of VARIANT_PREFIXES) {
+    if (n.startsWith(p)) {
+      n = n.slice(p.length)
+      break
+    }
+  }
+  for (const s of VARIANT_SUFFIXES) {
+    if (n.endsWith(s)) {
+      n = n.slice(0, -s.length)
+      break
+    }
+  }
+  return n.trim()
+}
+
+/**
+ * Encontra todas as variantes da mesma família no array de dispositions.
+ * Só retorna armas com disposition diferente da atual.
+ */
+function findVariants(weaponNameOrUrl, dispositionsList) {
+  if (!dispositionsList || !dispositionsList.length) return []
+
+  const key = weaponFamilyKey(weaponNameOrUrl)
+  if (!key) return []
+
+  const normalizedInput = String(weaponNameOrUrl || '')
+    .toLowerCase()
+    .replace(/_/g, ' ')
+    .trim()
+
+  // Encontra a arma atual (nome exato primeiro, depois family key)
+  let current = dispositionsList.find(d => {
+    const dn = String(d.name || '').toLowerCase().replace(/_/g, ' ').trim()
+    return dn === normalizedInput
+  })
+  if (!current) {
+    current = dispositionsList.find(d => weaponFamilyKey(d.name) === key)
+  }
+
+  const currentDispo = current ? current.disposition : null
+  const currentName = current ? current.name : String(weaponNameOrUrl)
+
+  const variants = []
+  const seen = new Set()
+
+  for (const d of dispositionsList) {
+    if (weaponFamilyKey(d.name) !== key) continue
+    if (d.name === currentName) continue
+    // só mostra se o disposition for diferente
+    if (currentDispo != null && Math.abs(d.disposition - currentDispo) < 0.001) continue
+    const id = d.name + '|' + d.disposition
+    if (seen.has(id)) continue
+    seen.add(id)
+    variants.push(d)
+  }
+
+  // Ordena: Prime → Mk1 → Prisma → Wraith → Vandal → Kuva → Tenet → Coda...
+  const order = [
+    'prime', 'mk1', 'prisma', 'wraith', 'vandal',
+    'kuva', 'tenet', 'coda', 'dex', 'mara',
+    'secura', 'synoid', 'vaykor', 'sancti', 'telos', 'rakta'
+  ]
+  variants.sort((a, b) => {
+    const an = a.name.toLowerCase()
+    const bn = b.name.toLowerCase()
+    const ai = order.findIndex(o => an.includes(o))
+    const bi = order.findIndex(o => bn.includes(o))
+    return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi)
+  })
+
+  return variants
+}
+
+/**
+ * Gera os blocos de texto de todas as variantes com dispo diferente.
+ * Pronto para concatenar na mensagem do !grade.
+ */
+function formatVariantBlocks(attrs, fromDispo, weaponNameOrUrl, dispositionsList, weaponOrCategory, configKey, modRank, maxRank) {
+  const variants = findVariants(weaponNameOrUrl, dispositionsList)
+  if (!variants.length) return ''
+
+  let out = ''
+  for (const v of variants) {
+    const graded = gradeForVariant(
+      attrs,
+      fromDispo,
+      v.disposition,
+      weaponOrCategory || v,
+      configKey,
+      modRank,
+      maxRank
+    )
+    out += '\n' + formatStatsBlock(graded, `Stats ${v.name} (${v.disposition})`, modRank, maxRank)
+  }
+  return out
+}
+
+module.exports = {
+  RIVEN_STAT_LABEL,
+  RIVEN_STAT_ALIASES,
+  WFM_TO_BASE_STAT,
+  resolveRivenStat,
+  statMatches,
+  isSpliceStat,
+  letterGrade,
+  gradeRank,
+  getConfigKey,
+  resolveBaseCategory,
+  gradeOneStat,
+  gradeForVariant,
+  formatStatsBlock,
+  projectToMaxRank,
+  findVariants,
+  formatVariantBlocks,
+  weaponFamilyKey,
+  analyzeRivenMeta,
+  formatMetaBlock
+}
