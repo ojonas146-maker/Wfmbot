@@ -9,7 +9,7 @@ const { getRivenAlertLimit, canUseRivenSnipe, isAdmin } = require('../../core/ad
 const { getWeaponMeta, findDisposition, resolveCategoryFromDisp, getDispositionsList } = require('./baseData')
 const {
   RIVEN_STAT_LABEL, RIVEN_STAT_ALIASES, resolveRivenStat, getConfigKey,
-  gradeOneStat, gradeRank, analyzeRivenMeta, formatMetaBlock,
+  gradeOneStat, gradeRank, analyzeRivenMeta, formatMetaBlock, statMatches, isSpliceStat,
   formatVariantBlocks, projectToMaxRank
 } = require('./grading')
 const { searchRivenAuctions, searchRivenAuctionsBroad } = require('./auctionSearch')
@@ -189,10 +189,11 @@ function rivenMatchesAlert(auction, alert) {
   if (alert.maxPrice != null && price != null && price > alert.maxPrice) return false
 
   const attrs = auction.item.attributes || []
-  const positiveNames = {}
-  for (const a of attrs) if (a.positive !== false) positiveNames[a.url_name] = true
+  const positiveList = attrs.filter((a) => a.positive !== false).map((a) => a.url_name)
   const stats = alert.stats || []
-  for (const s of stats) if (!positiveNames[s]) return false
+  for (const s of stats) {
+    if (!positiveList.some((n) => statMatches(n, s))) return false
+  }
 
   let posCount = 0, negCount = 0
   for (const a of attrs) { if (a.positive === false) negCount++; else posCount++ }
@@ -483,6 +484,9 @@ async function checkRivenAlerts(sock) {
       const seenStat = {}
       for (const al of alerts) {
         for (const s of al.stats || []) {
+          // Stats novos (splice) ficam fora da busca na API (url_name incerto);
+          // o filtro é feito localmente em rivenMatchesAlert.
+          if (isSpliceStat(s)) continue
           if (!seenStat[s]) { seenStat[s] = true; statsForSearch.push(s) }
         }
       }
