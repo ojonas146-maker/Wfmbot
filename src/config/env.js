@@ -55,7 +55,7 @@ module.exports = {
   WA_MAX_CHARS: 3500,
 
   // ---- Timers ----
-  CHECK_INTERVAL_MS: 4 * 60 * 1000,
+  CHECK_INTERVAL_MS: 60 * 1000,
   WFM_POLL_INTERVAL_MS: 30 * 1000,
 
   // ---- URLs externas ----
