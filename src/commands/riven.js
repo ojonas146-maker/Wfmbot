@@ -35,6 +35,22 @@ register(/^!grade\s+(.+)/i, async ({ sock, from, match }) => {
   await sock.sendMessage(from, { text: await getRivenGradeMessage(match[1].trim()) })
 })
 
+// /grade com imagem: legenda "/grade" no print do riven, ou resposta a uma imagem com "/grade"
+register(/^!grade\s*$/i, async ({ sock, from, msg }) => {
+  const { gradeRivenFromMessage } = require('../services/riven/rivenImage')
+  const hasImage = !!(msg && msg.message && (msg.message.imageMessage ||
+    (msg.message.extendedTextMessage && msg.message.extendedTextMessage.contextInfo &&
+      msg.message.extendedTextMessage.contextInfo.quotedMessage &&
+      msg.message.extendedTextMessage.contextInfo.quotedMessage.imageMessage)))
+  if (hasImage) await sock.sendMessage(from, { text: '📐 Lendo o riven...' })
+  const res = await gradeRivenFromMessage(sock, msg)
+  if (res.error) {
+    await sock.sendMessage(from, { text: res.error })
+    return
+  }
+  await sock.sendMessage(from, { image: res.png }, { quoted: msg })
+})
+
 register(/^!(meta|grol)\s+(.+)/i, async ({ sock, from, match }) => {
   await sock.sendMessage(from, { text: getMetaMessage(match[2].trim()) })
 })
