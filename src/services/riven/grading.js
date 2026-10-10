@@ -75,7 +75,7 @@ const RIVEN_STAT_ALIASES = {
   holster: 'reload_while_holstered', reloadholster: 'reload_while_holstered',
   slam: 'slam_attack_damage',
   statusdmg: 'status_damage', sdam: 'status_damage',
-  viral: 'viral_damage',
+  viral: 'viral',
   weakpoint: 'weakpoint_damage', wp: 'weakpoint_damage', wpd: 'weakpoint_damage',
   weakcrit: 'weakpoint_critical_chance', wpc: 'weakpoint_critical_chance', wpcc: 'weakpoint_critical_chance'
 }
@@ -123,6 +123,31 @@ const WFM_TO_BASE_STAT = {
   weakpoint_damage: 'Weakpoint Damage', weak_point_damage: 'Weakpoint Damage',
   weakpoint_critical_chance: 'Weakpoint Critical Chance',
   weak_point_critical_chance: 'Weakpoint Critical Chance'
+}
+
+// Stats novos (Riven Splicing): o url_name real no warframe.market pode vir com ou
+// sem o sufixo "_damage" (ex: "viral"). Compara tolerando essa diferença.
+const SPLICE_STATS = new Set([
+  'ammo_efficiency', 'blast_damage', 'blast', 'corrosive_damage', 'corrosive',
+  'damage_vs_orokin', 'damage_vs_scaldra', 'damage_vs_techrot', 'gas_damage', 'gas',
+  'heavy_attack_wind_up_speed', 'wind_up_speed', 'magnetic_damage', 'magnetic',
+  'melee_damage_on_heavy_attack', 'heavy_attack_damage', 'parry_angle',
+  'radiation_damage', 'radiation', 'reload_while_holstered', 'magazine_reload_while_holstered',
+  'slam_attack_damage', 'slam_damage', 'status_damage', 'viral_damage', 'viral',
+  'weakpoint_damage', 'weak_point_damage', 'weakpoint_critical_chance', 'weak_point_critical_chance'
+])
+
+function normStat(s) {
+  return String(s || '').toLowerCase().replace(/_/g, '').replace(/damage$/, '')
+}
+
+function statMatches(a, b) {
+  if (a === b) return true
+  return normStat(a) !== '' && normStat(a) === normStat(b)
+}
+
+function isSpliceStat(s) {
+  return SPLICE_STATS.has(String(s || '').toLowerCase())
 }
 
 function resolveRivenStat(token) {
@@ -615,6 +640,8 @@ module.exports = {
   RIVEN_STAT_ALIASES,
   WFM_TO_BASE_STAT,
   resolveRivenStat,
+  statMatches,
+  isSpliceStat,
   letterGrade,
   gradeRank,
   getConfigKey,
