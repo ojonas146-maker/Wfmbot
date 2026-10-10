@@ -14,7 +14,7 @@ const { loadBaseValues, findDisposition, getDispositionsList, resolveCategoryFro
 const { gradeOneStat, gradeRank, getConfigKey } = require('./grading')
 
 // Modelo de visão da Groq. Se a Groq aposentar este, troque via variável de ambiente.
-const VISION_MODEL = process.env.GROQ_VISION_MODEL || 'meta-llama/llama-4-scout-17b-16e-instruct'
+const VISION_MODEL = process.env.GROQ_VISION_MODEL || 'qwen/qwen3.6-27b'
 const MAX_IMAGE_BYTES = 3.5 * 1024 * 1024 // limite do base64 da Groq é ~4MB
 
 const FONT_DIR = path.join(__dirname, '..', '..', '..', 'assets', 'fonts')
@@ -86,15 +86,16 @@ const VISION_PROMPT = [
 ].join('\n')
 
 function parseJsonLoose(text) {
-  const s = String(text || '')
-  const start = s.indexOf('{')
+  // modelos com raciocínio (Qwen) podem devolver <think>...</think> antes do JSON
+  let s = String(text || '').replace(/<think>[\s\S]*?<\/think>/gi, '')
   const end = s.lastIndexOf('}')
-  if (start === -1 || end === -1 || end <= start) return null
-  try {
-    return JSON.parse(s.slice(start, end + 1))
-  } catch (e) {
-    return null
+  if (end === -1) return null
+  for (let start = s.indexOf('{'); start !== -1 && start < end; start = s.indexOf('{', start + 1)) {
+    try {
+      return JSON.parse(s.slice(start, end + 1))
+    } catch (e) { /* tenta o próximo '{' */ }
   }
+  return null
 }
 
 async function extractRivenFromImage(buf) {
@@ -112,7 +113,7 @@ async function extractRivenFromImage(buf) {
       {
         model: VISION_MODEL,
         temperature: 0,
-        max_tokens: 700,
+        max_tokens: 3000, // folga p/ modelos com raciocínio
         messages: [
           {
             role: 'user',
@@ -140,7 +141,10 @@ async function extractRivenFromImage(buf) {
     const status = e.response && e.response.status
     if (status === 404 || status === 400) {
       const detail = e.response && e.response.data && e.response.data.error && e.response.data.error.message
-      return { error: 'Modelo de visão indisponível (' + VISION_MODEL + '). Ajuste GROQ_VISION_MODEL. ' + (detail ? '\n' + detail : '') }
+      if (status === 404 || /model/i.test(String(detail || ''))) {
+        return { error: 'Modelo de visão indisponível (' + VISION_MODEL + '). Ajuste GROQ_VISION_MODEL. ' + (detail ? '\n' + detail : '') }
+      }
+      return { error: 'A Groq recusou a imagem: ' + (detail || e.message) }
     }
     if (status === 429) return { error: 'Limite da Groq atingido. Tente de novo em instantes.' }
     return { error: 'Erro ao ler a imagem: ' + e.message }
@@ -230,8 +234,8 @@ function findWeaponFromTitle(title, hint) {
 }
 
 const GRADE_COLORS = {
-  S: '#34d399', '+A': '#34d399', A: '#4ade80', '-A': '#86efac',
-  '+B': '#facc15', B: '#facc15', '-B': '#facc15',
+  S: '#3ddc84', '+A': '#3ddc84', A: '#3ddc84', '-A': '#3ddc84',
+  '+B': '#f5c542', B: '#f5c542', '-B': '#f5c542',
   '+C': '#fb923c', C: '#fb923c', '-C': '#fb923c', F: '#ef4444'
 }
 
@@ -330,34 +334,71 @@ function esc(s) {
   return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 }
 
+// Lê largura/altura do cabeçalho da imagem (PNG, JPEG, WebP) sem depender de biblioteca.
+function imageSize(buf) {
+  try {
+    const mime = detectMime(buf)
+    if (mime === 'image/png') return { w: buf.readUInt32BE(16), h: buf.readUInt32BE(20) }
+    if (mime === 'image/jpeg') {
+      let i = 2
+      while (i < buf.length - 9) {
+        if (buf[i] !== 0xff) { i++; continue }
+        const marker = buf[i + 1]
+        if (marker >= 0xc0 && marker <= 0xcf && marker !== 0xc4 && marker !== 0xc8 && marker !== 0xcc) {
+          return { h: buf.readUInt16BE(i + 5), w: buf.readUInt16BE(i + 7) }
+        }
+        i += 2 + buf.readUInt16BE(i + 2)
+      }
+    }
+    if (mime === 'image/webp') {
+      const kind = buf.toString('ascii', 12, 16)
+      if (kind === 'VP8 ') return { w: buf.readUInt16LE(26) & 0x3fff, h: buf.readUInt16LE(28) & 0x3fff }
+      if (kind === 'VP8L') { const b = buf.readUInt32LE(21); return { w: (b & 0x3fff) + 1, h: ((b >> 14) & 0x3fff) + 1 } }
+      if (kind === 'VP8X') return { w: 1 + buf.readUIntLE(24, 3), h: 1 + buf.readUIntLE(27, 3) }
+    }
+  } catch (e) { /* cai no padrão */ }
+  return null
+}
+
+// Estilo "referência": riven original ocupando a esquerda inteira, painel preto à direita.
 function buildCardSvg(result, imgBuf) {
-  const W = 900
-  const rowH = 100
+  const LEFT_W = 460
+  const RIGHT_W = 400
+  const W = LEFT_W + RIGHT_W
   const n = result.rows.length
-  const H = Math.max(480, 160 + n * rowH + 70)
-  const RX = 430 // início da coluna de stats
+  const HEAD = 126 // espaço do título + subtítulo
+
+  const size = imgBuf ? imageSize(imgBuf) : null
+  const natural = size && size.w > 0 ? Math.round(LEFT_W * size.h / size.w) : 560
+  const minH = HEAD + n * 92 + 14
+  const H = Math.max(minH, Math.min(natural, 820))
+  // se a altura final é próxima da natural, preenche tudo (sem sobras); senão mostra inteira
+  const fill = Math.abs(natural - H) / H < 0.15 ? 'slice' : 'meet'
+
+  const RX = LEFT_W + 36
+  const RR = W - 28
 
   let svg = ''
   svg += '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '">'
-  svg += '<defs><clipPath id="imgclip"><rect x="30" y="30" width="360" height="' + (H - 60) + '" rx="14"/></clipPath></defs>'
-  svg += '<rect width="' + W + '" height="' + H + '" fill="#0d0d11"/>'
+  svg += '<defs><clipPath id="imgclip"><rect x="0" y="0" width="' + LEFT_W + '" height="' + H + '"/></clipPath></defs>'
+  svg += '<rect width="' + W + '" height="' + H + '" fill="#08080a"/>'
 
-  // painel da imagem original
-  svg += '<rect x="30" y="30" width="360" height="' + (H - 60) + '" rx="14" fill="#15151b" stroke="#26262e"/>'
   if (imgBuf) {
-    svg += '<image x="30" y="30" width="360" height="' + (H - 60) + '" preserveAspectRatio="xMidYMid meet" clip-path="url(#imgclip)" xlink:href="data:' + detectMime(imgBuf) + ';base64,' + imgBuf.toString('base64') + '"/>'
+    svg += '<image x="0" y="0" width="' + LEFT_W + '" height="' + H + '" preserveAspectRatio="xMidYMid ' + fill + '" clip-path="url(#imgclip)" xlink:href="data:' + detectMime(imgBuf) + ';base64,' + imgBuf.toString('base64') + '"/>'
   }
 
   // cabeçalho
-  svg += '<text x="' + RX + '" y="82" font-family="DejaVu Sans" font-weight="bold" font-size="40" fill="#ffffff">' + esc(result.weaponName) + '</text>'
-  svg += '<text x="' + RX + '" y="114" font-family="DejaVu Sans" font-size="19" fill="#8b8b96">' + esc(result.configKey + ' \u00B7 disposition ' + result.disposition) + '</text>'
-  svg += '<line x1="' + RX + '" y1="140" x2="' + (W - 30) + '" y2="140" stroke="#26262e" stroke-width="2"/>'
+  svg += '<text x="' + RX + '" y="56" font-family="DejaVu Sans" font-weight="bold" font-size="32" fill="#ffffff">' + esc(result.weaponName) + '</text>'
+  svg += '<text x="' + RX + '" y="84" font-family="DejaVu Sans" font-size="15" fill="#6f6f7a">' + esc(result.configKey + ' \u00B7 disposition ' + result.disposition) + '</text>'
+  svg += '<line x1="' + RX + '" y1="104" x2="' + RR + '" y2="104" stroke="#2a2a31" stroke-width="1.5"/>'
 
   // linhas de stats
-  let y = 140
+  const rowH = Math.min(112, (H - HEAD - 6) / n)
+  let y = 104
   for (const r of result.rows) {
-    const color = r.grade ? (GRADE_COLORS[r.grade] || '#facc15') : '#8b8b96'
-    svg += '<text x="' + RX + '" y="' + (y + 38) + '" font-family="DejaVu Sans" font-size="26" fill="#f2f2f5">' + esc(r.label) + '</text>'
+    const color = r.grade ? (GRADE_COLORS[r.grade] || '#f5c542') : '#8b8b96'
+    const labelSize = r.label.length > 22 ? 19 : 23
+    svg += '<text x="' + RX + '" y="' + Math.round(y + rowH * 0.40) + '" font-family="DejaVu Sans" font-size="' + labelSize + '" fill="#f0f0f3">' + esc(r.label) + '</text>'
 
     let line
     if (r.grade) {
@@ -366,17 +407,15 @@ function buildCardSvg(result, imgBuf) {
     } else {
       line = r.valueText + '\u00A0\u00A0(' + (r.note || 'sem grade') + ')'
     }
-    svg += '<text x="' + RX + '" y="' + (y + 78) + '" font-family="DejaVu Sans" font-weight="bold" font-size="30" fill="' + color + '">' + esc(line) + '</text>'
+    svg += '<text x="' + RX + '" y="' + Math.round(y + rowH * 0.76) + '" font-family="DejaVu Sans" font-weight="bold" font-size="25" fill="' + color + '">' + esc(line) + '</text>'
     y += rowH
-    svg += '<line x1="' + RX + '" y1="' + y + '" x2="' + (W - 30) + '" y2="' + y + '" stroke="#26262e" stroke-width="2"/>'
+    svg += '<line x1="' + RX + '" y1="' + Math.round(y) + '" x2="' + RR + '" y2="' + Math.round(y) + '" stroke="#2a2a31" stroke-width="1.5"/>'
   }
 
-  // rodapé
-  const foot = []
-  foot.push('Rank ' + result.modRank + (result.rankAssumed ? ' (assumido)' : ''))
-  if (result.mastery != null) foot.push('MR ' + result.mastery)
-  if (result.rerolls != null) foot.push('Rerolls ' + result.rerolls)
-  svg += '<text x="' + RX + '" y="' + (H - 34) + '" font-family="DejaVu Sans" font-size="18" fill="#6e6e79">' + esc(foot.join(' \u00B7 ')) + '</text>'
+  // só avisa no rodapé quando o rank não pôde ser lido (afeta as notas)
+  if (result.rankAssumed) {
+    svg += '<text x="' + RX + '" y="' + (H - 14) + '" font-family="DejaVu Sans" font-size="14" fill="#6f6f7a">' + esc('Rank ' + result.modRank + ' (assumido)') + '</text>'
+  }
 
   svg += '</svg>'
   return svg
