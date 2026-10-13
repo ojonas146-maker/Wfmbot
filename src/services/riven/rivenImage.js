@@ -17,6 +17,7 @@ const { gradeOneStat, gradeRank, getConfigKey } = require('./grading')
 // tira espaços e aspas que às vezes vêm coladas junto do valor da variável
 const VISION_MODEL = String(process.env.GROQ_VISION_MODEL || '').trim().replace(/^["']|["']$/g, '') || 'qwen/qwen3.8-27b'
 console.log('[rivenImage] modelo de visão:', VISION_MODEL, process.env.GROQ_VISION_MODEL ? '(da variável GROQ_VISION_MODEL)' : '(padrão do código)')
+const MAX_OUT_TOKENS = Number(process.env.GROQ_VISION_MAX_TOKENS) || 500
 const MAX_IMAGE_BYTES = 3.5 * 1024 * 1024 // limite do base64 da Groq é ~4MB
 
 const FONT_DIR = path.join(__dirname, '..', '..', '..', 'assets', 'fonts')
@@ -111,7 +112,9 @@ async function extractRivenFromImage(buf) {
   const body = {
     model: VISION_MODEL,
     temperature: 0,
-    max_tokens: 3000, // folga p/ modelos com raciocínio
+    // plano grátis da Groq: ~1000 tokens de saída por minuto. O JSON do riven usa ~150.
+    max_tokens: MAX_OUT_TOKENS,
+    reasoning_effort: 'none', // sem "pensar": economiza tokens de saída
     messages: [
       {
         role: 'user',
@@ -128,22 +131,36 @@ async function extractRivenFromImage(buf) {
   }
 
   try {
-    let res
-    try {
-      res = await axios.post(env.GROQ_API_URL, body, reqCfg)
-    } catch (e1) {
-      // limite por minuto: se a Groq pede espera curta, espera e tenta mais uma vez
-      const retryAfter = e1.response && e1.response.status === 429 && Number(e1.response.headers && e1.response.headers['retry-after'])
-      if (retryAfter && retryAfter <= 20) {
-        await new Promise((r) => setTimeout(r, (retryAfter + 1) * 1000))
-        res = await axios.post(env.GROQ_API_URL, body, reqCfg)
-      } else {
+    const post = async (b) => {
+      try {
+        return await axios.post(env.GROQ_API_URL, b, reqCfg)
+      } catch (e1) {
+        const st = e1.response && e1.response.status
+        const msg1 = String((e1.response && e1.response.data && e1.response.data.error && e1.response.data.error.message) || '')
+        // modelo que não aceita "reasoning_effort": repete sem ele
+        if (st === 400 && /reasoning/i.test(msg1) && b.reasoning_effort) {
+          const b2 = Object.assign({}, b)
+          delete b2.reasoning_effort
+          return axios.post(env.GROQ_API_URL, b2, reqCfg)
+        }
+        // limite por minuto: se a Groq pede espera curta, espera e tenta mais uma vez
+        const retryAfter = st === 429 && Number(e1.response.headers && e1.response.headers['retry-after'])
+        if (retryAfter && retryAfter <= 20) {
+          await new Promise((r) => setTimeout(r, (retryAfter + 1) * 1000))
+          return axios.post(env.GROQ_API_URL, b, reqCfg)
+        }
         throw e1
       }
     }
+    const res = await post(body)
     const content = res.data && res.data.choices && res.data.choices[0] && res.data.choices[0].message && res.data.choices[0].message.content
     const data = parseJsonLoose(content)
-    if (!data) return { error: 'Não consegui interpretar a resposta do modelo de visão. Tente outro print.' }
+    if (!data) {
+      const cut = res.data && res.data.choices && res.data.choices[0] && res.data.choices[0].finish_reason === 'length'
+      return { error: cut
+        ? 'A resposta do modelo foi cortada (limite de tokens). Tente de novo ou aumente GROQ_VISION_MAX_TOKENS.'
+        : 'Não consegui interpretar a resposta do modelo de visão. Tente outro print.' }
+    }
     if (data.error) return { error: 'Isso não parece ser um riven. Envie o print da carta do riven.' }
     if (!Array.isArray(data.stats) || data.stats.length < 2) {
       return { error: 'Não consegui ler os stats do riven. Envie um print mais nítido, só com a carta.' }
