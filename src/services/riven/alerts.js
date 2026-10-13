@@ -71,7 +71,7 @@ function parseRivenAlertArgs(raw) {
     if (url) {
       if (stats.indexOf(url) === -1) stats.push(url)
     } else {
-      return { error: 'Stat desconhecido: *' + p + '*\nEx: ms fr cc cd sc dmg | meta | grade S' }
+      return { error: 'Stat desconhecido: *' + p + '*\nVeja todos os stats e abreviações: *!rivenstats*\nEx: ms fr cc cd sc dmg | meta | grade S' }
     }
   }
 
@@ -98,7 +98,8 @@ function createRivenAlert(userJid, rawArgs, isAdmFlag) {
       '• !alertariven burston ms cc cd max 5000\n' +
       '• !alertariven torid meta max 2500\n' +
       '• !alertariven burston meta grade +A max 4000\n' +
-      '• !alertariven ballistica ms cd 2p max 3000'
+      '• !alertariven ballistica ms cd 2p max 3000\n\n' +
+      '📖 Stats e abreviações: !rivenstats'
     )
   }
   if (parsed.error) return '❌ ' + parsed.error
@@ -580,7 +581,7 @@ async function checkRivenAlerts(sock) {
 
           try {
             const msg = await formatRivenAuctionMessage(top, alert)
-            await sock.sendMessage(alert.userJid, { text: msg })
+            await sendAuctionWithCard(sock, alert.userJid, top, msg)
             pingsThisCycle[userKey] = (pingsThisCycle[userKey] || 0) + 1
           } catch (e) {
             console.error('Erro envio alerta riven:', e.message)
@@ -879,11 +880,94 @@ async function createWeekSnipers(userJid, rawArgs, isAdmFlag) {
   return reply.trim()
 }
 
+// ---------------------------------------------------------------- cartão em imagem
+// Gera o PNG do anúncio (src/services/riven/rivenImage.js). Se algo falhar, cai no texto.
+function metaCaptionLine(weapon, attrs) {
+  try {
+    const an = analyzeRivenMeta(weapon, attrs, getWeaponMeta)
+    if (an && an.hasMeta) return '🎯 Meta: *' + an.label + '* · score ' + an.score
+  } catch (e) {}
+  return ''
+}
+
+// Linha de sussurro pronta pra copiar e colar no jogo (mensagem separada, só o comando)
+function whisperText(auction) {
+  const owner = (auction && auction.owner) || {}
+  const seller = owner.ingame_name || owner.slug
+  return seller ? '/w ' + seller + ' hi' : ''
+}
+
+async function sendAuctionWithCard(sock, jid, auction, msg) {
+  let png = null
+  try {
+    png = require('./rivenImage').renderAuctionPng(auction)
+  } catch (e) {
+    console.error('card riven (render):', e.message)
+  }
+  if (!png) {
+    await sock.sendMessage(jid, { text: msg })
+    return
+  }
+
+  const item = auction.item || {}
+  // a imagem já traz stats e notas: a legenda leva só cabeçalho, meta, link e /w
+  let caption = String(msg).split('\n*Stats:*')[0].trim()
+  const meta = metaCaptionLine(item.weapon_url_name, item.attributes || [])
+  if (meta) caption += '\n' + meta
+  const link = (String(msg).match(/🔗[^\n]*/) || [''])[0]
+  if (link) caption += '\n\n' + link
+
+  try {
+    await sock.sendMessage(jid, { image: png, caption: caption.slice(0, 1000) })
+    const w = whisperText(auction)
+    if (w) await sock.sendMessage(jid, { text: w })
+  } catch (e) {
+    console.error('card riven (envio):', e.message)
+    await sock.sendMessage(jid, { text: msg })
+  }
+}
+
+/** /grade <link>: devolve { png, caption } ou null (aí o comando usa o texto completo). */
+async function getRivenGradeImage(rawInput) {
+  const id = extractAuctionId(rawInput)
+  if (!id) return null
+  try {
+    const auction = await fetchAuctionById(id)
+    if (!auction || !auction.item) return null
+    const png = require('./rivenImage').renderAuctionPng(auction)
+
+    const item = auction.item
+    const price = auction.buyout_price != null ? auction.buyout_price : auction.starting_price
+    const seller = (auction.owner && (auction.owner.ingame_name || auction.owner.slug)) || '?'
+    const status = (auction.owner && auction.owner.status) || '?'
+
+    let caption = '💰 *' + (price != null ? price + 'p' : '?') + '* | ' + seller + ' (' + status + ')'
+    try {
+      const off = await getOfficialRivenMedian(item.weapon_url_name)
+      if (off && off.median != null) {
+        caption += '\n📊 Mediana oficial: *' + fmtPlat(off.median) + '*'
+        if (price != null && off.median > 0) {
+          const diff = Math.round(((price - off.median) / off.median) * 100)
+          caption += ' | Anúncio: ' + (diff >= 0 ? '+' : '') + diff + '% vs mediana'
+        }
+      }
+    } catch (e) {}
+    const meta = metaCaptionLine(item.weapon_url_name, item.attributes || [])
+    if (meta) caption += '\n' + meta
+    caption += '\n🔗 https://warframe.market/auction/' + id
+    return { png, caption, whisper: whisperText(auction) }
+  } catch (e) {
+    console.error('!grade imagem:', e.message)
+    return null
+  }
+}
+
 module.exports = {
   loadRivenAlerts, saveRivenAlerts, countUserRivenAlerts,
   parseRivenAlertArgs, createRivenAlert, listRivenAlerts, deleteRivenAlert,
   rivenMatchesAlert, formatRivenAuctionMessage, checkRivenAlerts,
   loadRivenSeen, saveRivenSeen, rivenAuctionFingerprint, rivenSeenKey,
   hasSeenRiven, markSeenRiven, markAuctionSeenForUser, wasAuctionSeen,
-  extractAuctionId, fetchAuctionById, getRivenGradeMessage, createWeekSnipers
+  extractAuctionId, fetchAuctionById, getRivenGradeMessage, createWeekSnipers,
+  sendAuctionWithCard, getRivenGradeImage
 }
