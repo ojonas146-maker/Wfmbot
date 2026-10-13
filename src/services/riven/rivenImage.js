@@ -11,7 +11,7 @@ const axios = require('axios')
 
 const env = require('../../config/env')
 const { loadBaseValues, findDisposition, getDispositionsList, resolveCategoryFromDisp } = require('./baseData')
-const { gradeOneStat, gradeRank, getConfigKey } = require('./grading')
+const { gradeOneStat, gradeRank, getConfigKey, RIVEN_STAT_LABEL } = require('./grading')
 
 // Modelo de visão da Groq. Se a Groq aposentar este, troque via variável de ambiente.
 // tira espaços e aspas que às vezes vêm coladas junto do valor da variável
@@ -267,6 +267,8 @@ function findWeaponFromTitle(title, hint) {
   return findDisposition(hint || '') || findDisposition(t.split(' ')[0]) || null
 }
 
+const NOTE_SHORT = { 'não rola nesta categoria': 'não rola aqui', 'categoria desconhecida': 'sem categoria' }
+
 const GRADE_COLORS = {
   S: '#3ddc84', '+A': '#3ddc84', A: '#3ddc84', '-A': '#3ddc84',
   '+B': '#f5c542', B: '#f5c542', '-B': '#f5c542',
@@ -396,6 +398,48 @@ function imageSize(buf) {
   return null
 }
 
+function txt(x, y, size, fill, str, opts) {
+  opts = opts || {}
+  return '<text x="' + x + '" y="' + y + '" font-family="DejaVu Sans" font-size="' + size + '"' +
+    (opts.bold ? ' font-weight="bold"' : '') +
+    (opts.middle ? ' text-anchor="middle"' : '') +
+    ' fill="' + fill + '">' + esc(str) + '</text>'
+}
+
+// Painel à esquerda quando não existe a imagem do riven (anúncios do warframe.market):
+// desenha uma "carta" simples com nome, stats, preço e vendedor.
+function buildCardPanel(card, W, H) {
+  const cx = W / 2
+  let s = '<defs><linearGradient id="pg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a1f3d"/><stop offset="1" stop-color="#0e0a15"/></linearGradient></defs>'
+  s += '<rect x="0" y="0" width="' + W + '" height="' + H + '" fill="url(#pg)"/>'
+  s += '<rect x="20" y="20" width="' + (W - 40) + '" height="' + (H - 40) + '" rx="16" fill="none" stroke="#6f5e99" stroke-width="2"/>'
+
+  const wSize = card.weapon.length > 16 ? 24 : 30
+  s += txt(cx, 84, wSize, '#e0d4fa', card.weapon, { bold: true, middle: true })
+  if (card.name) s += txt(cx, 122, 25, '#b9a6e6', card.name, { middle: true })
+  s += '<line x1="60" y1="146" x2="' + (W - 60) + '" y2="146" stroke="#4a3d6b" stroke-width="1.5"/>'
+
+  let y = 188
+  for (const line of card.lines.slice(0, 5)) {
+    s += txt(cx, y, line.length > 28 ? 16 : 20, '#cbbcf0', line, { middle: true })
+    y += 34
+  }
+
+  const priceY = H - 168
+  s += '<line x1="60" y1="' + (priceY - 52) + '" x2="' + (W - 60) + '" y2="' + (priceY - 52) + '" stroke="#4a3d6b" stroke-width="1.5"/>'
+  s += txt(cx, priceY, 42, '#f5c542', card.price != null ? card.price + ' p' : '? p', { bold: true, middle: true })
+
+  const dot = card.status === 'ingame' ? '#3ddc84' : card.status === 'online' ? '#f5c542' : '#6e6e79'
+  s += '<text x="' + cx + '" y="' + (priceY + 46) + '" font-family="DejaVu Sans" font-size="19" text-anchor="middle" fill="#a79bc4">' +
+    '<tspan fill="' + dot + '">\u25CF</tspan><tspan> ' + esc(card.seller + (card.status ? ' \u00B7 ' + card.status : '')) + '</tspan></text>'
+
+  const foot = []
+  if (card.mr != null) foot.push('MR ' + card.mr)
+  if (card.rerolls != null) foot.push('Rerolls ' + card.rerolls)
+  if (foot.length) s += txt(cx, H - 56, 19, '#9d8cc4', foot.join('   \u00B7   '), { middle: true })
+  return s
+}
+
 // Estilo "referência": riven original ocupando a esquerda inteira, painel preto à direita.
 function buildCardSvg(result, imgBuf) {
   const LEFT_W = 460
@@ -405,7 +449,7 @@ function buildCardSvg(result, imgBuf) {
   const HEAD = 126 // espaço do título + subtítulo
 
   const size = imgBuf ? imageSize(imgBuf) : null
-  const natural = size && size.w > 0 ? Math.round(LEFT_W * size.h / size.w) : 560
+  const natural = size && size.w > 0 ? Math.round(LEFT_W * size.h / size.w) : 600
   const minH = HEAD + n * 92 + 14
   const H = Math.max(minH, Math.min(natural, 820))
   // se a altura final é próxima da natural, preenche tudo (sem sobras); senão mostra inteira
@@ -419,13 +463,14 @@ function buildCardSvg(result, imgBuf) {
   svg += '<defs><clipPath id="imgclip"><rect x="0" y="0" width="' + LEFT_W + '" height="' + H + '"/></clipPath></defs>'
   svg += '<rect width="' + W + '" height="' + H + '" fill="#08080a"/>'
 
+  if (!imgBuf && result.card) svg += buildCardPanel(result.card, LEFT_W, H)
   if (imgBuf) {
     svg += '<image x="0" y="0" width="' + LEFT_W + '" height="' + H + '" preserveAspectRatio="xMidYMid ' + fill + '" clip-path="url(#imgclip)" xlink:href="data:' + detectMime(imgBuf) + ';base64,' + imgBuf.toString('base64') + '"/>'
   }
 
   // cabeçalho
   svg += '<text x="' + RX + '" y="56" font-family="DejaVu Sans" font-weight="bold" font-size="32" fill="#ffffff">' + esc(result.weaponName) + '</text>'
-  svg += '<text x="' + RX + '" y="84" font-family="DejaVu Sans" font-size="15" fill="#6f6f7a">' + esc(result.configKey + ' \u00B7 disposition ' + result.disposition) + '</text>'
+  svg += '<text x="' + RX + '" y="84" font-family="DejaVu Sans" font-size="15" fill="#6f6f7a">' + esc(result.disposition != null ? result.configKey + ' \u00B7 disposition ' + result.disposition : result.configKey) + '</text>'
   svg += '<line x1="' + RX + '" y1="104" x2="' + RR + '" y2="104" stroke="#2a2a31" stroke-width="1.5"/>'
 
   // linhas de stats
@@ -441,7 +486,7 @@ function buildCardSvg(result, imgBuf) {
       const dev = (r.dev >= 0 ? '+' : '') + r.dev.toFixed(2) + '%'
       line = r.grade + '\u00A0\u00A0' + r.valueText + '\u00A0\u00A0(' + dev + ')'
     } else {
-      line = r.valueText + '\u00A0\u00A0(' + (r.note || 'sem grade') + ')'
+      line = r.valueText + '\u00A0\u00A0(' + (NOTE_SHORT[r.note] || r.note || 'sem grade') + ')'
     }
     svg += '<text x="' + RX + '" y="' + Math.round(y + rowH * 0.76) + '" font-family="DejaVu Sans" font-weight="bold" font-size="25" fill="' + color + '">' + esc(line) + '</text>'
     y += rowH
@@ -468,6 +513,89 @@ function renderPng(svg) {
     }
   })
   return resvg.render().asPng()
+}
+
+// ---------------------------------------------------------------------------
+// 5b) Cartão a partir de um anúncio do warframe.market (/grade <link> e snipes)
+// ---------------------------------------------------------------------------
+
+function prettyName(s) {
+  return String(s || '').replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())
+}
+
+function fmtNum(n) {
+  return String(Number(Number(n).toFixed(1)))
+}
+
+function buildAuctionResult(auction) {
+  const item = (auction && auction.item) || {}
+  const weaponUrl = item.weapon_url_name || ''
+  const disp = findDisposition(weaponUrl)
+  const attrs = item.attributes || []
+  const configKey = getConfigKey(attrs)
+  const disposition = disp ? Number(disp.disposition) : null
+  const category = disp ? resolveCategoryFromDisp(disp) : null
+  const modRank = item.mod_rank != null ? Number(item.mod_rank) : 8
+  const maxRank = item.mod_max_rank != null ? Number(item.mod_max_rank) : 8
+
+  const rows = attrs.map((a) => {
+    const isPos = a.positive !== false
+    const num = Number(a.value)
+    const g = disposition != null
+      ? gradeOneStat(a, category, disposition, configKey, modRank, maxRank)
+      : { label: RIVEN_STAT_LABEL[a.url_name] || a.url_name, grade: null, dev: null }
+    const unit = g.unit || '%'
+    let valueText
+    if (unit === 'x') valueText = 'x' + num.toFixed(2)
+    else if (isPos) valueText = (num >= 0 ? '+' : '') + fmtNum(num)
+    else valueText = num < 0 ? fmtNum(num) : '-' + fmtNum(Math.abs(num))
+    return {
+      label: g.label || a.url_name,
+      valueText,
+      unit,
+      positive: isPos,
+      grade: g.grade || null,
+      dev: g.dev != null ? g.dev : null,
+      note: g.note || null
+    }
+  })
+
+  // linhas "como na carta do jogo", na ordem original do anúncio
+  const lines = rows.map((r) => (r.unit === 'x' ? r.valueText + ' ' + r.label : r.valueText + '% ' + r.label))
+
+  rows.sort((a, b) => {
+    if (a.positive !== b.positive) return a.positive ? -1 : 1
+    return gradeRank(b.grade) - gradeRank(a.grade)
+  })
+
+  const weaponName = disp && disp.name ? disp.name : prettyName(weaponUrl)
+  const price = auction.buyout_price != null ? auction.buyout_price : auction.starting_price
+  const owner = auction.owner || {}
+  const rivenName = String(item.name || '')
+
+  return {
+    weaponName,
+    rivenName,
+    disposition,
+    configKey,
+    modRank,
+    rankNote: modRank < maxRank ? 'Rank ' + modRank : null,
+    rows,
+    card: {
+      weapon: weaponName,
+      name: rivenName ? rivenName.charAt(0).toUpperCase() + rivenName.slice(1) : '',
+      lines,
+      price,
+      seller: owner.ingame_name || owner.slug || '?',
+      status: owner.status || '',
+      mr: item.mastery_level,
+      rerolls: item.re_rolls
+    }
+  }
+}
+
+function renderAuctionPng(auction) {
+  return renderPng(buildCardSvg(buildAuctionResult(auction), null))
 }
 
 // ---------------------------------------------------------------------------
@@ -513,5 +641,7 @@ module.exports = {
   renderPng,
   resolveBaseStat,
   extractRivenFromImage,
+  buildAuctionResult,
+  renderAuctionPng,
   findImageNode
 }
