@@ -10,7 +10,7 @@ const RIVEN_STAT_LABEL = {
   electricity: 'Electric', electricity_damage: 'Electric', electric_damage: 'Electric',
   heat: 'Heat', heat_damage: 'Heat', toxin: 'Toxin', toxin_damage: 'Toxin',
   combo_duration: 'Combo Duration', critical_chance: 'Crit Chance',
-  slide_attack_critical_chance: 'Slide Crit', critical_chance_on_slide_attack: 'Slide Crit', critical_damage: 'Crit Damage',
+  slide_attack_critical_chance: 'Slide Crit', critical_damage: 'Crit Damage',
   finisher_damage: 'Finisher', projectile_speed: 'Flight Speed', ammo_maximum: 'Ammo Max',
   magazine_capacity: 'Magazine', punch_through: 'Punch Through', reload_speed: 'Reload',
   range: 'Range', status_chance: 'Status Chance', status_duration: 'Status Duration',
@@ -50,7 +50,7 @@ const RIVEN_STAT_ALIASES = {
   heat: 'heat_damage', fire: 'heat_damage', heat_damage: 'heat_damage',
   toxin: 'toxin_damage', tox: 'toxin_damage', toxin_damage: 'toxin_damage',
   combo: 'combo_duration', critchance: 'critical_chance', cc: 'critical_chance',
-  slide: 'slide_attack_critical_chance', critical_chance_on_slide_attack: 'slide_attack_critical_chance', critdmg: 'critical_damage', cd: 'critical_damage',
+  slide: 'slide_attack_critical_chance', critdmg: 'critical_damage', cd: 'critical_damage',
   finisher: 'finisher_damage', fin: 'finisher_damage', flight: 'projectile_speed', pfs: 'projectile_speed',
   ps: 'projectile_speed', ammo: 'ammo_maximum', magazine: 'magazine_capacity', mag: 'magazine_capacity',
   punch: 'punch_through', pt: 'punch_through', reload: 'reload_speed', rld: 'reload_speed', rs: 'reload_speed',
@@ -95,7 +95,7 @@ const WFM_TO_BASE_STAT = {
   damage_vs_corpus: 'Damage vs. Corpus', damage_vs_grineer: 'Damage vs. Grineer',
   damage_vs_infested: 'Damage vs. Infested', range: 'Range', initial_combo: 'Initial Combo',
   combo_duration: 'Combo Duration', heavy_attack_efficiency: 'Heavy Attack Efficiency',
-  finisher_damage: 'Finisher Damage', slide_attack_critical_chance: 'Critical Chance for Slide Attack', critical_chance_on_slide_attack: 'Critical Chance for Slide Attack', 
+  finisher_damage: 'Finisher Damage', slide_attack_critical_chance: 'Critical Chance for Slide Attack',
   chance_to_gain_combo_count: 'Chance to Gain Combo Count',
   additional_combo_count_chance: 'Additional Combo Count Chance',
   chance_to_gain_extra_combo_count: 'Additional Combo Count Chance',
@@ -150,9 +150,22 @@ function isSpliceStat(s) {
   return SPLICE_STATS.has(String(s || '').toLowerCase())
 }
 
+let _fullNameMap = null
+function getFullNameMap() {
+  if (_fullNameMap) return _fullNameMap
+  const m = {}
+  const add = (url) => { m[String(url).toLowerCase().replace(/[^a-z0-9]/g, '')] = url }
+  for (const alias of Object.keys(RIVEN_STAT_ALIASES)) add(RIVEN_STAT_ALIASES[alias])
+  _fullNameMap = m
+  return m
+}
+
 function resolveRivenStat(token) {
   const t = String(token || '').toLowerCase().trim()
-  return RIVEN_STAT_ALIASES[t] || null
+  if (RIVEN_STAT_ALIASES[t]) return RIVEN_STAT_ALIASES[t]
+  // aceita também o nome completo: multishot, criticalchance, weakpoint_damage, heat-damage...
+  const key = t.replace(/[^a-z0-9]/g, '')
+  return key ? (getFullNameMap()[key] || null) : null
 }
 
 function letterGrade(dev) {
@@ -313,7 +326,9 @@ function gradeOneStat(attr, weaponOrCategory, disposition, configKey, modRank, m
   // Positivos: actual > expected = melhor
   // Negativos: actual > expected (curse mais forte) = melhor → inverte o sinal
   let dev = expected ? ((actual - expected) / expected) * 100 : 0
-  if (!isPos) dev = -dev
+  // Weapon Recoil: as outras ferramentas (e quem vende riven) comparam o valor direto,
+  // sem a lógica de curse invertida. Mantemos igual para não confundir.
+  if (!isPos && baseName !== 'Weapon Recoil') dev = -dev
 
   const grade = letterGrade(dev)
 
