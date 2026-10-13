@@ -46,12 +46,14 @@ function getHelp() {
     '━━━━━━━━━━━━━━━━━\n' +
     '🔫 *RIVENS*\n' +
     '━━━━━━━━━━━━━━━━━\n' +
-    '📐 *!grade <link|id>* — analisa a grade do seu riven vs. a meta\n' +
+    '📐 *!grade <link|id>* — cartão com a grade do riven (add `texto` p/ versão completa)\n' +
+    '🖼️ *!grade* (legenda no print do riven ou respondendo a imagem) — lê o riven e gera o cartão\n' +
     '🎯 *!meta <arma>* / *!grol <arma>* — god roll / rolls must-have da arma\n' +
     '🏆 *!rivendb [N] [pop] [rolled|unrolled]* — ranking semanal de rivens\n' +
     '🎯 *!alertariven <arma> [stats] [meta] [grade S|+A] [max N] [2p|3p]*\n' +
     '   Sniper: te avisa só quando aparecer um roll bom, meta ou barato\n' +
     '   Ex: `!alertariven torid meta max 2500`\n' +
+    '📖 *!rivenstats [stat]* — dicionário de stats/abreviações e como montar o !alertariven\n' +
     '📅 *!snipeweek [N] [pop|price] [max 900|auto]* — top da semana p/ flip\n' +
     '   Ex: `!snipeweek 20 max 900` · `!snipeweek 15 auto` · `!snipeweek clear`\n' +
     '📋 *!alertasriven* — lista seus alertas · ❌ *!delalertariven <id|all>*\n' +
