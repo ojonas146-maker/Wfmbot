@@ -1,6 +1,7 @@
 // src/commands/riven.js — comandos de riven (sniper, grade, meta, mercado semanal, highest, !i)
 const { register } = require('./router')
-const { createRivenAlert, listRivenAlerts, deleteRivenAlert, getRivenGradeMessage, createWeekSnipers } = require('../services/riven/alerts')
+const { createRivenAlert, listRivenAlerts, deleteRivenAlert, getRivenGradeMessage, getRivenGradeImage, createWeekSnipers } = require('../services/riven/alerts')
+const { getRivenStatsMessages } = require('../services/riven/statDictionary')
 const { getRivenMarketMessage, getTopRivensMessage } = require('../services/riven/weekly')
 const { getMetaMessage } = require('../services/riven/metaCommands')
 const { formatHighestMenu, formatHighestRanking } = require('../services/wfm/highest')
@@ -30,25 +31,44 @@ register(/^!riven(?:\s+(.+))?$/i, async ({ sock, from, match }) => {
   await sock.sendMessage(from, { text: await getRivenMarketMessage(match[1] || '') })
 })
 
-register(/^!grade\s+(.+)/i, async ({ sock, from, match }) => {
-  await sock.sendMessage(from, { text: '📐 Calculando grade...' })
-  await sock.sendMessage(from, { text: await getRivenGradeMessage(match[1].trim()) })
-})
-
-// /grade com imagem: legenda "/grade" no print do riven, ou resposta a uma imagem com "/grade"
-register(/^!grade\s*$/i, async ({ sock, from, msg }) => {
+// /grade com imagem: legenda "/grade" no print do riven, ou resposta a uma imagem com "/grade".
+// Rank diferente de 8: "/grade r5". Fica ANTES de !grade <link> para ter prioridade.
+register(/^!grade(?:\s+(?:r|rank)\s*(\d{1,2}))?\s*$/i, async ({ sock, from, msg, match }) => {
   const { gradeRivenFromMessage } = require('../services/riven/rivenImage')
   const hasImage = !!(msg && msg.message && (msg.message.imageMessage ||
     (msg.message.extendedTextMessage && msg.message.extendedTextMessage.contextInfo &&
       msg.message.extendedTextMessage.contextInfo.quotedMessage &&
       msg.message.extendedTextMessage.contextInfo.quotedMessage.imageMessage)))
   if (hasImage) await sock.sendMessage(from, { text: '📐 Lendo o riven...' })
-  const res = await gradeRivenFromMessage(sock, msg)
+  const res = await gradeRivenFromMessage(sock, msg, { rank: match[1] != null ? Number(match[1]) : null })
   if (res.error) {
     await sock.sendMessage(from, { text: res.error })
     return
   }
   await sock.sendMessage(from, { image: res.png }, { quoted: msg })
+})
+
+// /grade <link|id> -> cartão em imagem. Para o texto completo: "/grade <link> texto"
+register(/^!grade\s+(.+)/i, async ({ sock, from, msg, match }) => {
+  const arg = match[1].trim()
+  const wantText = /\s+(texto|text|full|completo)$/i.test(arg)
+  const link = arg.replace(/\s+(texto|text|full|completo)$/i, '').trim()
+  await sock.sendMessage(from, { text: '📐 Calculando grade...' })
+  if (!wantText) {
+    const card = await getRivenGradeImage(link)
+    if (card && card.png) {
+      await sock.sendMessage(from, { image: card.png, caption: card.caption }, { quoted: msg })
+      if (card.whisper) await sock.sendMessage(from, { text: card.whisper })
+      return
+    }
+  }
+  await sock.sendMessage(from, { text: await getRivenGradeMessage(link) })
+})
+
+// Dicionário de stats / como montar o !alertariven. "!rivenstats weakpoint" procura um stat.
+register(/^!(?:rivenstats|statsriven|dicionario|dicstats)(?:\s+(.+))?$/i, async ({ sock, from, match }) => {
+  const parts = getRivenStatsMessages(match[1] || '')
+  for (const text of parts) await sock.sendMessage(from, { text })
 })
 
 register(/^!(meta|grol)\s+(.+)/i, async ({ sock, from, match }) => {
