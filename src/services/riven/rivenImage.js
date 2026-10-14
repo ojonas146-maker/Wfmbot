@@ -11,7 +11,7 @@ const axios = require('axios')
 
 const env = require('../../config/env')
 const { loadBaseValues, findDisposition, getDispositionsList, resolveCategoryFromDisp } = require('./baseData')
-const { gradeOneStat, gradeRank, getConfigKey, RIVEN_STAT_LABEL, resolveEffectiveRank } = require('./grading')
+const { gradeOneStat, gradeRank, getConfigKey, RIVEN_STAT_LABEL, projectToMaxRank, effectiveModRank } = require('./grading')
 
 // Modelo de visão da Groq. Se a Groq aposentar este, troque via variável de ambiente.
 // tira espaços e aspas que às vezes vêm coladas junto do valor da variável
@@ -282,6 +282,18 @@ function fmtValue(base, unit, v) {
   return sign + Math.abs(n).toFixed(1)
 }
 
+// Valor do stat projetado para o rank máximo (ex: rank 0 -> x9). null se já está no máximo.
+function projectedText(unit, num, neg, modRank, maxRank) {
+  if (modRank >= maxRank) return null
+  if (unit === 'x') {
+    const pb = projectToMaxRank(Number(num) - 1, modRank, maxRank)
+    return pb == null ? null : 'x' + (1 + pb).toFixed(2)
+  }
+  const p = projectToMaxRank(Math.abs(Number(num)), modRank, maxRank)
+  if (p == null) return null
+  return (neg ? '-' : '+') + fmtNum(p) + (unit === '%' ? '%' : '')
+}
+
 function gradeExtracted(data, opts) {
   const bv = loadBaseValues()
   const title = String(data.riven_name || '').trim()
@@ -329,7 +341,7 @@ function gradeExtracted(data, opts) {
   let rankNote = null
   if (opts && opts.rank != null && !isNaN(Number(opts.rank))) {
     modRank = Math.max(0, Math.min(maxRank, Number(opts.rank)))
-    if (modRank < maxRank) rankNote = 'Rank ' + modRank
+    if (modRank < maxRank) rankNote = 'Rank ' + modRank + ' \u00B7 valores projetados no Rank ' + maxRank
   }
 
   const rows = parsed.map((p) => {
@@ -340,7 +352,8 @@ function gradeExtracted(data, opts) {
       positive: p.attr.positive,
       grade: g.grade || null,
       dev: g.dev != null ? g.dev : null,
-      note: g.note || null
+      note: g.note || null,
+      proj: projectedText(p.unit, p.raw, p.raw < 0, modRank, maxRank)
     }
   })
 
@@ -357,6 +370,7 @@ function gradeExtracted(data, opts) {
     category,
     configKey,
     modRank,
+    maxRank,
     rankNote,
     mastery: data.mastery_rank,
     rerolls: data.rerolls,
@@ -450,7 +464,8 @@ function buildCardSvg(result, imgBuf) {
 
   const size = imgBuf ? imageSize(imgBuf) : null
   const natural = size && size.w > 0 ? Math.round(LEFT_W * size.h / size.w) : 600
-  const minH = HEAD + n * 92 + 14
+  const hasProj = result.rows.some((r) => r.proj)
+  const minH = HEAD + n * (hasProj ? 114 : 92) + 14 + (result.rankNote ? 18 : 0)
   const H = Math.max(minH, Math.min(natural, 820))
   // se a altura final é próxima da natural, preenche tudo (sem sobras); senão mostra inteira
   const fill = Math.abs(natural - H) / H < 0.15 ? 'slice' : 'meet'
@@ -474,12 +489,14 @@ function buildCardSvg(result, imgBuf) {
   svg += '<line x1="' + RX + '" y1="104" x2="' + RR + '" y2="104" stroke="#2a2a31" stroke-width="1.5"/>'
 
   // linhas de stats
-  const rowH = Math.min(112, (H - HEAD - 6) / n)
+  const rowH = hasProj ? 114 : Math.min(112, (H - HEAD - 6 - (result.rankNote ? 18 : 0)) / n)
+  const fLabel = 0.40
+  const fGrade = 0.76
   let y = 104
   for (const r of result.rows) {
     const color = r.grade ? (GRADE_COLORS[r.grade] || '#f5c542') : '#8b8b96'
     const labelSize = r.label.length > 22 ? 19 : 23
-    svg += '<text x="' + RX + '" y="' + Math.round(y + rowH * 0.40) + '" font-family="DejaVu Sans" font-size="' + labelSize + '" fill="#f0f0f3">' + esc(r.label) + '</text>'
+    svg += '<text x="' + RX + '" y="' + (hasProj ? Math.round(y + 36) : Math.round(y + rowH * fLabel)) + '" font-family="DejaVu Sans" font-size="' + labelSize + '" fill="#f0f0f3">' + esc(r.label) + '</text>'
 
     let line
     if (r.grade) {
@@ -488,7 +505,10 @@ function buildCardSvg(result, imgBuf) {
     } else {
       line = r.valueText + '\u00A0\u00A0(' + (NOTE_SHORT[r.note] || r.note || 'sem grade') + ')'
     }
-    svg += '<text x="' + RX + '" y="' + Math.round(y + rowH * 0.76) + '" font-family="DejaVu Sans" font-weight="bold" font-size="25" fill="' + color + '">' + esc(line) + '</text>'
+    svg += '<text x="' + RX + '" y="' + (hasProj ? Math.round(y + 74) : Math.round(y + rowH * 0.76)) + '" font-family="DejaVu Sans" font-weight="bold" font-size="25" fill="' + color + '">' + esc(line) + '</text>'
+    if (r.proj) {
+      svg += '<text x="' + RX + '" y="' + Math.round(y + 100) + '" font-family="DejaVu Sans" font-size="17" fill="#b9a6e6">' + esc('\u2192 Rank ' + result.maxRank + ': ' + r.proj) + '</text>'
+    }
     y += rowH
     svg += '<line x1="' + RX + '" y1="' + Math.round(y) + '" x2="' + RR + '" y2="' + Math.round(y) + '" stroke="#2a2a31" stroke-width="1.5"/>'
   }
@@ -535,13 +555,11 @@ function buildAuctionResult(auction) {
   const configKey = getConfigKey(attrs)
   const disposition = disp ? Number(disp.disposition) : null
   const category = disp ? resolveCategoryFromDisp(disp) : null
-  const listedRank = item.mod_rank != null ? Number(item.mod_rank) : 8
+  const rawRank = item.mod_rank != null ? Number(item.mod_rank) : 8
   const maxRank = item.mod_max_rank != null ? Number(item.mod_max_rank) : 8
-  // anúncio "rank 0" com valores já de R8 (listagem errada): grade em R8, não em R0
-  const eff = disposition != null
-    ? resolveEffectiveRank(attrs, category, disposition, configKey, listedRank, maxRank)
-    : { rank: listedRank, assumedMax: false }
-  const modRank = eff.rank
+  // vendedor às vezes lista rank baixo com os valores já no rank máximo: detecta
+  const modRank = effectiveModRank(attrs, category, disposition, configKey, rawRank, maxRank)
+  const rankFixed = modRank !== rawRank
 
   const rows = attrs.map((a) => {
     const isPos = a.positive !== false
@@ -561,7 +579,8 @@ function buildAuctionResult(auction) {
       positive: isPos,
       grade: g.grade || null,
       dev: g.dev != null ? g.dev : null,
-      note: g.note || null
+      note: g.note || null,
+      proj: projectedText(unit, num, isPos ? num < 0 : true, modRank, maxRank)
     }
   })
 
@@ -584,7 +603,10 @@ function buildAuctionResult(auction) {
     disposition,
     configKey,
     modRank,
-    rankNote: eff.assumedMax ? 'Listado R' + listedRank + ' · valores em R' + maxRank : (modRank < maxRank ? 'Rank ' + modRank : null),
+    maxRank,
+    rankNote: modRank < maxRank
+      ? 'Rank ' + modRank + ' \u00B7 valores projetados no Rank ' + maxRank
+      : (rankFixed ? 'Anúncio com rank ' + rawRank + ' \u00B7 valores já no Rank ' + maxRank : null),
     rows,
     card: {
       weapon: weaponName,
