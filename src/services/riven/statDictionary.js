@@ -7,7 +7,7 @@ const { RIVEN_STAT_ALIASES, RIVEN_STAT_LABEL } = require('./grading')
 const GROUPS = [
   ['⚔️ Principais', ['multishot', 'critical_chance', 'critical_damage', 'base_damage_/_melee_damage', 'fire_rate_/_attack_speed', 'status_chance', 'status_duration']],
   ['🔥 Elementais e físicos', ['heat_damage', 'cold_damage', 'electric_damage', 'toxin_damage', 'impact', 'puncture', 'slash']],
-  ['🧪 Novos (Riven Splicing)', ['viral', 'gas_damage', 'blast_damage', 'corrosive_damage', 'magnetic_damage', 'radiation_damage', 'status_damage', 'weakpoint_damage', 'weakpoint_critical_chance', 'ammo_efficiency', 'reload_while_holstered', 'damage_vs_orokin', 'damage_vs_scaldra', 'damage_vs_techrot']],
+  ['🧪 Novos (Riven Splicing)', ['viral', 'gas_damage', 'blast_damage', 'corrosive_damage', 'magnetic_damage', 'radiation_damage', 'status_damage', 'weakpoint_damage', 'weakpoint_critical_chance', 'ammo_efficiency', 'reload_while_holstered', 'damage_vs_orokin', 'damage_vs_scaldra', 'damage_vs_techrot', 'slam_attack_damage', 'heavy_attack_wind_up_speed', 'melee_damage_on_heavy_attack', 'parry_angle']],
   ['👾 Facções', ['damage_vs_grineer', 'damage_vs_corpus', 'damage_vs_infested']],
   ['🔫 Armas de fogo', ['reload_speed', 'magazine_capacity', 'ammo_maximum', 'projectile_speed', 'punch_through', 'recoil', 'zoom', 'range']],
   ['🗡️ Corpo a corpo', ['combo_duration', 'initial_combo', 'heavy_attack_efficiency', 'combo_chance', 'finisher_damage', 'slide_attack_critical_chance', 'heavy_attack_wind_up_speed', 'melee_damage_on_heavy_attack', 'slam_attack_damage', 'parry_angle']]
@@ -32,9 +32,18 @@ function labelOf(url) {
   return RIVEN_STAT_LABEL[url] || url
 }
 
+// Onde cada stat de Splicing rola (tabela Riven Splicer da wiki).
+const SPLICE_ONLY = {
+  slam_attack_damage: 'só melee', heavy_attack_wind_up_speed: 'só melee',
+  melee_damage_on_heavy_attack: 'só melee', parry_angle: 'só melee',
+  weakpoint_damage: 'não rola em melee', weakpoint_critical_chance: 'não rola em melee',
+  ammo_efficiency: 'não rola em melee', reload_while_holstered: 'só rifle/shotgun/pistola'
+}
+
 function statLine(url, map) {
   const list = (map[url] || []).slice(0, 6)
-  return '• *' + labelOf(url) + '* — ' + (list.length ? list.join(', ') : url)
+  const tag = SPLICE_ONLY[url] ? ' _(' + SPLICE_ONLY[url] + ')_' : ''
+  return '• *' + labelOf(url) + '* — ' + (list.length ? list.join(', ') : url) + tag
 }
 
 function howToMessage() {
@@ -51,6 +60,7 @@ function howToMessage() {
     '• `!alertariven burston ms cc cd max 5000`\n' +
     '• `!alertariven burston wp cc max 3000` _(weakpoint damage + crit chance)_\n' +
     '• `!alertariven kohm viral dmg 3p max 800`\n' +
+    '• `!alertariven magistar slam cc dmg max 2000` _(melee: slam damage)_\n' +
     '• `!alertariven torid meta max 2500`\n' +
     '• `!alertariven burston dmg cc cd grade +A max 4000`\n\n' +
     '📖 Todas as abreviações: `!rivenstats`\n' +
@@ -71,7 +81,7 @@ function dictionaryMessage() {
   if (others.length) {
     out += '\n*Outros*\n' + others.map((u) => statLine(u, map)).join('\n') + '\n'
   }
-  out += '\n💡 Exemplo: `!alertariven burston wp cc max 3000`'
+  out += '\n💡 Exemplos: `!alertariven burston wp cc max 3000` · `!alertariven magistar slam cc dmg max 2000`\n_Dica: "slam damage" = `slam` e "damage" = `dmg` (são stats separados)._'
   return out.trim()
 }
 
