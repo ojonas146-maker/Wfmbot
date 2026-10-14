@@ -6,11 +6,11 @@ const axios = require('axios')
 const { RIVEN_ALERTS_FILE, RIVEN_SEEN_FILE } = require('../../config/env')
 const { jidToNumber } = require('../../utils/text')
 const { getRivenAlertLimit, canUseRivenSnipe, isAdmin } = require('../../core/adminAuth')
-const { getWeaponMeta, findDisposition, resolveCategoryFromDisp, getDispositionsList, loadBaseValues } = require('./baseData')
-const {
+const { getWeaponMeta, findDisposition, resolveCategoryFromDisp, getDispositionsList } = require('./baseData')
+const { effectiveModRank,
   RIVEN_STAT_LABEL, RIVEN_STAT_ALIASES, resolveRivenStat, getConfigKey,
   gradeOneStat, gradeRank, analyzeRivenMeta, formatMetaBlock, statMatches, isSpliceStat,
-  formatVariantBlocks, projectToMaxRank, resolveEffectiveRank, WFM_TO_BASE_STAT
+  formatVariantBlocks, projectToMaxRank
 } = require('./grading')
 const { searchRivenAuctions, searchRivenAuctionsBroad } = require('./auctionSearch')
 const { getOfficialRivenMedian, fmtPlat, getTopWeeklyWeapons } = require('./weekly')
@@ -28,18 +28,10 @@ function saveRivenAlerts(data) {
   fs.writeFileSync(RIVEN_ALERTS_FILE, JSON.stringify(data, null, 2))
 }
 
-// Dono do alerta: compara o JID exato, o número e os JIDs alternativos (LID <-> número)
-// que o WhatsApp manda na mesma conversa. Antes só "all"/lista usavam match flexível e o
-// delete por ID usava ===, então o ID existia mas "não era seu".
-function isAlertOwner(alert, userJid, aliases) {
+function countUserRivenAlerts(userJid) {
   const { configHasUser } = require('../../core/adminAuth')
-  const ids = [userJid].concat(aliases || []).filter(Boolean)
-  return ids.some((j) => alert.userJid === j || configHasUser([alert.userJid], j))
-}
-
-function countUserRivenAlerts(userJid, aliases) {
   try {
-    return loadRivenAlerts().alerts.filter((a) => isAlertOwner(a, userJid, aliases)).length
+    return loadRivenAlerts().alerts.filter((a) => configHasUser([a.userJid], userJid) || a.userJid === userJid).length
   } catch (e) {
     return 0
   }
@@ -95,7 +87,7 @@ function parseRivenAlertArgs(raw) {
 }
 
 // ---------------------------------------------------------------- CRUD
-function createRivenAlert(userJid, rawArgs, isAdmFlag, aliases) {
+function createRivenAlert(userJid, rawArgs, isAdmFlag) {
   const parsed = parseRivenAlertArgs(rawArgs)
   if (!parsed) {
     return (
@@ -114,29 +106,11 @@ function createRivenAlert(userJid, rawArgs, isAdmFlag, aliases) {
 
   const adm = isAdmFlag === true || isAdmin(userJid)
   if (!canUseRivenSnipe(userJid, adm)) return '❌ Snipe de riven está *desativado* pelo admin no momento.'
-  const cur = countUserRivenAlerts(userJid, aliases)
+  const cur = countUserRivenAlerts(userJid)
   const lim = getRivenAlertLimit(userJid, adm)
   if (!adm && cur >= lim) {
     return '❌ Limite de snipes de riven: *' + lim + '*. Você já tem ' + cur + '.\nUse `!delalertariven all` ou apague alguns.'
   }
-
-  // stat que não rola nessa categoria de arma (ex: slam em rifle) nunca vai disparar
-  try {
-    const dispC = findDisposition(parsed.weapon)
-    if (dispC) {
-      const catC = resolveCategoryFromDisp(dispC)
-      const bvC = loadBaseValues()
-      const impossible = []
-      for (const s of parsed.stats || []) {
-        const baseName = WFM_TO_BASE_STAT[s] || WFM_TO_BASE_STAT[String(s).replace(/_damage$/, '')]
-        const entry = baseName && bvC.stats[baseName]
-        if (entry && catC && entry[catC] == null) impossible.push(RIVEN_STAT_LABEL[s] || s)
-      }
-      if (impossible.length) {
-        return '❌ *' + impossible.join(', ') + '* não rola em ' + parsed.weapon.replace(/_/g, ' ') + ' (' + catC + ').\nVeja onde cada stat rola: *!rivenstats*'
-      }
-    }
-  } catch (e) {}
 
   const store = loadRivenAlerts()
   const id = store.nextId++
@@ -165,9 +139,10 @@ function createRivenAlert(userJid, rawArgs, isAdmFlag, aliases) {
   return reply
 }
 
-function listRivenAlerts(userJid, aliases) {
+function listRivenAlerts(userJid) {
+  const { configHasUser } = require('../../core/adminAuth')
   const store = loadRivenAlerts()
-  const mine = store.alerts.filter((a) => isAlertOwner(a, userJid, aliases))
+  const mine = store.alerts.filter((a) => a.userJid === userJid || configHasUser([a.userJid], userJid))
   if (!mine.length) return '🔔 Sem alertas de riven.\nCrie: !alertariven torid meta max 2500'
   let reply = '🎯 *SEUS RIVEN SNIPERS*\n\n'
   for (const a of mine) {
@@ -183,21 +158,20 @@ function listRivenAlerts(userJid, aliases) {
   return reply.trim()
 }
 
-function deleteRivenAlert(userJid, arg, aliases) {
+function deleteRivenAlert(userJid, arg) {
+  const { configHasUser } = require('../../core/adminAuth')
   const store = loadRivenAlerts()
   if (/^all$/i.test(arg)) {
     const before = store.alerts.length
-    store.alerts = store.alerts.filter((a) => !isAlertOwner(a, userJid, aliases))
+    store.alerts = store.alerts.filter((a) => !(a.userJid === userJid || configHasUser([a.userJid], userJid)))
     const removed = before - store.alerts.length
     saveRivenAlerts(store)
     return removed ? '🔕 ' + removed + ' alerta(s) de riven removido(s).' : 'Você não tinha alertas de riven.'
   }
   const id = parseInt(arg, 10)
   if (!id) return '❌ Use: !delalertariven 1  ou  !delalertariven all'
-  const idx = store.alerts.findIndex((a) => a.id === id && isAlertOwner(a, userJid, aliases))
-  if (idx === -1) {
-    return '❌ Sniper de riven #' + id + ' não encontrado (ou não é seu).\nVeja seus IDs com *!alertasriven*.'
-  }
+  const idx = store.alerts.findIndex((a) => a.id === id && (a.userJid === userJid || configHasUser([a.userJid], userJid)))
+  if (idx === -1) return '❌ Alerta de riven #' + id + ' não encontrado.'
   store.alerts.splice(idx, 1)
   saveRivenAlerts(store)
   return '🔕 Alerta de riven *#' + id + '* removido.'
@@ -240,15 +214,13 @@ function rivenMatchesAlert(auction, alert) {
     if (!disp || disp.disposition == null) return false
     const category = resolveCategoryFromDisp(disp)
     const configKey = getConfigKey(attrs)
-    const mrG = auction.item && auction.item.mod_rank != null ? Number(auction.item.mod_rank) : 8
-    const mxG0 = auction.item && auction.item.mod_max_rank != null ? Number(auction.item.mod_max_rank) : 8
-    const effG = resolveEffectiveRank(attrs, category, disp.disposition, configKey, mrG, mxG0)
-    const mrEff = effG.rank
-    const mxG = mxG0
+    const mxG = auction.item && auction.item.mod_max_rank != null ? Number(auction.item.mod_max_rank) : 8
+    const mrRaw = auction.item && auction.item.mod_rank != null ? Number(auction.item.mod_rank) : 8
+    const mrG = effectiveModRank(attrs, category, disp.disposition, configKey, mrRaw, mxG)
     let best = -1
     for (const a of attrs) {
       if (a.positive === false) continue
-      const g = gradeOneStat(a, category, disp.disposition, configKey, mrEff, mxG)
+      const g = gradeOneStat(a, category, disp.disposition, configKey, mrG, mxG)
       if (g.grade) best = Math.max(best, gradeRank(g.grade))
     }
     if (best < gradeRank(alert.minGrade)) return false
@@ -300,9 +272,8 @@ async function formatRivenAuctionMessage(auction, alert) {
   const disposition = disp ? disp.disposition : null
   const category = resolveCategoryFromDisp(disp)
   const configKey = getConfigKey(attrs)
-  const mrMsg = item.mod_rank != null ? Number(item.mod_rank) : 8
   const mxMsg = item.mod_max_rank != null ? Number(item.mod_max_rank) : 8
-  const effMsg = disposition != null ? resolveEffectiveRank(attrs, category, disposition, configKey, mrMsg, mxMsg) : { rank: mrMsg, assumedMax: false }
+  const mrMsg = effectiveModRank(attrs, category, disposition, configKey, item.mod_rank != null ? Number(item.mod_rank) : 8, mxMsg)
 
   if (disposition != null) {
     reply += '_' + configKey + ' · dispo ' + disposition
@@ -310,13 +281,12 @@ async function formatRivenAuctionMessage(auction, alert) {
     reply += '_\n'
   }
 
-  if (effMsg.assumedMax) reply += '_⚠️ Listado como rank ' + mrMsg + ', mas os valores são de R' + mxMsg + ' (grade calculado em R' + mxMsg + ')_\n'
   for (const a of attrs) {
     const sign = a.positive === false ? '' : '+'
     const label = RIVEN_STAT_LABEL[a.url_name] || a.url_name
     let line = '• ' + sign + a.value + ' ' + label
     if (disposition != null) {
-      const g = gradeOneStat(a, category, disposition, configKey, effMsg.rank, mxMsg)
+      const g = gradeOneStat(a, category, disposition, configKey, mrMsg, mxMsg)
       if (g.grade) {
         const devStr = (g.dev >= 0 ? '+' : '') + g.dev.toFixed(1) + '%'
         line += ' → *' + g.grade + '* (' + devStr + ')'
@@ -675,12 +645,8 @@ async function getRivenGradeMessage(rawInput) {
     const disposition = disp ? disp.disposition : null
     const category = resolveCategoryFromDisp(disp)
     const configKey = getConfigKey(attrs)
-    const listedRank = item.mod_rank != null ? Number(item.mod_rank) : 8
     const maxRankNum = item.mod_max_rank != null ? Number(item.mod_max_rank) : 8
-    const effRank = disposition != null
-      ? resolveEffectiveRank(attrs, category, disposition, configKey, listedRank, maxRankNum)
-      : { rank: listedRank, assumedMax: false }
-    const modRankNum = effRank.rank
+    const modRankNum = effectiveModRank(attrs, category, disposition, configKey, item.mod_rank != null ? Number(item.mod_rank) : 8, maxRankNum)
 
     let title = weapon.replace(/_/g, ' ')
     if (rivenName) title += ' ' + rivenName
@@ -695,7 +661,6 @@ async function getRivenGradeMessage(rawInput) {
       reply += 'Disposition: *?* | ' + configKey + ' | ' + category + '\n'
       reply += '_Arma não encontrada em dispositions.json_\n'
     }
-    if (effRank.assumedMax) reply += '_⚠️ Listado como rank ' + listedRank + ', mas os valores são de R' + maxRankNum + ' (grade em R' + maxRankNum + ')_\n'
     reply += 'Rank *' + rank + '* | Rerolls *' + rerolls + '* | MR *' + mr + '*\n'
     reply += '💰 *' + (price != null ? price + 'p' : '?') + '* | ' + seller + ' (' + status + ')\n\n'
 
