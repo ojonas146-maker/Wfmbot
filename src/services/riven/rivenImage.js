@@ -11,7 +11,7 @@ const axios = require('axios')
 
 const env = require('../../config/env')
 const { loadBaseValues, findDisposition, getDispositionsList, resolveCategoryFromDisp } = require('./baseData')
-const { gradeOneStat, gradeRank, getConfigKey, RIVEN_STAT_LABEL } = require('./grading')
+const { gradeOneStat, gradeRank, getConfigKey, RIVEN_STAT_LABEL, resolveEffectiveRank } = require('./grading')
 
 // Modelo de visão da Groq. Se a Groq aposentar este, troque via variável de ambiente.
 // tira espaços e aspas que às vezes vêm coladas junto do valor da variável
@@ -535,8 +535,13 @@ function buildAuctionResult(auction) {
   const configKey = getConfigKey(attrs)
   const disposition = disp ? Number(disp.disposition) : null
   const category = disp ? resolveCategoryFromDisp(disp) : null
-  const modRank = item.mod_rank != null ? Number(item.mod_rank) : 8
+  const listedRank = item.mod_rank != null ? Number(item.mod_rank) : 8
   const maxRank = item.mod_max_rank != null ? Number(item.mod_max_rank) : 8
+  // anúncio "rank 0" com valores já de R8 (listagem errada): grade em R8, não em R0
+  const eff = disposition != null
+    ? resolveEffectiveRank(attrs, category, disposition, configKey, listedRank, maxRank)
+    : { rank: listedRank, assumedMax: false }
+  const modRank = eff.rank
 
   const rows = attrs.map((a) => {
     const isPos = a.positive !== false
@@ -579,7 +584,7 @@ function buildAuctionResult(auction) {
     disposition,
     configKey,
     modRank,
-    rankNote: modRank < maxRank ? 'Rank ' + modRank : null,
+    rankNote: eff.assumedMax ? 'Listado R' + listedRank + ' · valores em R' + maxRank : (modRank < maxRank ? 'Rank ' + modRank : null),
     rows,
     card: {
       weapon: weaponName,
