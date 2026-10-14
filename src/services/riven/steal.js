@@ -63,8 +63,8 @@ async function formatStealMessage(auction, medianInfo) {
   const disposition = disp ? disp.disposition : null
   const category = resolveCategoryFromDisp(disp)
   const configKey = getConfigKey(attrs)
-  const mrSt = item.mod_rank != null ? Number(item.mod_rank) : 8
   const mxSt = item.mod_max_rank != null ? Number(item.mod_max_rank) : 8
+  const mrSt = require('./grading').effectiveModRank(attrs, category, disposition, configKey, item.mod_rank != null ? Number(item.mod_rank) : 8, mxSt)
   for (const a of attrs) {
     const sign = a.positive === false ? '' : '+'
     const label = RIVEN_STAT_LABEL[a.url_name] || a.url_name
