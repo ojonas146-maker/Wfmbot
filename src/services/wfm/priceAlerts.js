@@ -81,7 +81,7 @@ function deleteAlert(userJid, arg) {
   const id = parseInt(arg, 10)
   if (!id) return '❌ Use: !delalerta 17  ou  !delalerta all'
   const idx = store.alerts.findIndex((a) => a.id === id && a.userJid === userJid)
-  if (idx === -1) return '❌ Alerta #' + id + ' não encontrado (ou não é seu).'
+  if (idx === -1) return '❌ Alerta de preço #' + id + ' não encontrado (ou não é seu).\n_Se é um *sniper de riven*, use_ `!delalertariven ' + id + '` _(veja os IDs em_ `!alertasriven`_)_'
   store.alerts.splice(idx, 1)
   saveAlerts(store)
   return '✅ Alerta *#' + id + '* removido.'
