@@ -32,5 +32,10 @@ register(/^!alertas$/i, async ({ sock, from }) => {
 })
 
 register(/^!delalerta\s+(.+)/i, async ({ sock, from, match }) => {
-  await sock.sendMessage(from, { text: deleteAlert(from, match[1].trim()) })
+  const arg = match[1].trim()
+  let out = deleteAlert(from, arg)
+  if (/^\d+$/.test(arg) && /n[ãa]o encontrado/i.test(out)) {
+    out += '\n💡 É um *sniper de riven*? Use *!delalertariven ' + arg + '*'
+  }
+  await sock.sendMessage(from, { text: out })
 })
