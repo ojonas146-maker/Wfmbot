@@ -11,6 +11,14 @@ function getSenderJid(msg) {
   return null
 }
 
+/** JIDs alternativos do remetente (LID <-> número) que o Baileys manda junto na mesma msg. */
+function getSenderAliases(msg) {
+  const k = (msg && msg.key) || {}
+  const main = getSenderJid(msg)
+  return [k.participant, k.participantAlt, k.remoteJid, k.remoteJidAlt]
+    .filter((j) => j && j !== main && !/@g\.us$/.test(j))
+}
+
 /** Aceita um JID/número (string) OU o objeto `msg` do Baileys. */
 function isAdmin(jidOrMsg) {
   let jid = jidOrMsg
@@ -101,7 +109,7 @@ function canUseRivenSnipe(userJid, isAdm) {
 }
 
 module.exports = {
-  getSenderJid, isAdmin, identityKeys, configHasUser, isUserMuted, isVip,
+  getSenderJid, getSenderAliases, isAdmin, identityKeys, configHasUser, isUserMuted, isVip,
   normalizeTargetJid, addToConfigList, removeFromConfigList,
   getRivenAlertLimit, canUseRivenSnipe
 }
