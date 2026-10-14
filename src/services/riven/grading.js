@@ -345,6 +345,35 @@ function gradeOneStat(attr, weaponOrCategory, disposition, configKey, modRank, m
   }
 }
 
+/**
+ * Descobre em qual rank os VALORES do anúncio realmente estão.
+ * Alguns vendedores listam o riven como rank 0 no warframe.market mas digitam
+ * os valores do rank máximo (R8). Aí a escala (rank+1)/(max+1) comparava +212.9
+ * com ~1/9 do esperado e dava "+741%". Se algum stat estoura o teto possível
+ * (roll máx. ≈ +10%) no rank listado, mas todos cabem no rank máximo, os valores
+ * são de rank máximo e o grade usa o rank máximo.
+ *
+ * @returns {{ rank:number, assumedMax:boolean }}
+ */
+function resolveEffectiveRank(attrs, weaponOrCategory, disposition, configKey, modRank, maxRank) {
+  const mx = maxRank != null && !isNaN(Number(maxRank)) && Number(maxRank) >= 1 ? Number(maxRank) : 8
+  const mr = modRank != null && !isNaN(Number(modRank)) ? Math.max(0, Math.min(mx, Number(modRank))) : mx
+  if (mr >= mx || disposition == null) return { rank: mr, assumedMax: false }
+
+  const CAP = 15 // % acima do esperado que ainda é um roll possível (máx real ≈ +10%)
+  let overListed = false
+  let fitsMax = true
+  for (const a of attrs || []) {
+    const atListed = gradeOneStat(a, weaponOrCategory, disposition, configKey, mr, mx)
+    if (atListed.dev == null) continue
+    if (atListed.dev > CAP) overListed = true
+    const atMax = gradeOneStat(a, weaponOrCategory, disposition, configKey, mx, mx)
+    if (atMax.dev != null && Math.abs(atMax.dev) > CAP) fitsMax = false
+  }
+  if (overListed && fitsMax) return { rank: mx, assumedMax: true }
+  return { rank: mr, assumedMax: false }
+}
+
 function analyzeRivenMeta(weaponUrlName, attrs, getWeaponMeta) {
   const meta = getWeaponMeta(weaponUrlName)
   if (!meta) {
@@ -662,6 +691,7 @@ module.exports = {
   getConfigKey,
   resolveBaseCategory,
   gradeOneStat,
+  resolveEffectiveRank,
   gradeForVariant,
   formatStatsBlock,
   projectToMaxRank,
