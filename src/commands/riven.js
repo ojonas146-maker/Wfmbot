@@ -1,15 +1,16 @@
 // src/commands/riven.js — comandos de riven (sniper, grade, meta, mercado semanal, highest, !i)
 const { register } = require('./router')
 const { createRivenAlert, listRivenAlerts, deleteRivenAlert, getRivenGradeMessage, getRivenGradeImage, createWeekSnipers } = require('../services/riven/alerts')
+const { getSenderAliases } = require('../core/adminAuth')
 const { getRivenStatsMessages } = require('../services/riven/statDictionary')
 const { getRivenMarketMessage, getTopRivensMessage } = require('../services/riven/weekly')
 const { getMetaMessage } = require('../services/riven/metaCommands')
 const { formatHighestMenu, formatHighestRanking } = require('../services/wfm/highest')
 const { getItemInfoCommand } = require('../services/wfm/itemInfo')
 
-register(/^!alertariven\s+(.+)/i, async ({ sock, from, senderJid, isAdmin, match }) => {
+register(/^!alertariven\s+(.+)/i, async ({ sock, from, senderJid, isAdmin, match, msg }) => {
   const ownerJid = senderJid || from
-  await sock.sendMessage(from, { text: createRivenAlert(ownerJid, match[1].trim(), isAdmin) })
+  await sock.sendMessage(from, { text: createRivenAlert(ownerJid, match[1].trim(), isAdmin, getSenderAliases(msg)) })
 })
 
 register(/^!snipeweek(?:\s+(.*))?$/i, async ({ sock, from, senderJid, isAdmin, match }) => {
@@ -18,12 +19,12 @@ register(/^!snipeweek(?:\s+(.*))?$/i, async ({ sock, from, senderJid, isAdmin, m
   await sock.sendMessage(from, { text: await createWeekSnipers(ownerJidW, match[1] || '', isAdmin) })
 })
 
-register(/^!alertasriven$/i, async ({ sock, from, senderJid }) => {
-  await sock.sendMessage(from, { text: listRivenAlerts(senderJid || from) })
+register(/^!alertasriven$/i, async ({ sock, from, senderJid, msg }) => {
+  await sock.sendMessage(from, { text: listRivenAlerts(senderJid || from, getSenderAliases(msg)) })
 })
 
-register(/^!delalertariven\s+(.+)/i, async ({ sock, from, senderJid, match }) => {
-  await sock.sendMessage(from, { text: deleteRivenAlert(senderJid || from, match[1].trim()) })
+register(/^!delalertariven\s+#?(.+)/i, async ({ sock, from, senderJid, match, msg }) => {
+  await sock.sendMessage(from, { text: deleteRivenAlert(senderJid || from, match[1].trim(), getSenderAliases(msg)) })
 })
 
 register(/^!riven(?:\s+(.+))?$/i, async ({ sock, from, match }) => {
