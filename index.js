@@ -20,6 +20,7 @@ require('./src/commands/help')
 require('./src/commands/ai')
 require('./src/commands/price')
 require('./src/commands/riven')
+require('./src/commands/lich')
 require('./src/commands/worldstate')
 require('./src/commands/mcp')
 require('./src/commands/admin')
@@ -122,7 +123,7 @@ async function startBot() {
     }
 
     // trava snipe riven se desligado
-    if (!isAdm && /^!(alertariven|snipeweek|alertasriven|delalertariven)\b/i.test(text)) {
+    if (!isAdm && /^!(alertariven|snipeweek|alertasriven|delalertariven|alertalich|alertaslich|delalertalich)\b/i.test(text)) {
       if (!canUseRivenSnipe(senderJid, false)) {
         await sock.sendMessage(from, { text: '❌ Snipe de riven desativado pelo admin.' })
         return
