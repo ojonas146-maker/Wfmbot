@@ -60,6 +60,17 @@ function getHelp() {
     '💎 Detector automático de rivens roubados (compara com o top da semana)\n\n' +
 
     '━━━━━━━━━━━━━━━━━\n' +
+    '🧬 *KUVA LICH / SISTERS OF PARVOS*\n' +
+    '━━━━━━━━━━━━━━━━━\n' +
+    '🔎 *!lich <filtros>* — mostra agora os 3 mais baratos (cartão + /w pronto)\n' +
+    '   Ex: `!lich hek toxin efemera max 400`\n' +
+    '🎯 *!alertalich <arma> [elemento] [efemera] [dano 55] [quirk x] [max N]*\n' +
+    '   Sniper: avisa quando aparecer a arma/efêmera que você quer, com compra direta\n' +
+    '   Ex: `!alertalich lich cold efemera max 300` · `!alertalich tenet plinx dano 55 max 500`\n' +
+    '📖 *!lichajuda* — armas, elementos, efêmeras e como montar o comando\n' +
+    '📋 *!alertaslich* — lista seus alertas · ❌ *!delalertalich <id|all>*\n\n' +
+
+    '━━━━━━━━━━━━━━━━━\n' +
     '🔔 *ALERTAS*\n' +
     '━━━━━━━━━━━━━━━━━\n' +
     '🔔 *!alerta <item> <=preço>* — avisa quando o item cair pra esse preço\n' +
