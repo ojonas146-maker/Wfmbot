@@ -471,15 +471,18 @@ function gradeForVariant(attrs, fromDispo, toDispo, weaponOrCategory, configKey,
  * Rivens escalam linearmente: valor_Rmax = valor_R * (maxRank+1) / (modRank+1)
  */
 /**
- * Alguns anúncios vêm com mod_rank menor que o máximo (ex: rank 0), mas com os valores
- * JÁ no rank máximo (vendedor preencheu o rank errado). Um riven real varia só ~±10% da
- * média, então: se no rank listado algum stat dá desvio absurdo (>15%) e no rank máximo
- * todos ficam plausíveis (<=15%), os valores são do rank máximo.
+ * Anúncios do warframe.market às vezes trazem mod_rank errado (ex: rank 0) com os valores
+ * de outro rank. Um riven real varia só ~±10% da média, então procuramos o rank em que
+ * TODOS os stats ficam plausíveis (desvio <= 15%):
+ *  - status 'ok'           -> o rank listado serve
+ *  - status 'fixed'        -> valores já estão no rank máximo
+ *  - status 'inferred'     -> valores batem com outro rank (ex: listado 0, na verdade ~5)
+ *  - status 'inconsistent' -> nenhum rank explica os valores (anúncio suspeito)
  */
-function effectiveModRank(attrs, weaponOrCategory, disposition, configKey, modRank, maxRank) {
+function inferModRank(attrs, weaponOrCategory, disposition, configKey, modRank, maxRank) {
   const mr = Number(modRank)
   const mx = Number(maxRank)
-  if (disposition == null || isNaN(mr) || isNaN(mx) || mr >= mx) return modRank
+  if (disposition == null || isNaN(mr) || isNaN(mx)) return { rank: modRank, status: 'ok', worst: 0 }
   const worst = (rank) => {
     let w = 0
     for (const a of attrs || []) {
@@ -488,7 +491,19 @@ function effectiveModRank(attrs, weaponOrCategory, disposition, configKey, modRa
     }
     return w
   }
-  return worst(mr) > 15 && worst(mx) <= 15 ? mx : modRank
+  const w0 = worst(mr)
+  if (mr >= mx || w0 <= 15) return { rank: modRank, status: 'ok', worst: w0 }
+  let best = null
+  for (let r = mr + 1; r <= mx; r++) {
+    const w = worst(r)
+    if (!best || w < best.w) best = { r, w }
+  }
+  if (best && best.w <= 15) return { rank: best.r, status: best.r === mx ? 'fixed' : 'inferred', worst: best.w }
+  return { rank: modRank, status: 'inconsistent', worst: w0 }
+}
+
+function effectiveModRank(attrs, weaponOrCategory, disposition, configKey, modRank, maxRank) {
+  return inferModRank(attrs, weaponOrCategory, disposition, configKey, modRank, maxRank).rank
 }
 
 function projectToMaxRank(value, modRank, maxRank) {
@@ -687,6 +702,7 @@ module.exports = {
   formatStatsBlock,
   projectToMaxRank,
   effectiveModRank,
+  inferModRank,
   findVariants,
   formatVariantBlocks,
   weaponFamilyKey,
