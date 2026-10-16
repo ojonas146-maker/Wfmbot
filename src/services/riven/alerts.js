@@ -898,6 +898,18 @@ function whisperText(auction) {
   return seller ? '/w ' + seller + ' hi' : ''
 }
 
+// Aviso quando o rank listado do anúncio não bate com os valores (ver inferModRank)
+function rankWarningLine(auction) {
+  try {
+    const r = require('./rivenImage').buildAuctionResult(auction)
+    const raw = auction.item && auction.item.mod_rank
+    if (r.rankStatus === 'inconsistent') return '⚠️ Valores incompatíveis com qualquer rank — anúncio suspeito'
+    if (r.rankStatus === 'inferred') return 'ℹ️ Listado como rank ' + raw + ', mas os valores batem com o rank ' + r.modRank
+    if (r.rankStatus === 'fixed') return 'ℹ️ Listado como rank ' + raw + ', mas os valores já estão no rank máximo'
+  } catch (e) {}
+  return ''
+}
+
 async function sendAuctionWithCard(sock, jid, auction, msg) {
   let png = null
   try {
@@ -915,6 +927,8 @@ async function sendAuctionWithCard(sock, jid, auction, msg) {
   let caption = String(msg).split('\n*Stats:*')[0].trim()
   const meta = metaCaptionLine(item.weapon_url_name, item.attributes || [])
   if (meta) caption += '\n' + meta
+  const warn = rankWarningLine(auction)
+  if (warn) caption += '\n' + warn
   const link = (String(msg).match(/🔗[^\n]*/) || [''])[0]
   if (link) caption += '\n\n' + link
 
@@ -955,6 +969,8 @@ async function getRivenGradeImage(rawInput) {
     } catch (e) {}
     const meta = metaCaptionLine(item.weapon_url_name, item.attributes || [])
     if (meta) caption += '\n' + meta
+    const warn = rankWarningLine(auction)
+    if (warn) caption += '\n' + warn
     caption += '\n🔗 https://warframe.market/auction/' + id
     return { png, caption, whisper: whisperText(auction) }
   } catch (e) {
