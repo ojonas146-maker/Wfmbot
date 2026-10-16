@@ -7,6 +7,7 @@ const { checkAlerts } = require('../services/wfm/priceAlerts')
 const { checkInvasionAlerts } = require('../services/worldstate/invasions')
 const { checkRivenAlerts } = require('../services/riven/alerts')
 const { checkRivenSteals } = require('../services/riven/steal')
+const { checkLichAlerts } = require('../services/lich/lichAlerts')
 
 async function runAllChecks(sock) {
   if (adminState.alertsPaused) {
@@ -27,6 +28,9 @@ async function runAllChecks(sock) {
     await sleep(2000)
 
     try { await checkRivenSteals(sock) } catch (e) { console.error('checkRivenSteals:', e.message) }
+    await sleep(2000)
+
+    try { await checkLichAlerts(sock) } catch (e) { console.error('checkLichAlerts:', e.message) }
   } catch (e) {
     adminState.lastCheckError = e.message
     console.error('runAllChecks:', e.message)
