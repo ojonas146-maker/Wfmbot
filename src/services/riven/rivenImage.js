@@ -11,7 +11,7 @@ const axios = require('axios')
 
 const env = require('../../config/env')
 const { loadBaseValues, findDisposition, getDispositionsList, resolveCategoryFromDisp } = require('./baseData')
-const { gradeOneStat, gradeRank, getConfigKey, RIVEN_STAT_LABEL, projectToMaxRank, effectiveModRank } = require('./grading')
+const { gradeOneStat, gradeRank, getConfigKey, RIVEN_STAT_LABEL, projectToMaxRank, inferModRank } = require('./grading')
 
 // Modelo de visão da Groq. Se a Groq aposentar este, troque via variável de ambiente.
 // tira espaços e aspas que às vezes vêm coladas junto do valor da variável
@@ -465,7 +465,7 @@ function buildCardSvg(result, imgBuf) {
   const size = imgBuf ? imageSize(imgBuf) : null
   const natural = size && size.w > 0 ? Math.round(LEFT_W * size.h / size.w) : 600
   const hasProj = result.rows.some((r) => r.proj)
-  const minH = HEAD + n * (hasProj ? 114 : 92) + 14 + (result.rankNote ? 18 : 0)
+  const minH = HEAD + n * (hasProj ? 114 : 92) + 14 + (result.rankNote ? 52 : 0)
   const H = Math.max(minH, Math.min(natural, 820))
   // se a altura final é próxima da natural, preenche tudo (sem sobras); senão mostra inteira
   const fill = Math.abs(natural - H) / H < 0.15 ? 'slice' : 'meet'
@@ -489,7 +489,7 @@ function buildCardSvg(result, imgBuf) {
   svg += '<line x1="' + RX + '" y1="104" x2="' + RR + '" y2="104" stroke="#2a2a31" stroke-width="1.5"/>'
 
   // linhas de stats
-  const rowH = hasProj ? 114 : Math.min(112, (H - HEAD - 6 - (result.rankNote ? 18 : 0)) / n)
+  const rowH = hasProj ? 114 : Math.min(112, (H - HEAD - 6 - (result.rankNote ? 52 : 0)) / n)
   const fLabel = 0.40
   const fGrade = 0.76
   let y = 104
@@ -515,7 +515,17 @@ function buildCardSvg(result, imgBuf) {
 
   // rodapé só quando o rank foi informado e é menor que o máximo (ex: /grade r5)
   if (result.rankNote) {
-    svg += '<text x="' + RX + '" y="' + (H - 14) + '" font-family="DejaVu Sans" font-size="14" fill="#6f6f7a">' + esc(result.rankNote) + '</text>'
+    const lines = []
+    let cur = ''
+    for (const w of String(result.rankNote).split(' ')) {
+      if ((cur + ' ' + w).trim().length > 46) { lines.push(cur); cur = w } else cur = (cur + ' ' + w).trim()
+    }
+    if (cur) lines.push(cur)
+    const warn = result.rankStatus === 'inconsistent'
+    const startY = H - 12 - (lines.length - 1) * 17
+    lines.forEach((ln, i) => {
+      svg += '<text x="' + RX + '" y="' + (startY + i * 17) + '" font-family="DejaVu Sans" font-size="14" fill="' + (warn ? '#fb923c' : '#6f6f7a') + '">' + esc(ln) + '</text>'
+    })
   }
 
   svg += '</svg>'
@@ -557,9 +567,10 @@ function buildAuctionResult(auction) {
   const category = disp ? resolveCategoryFromDisp(disp) : null
   const rawRank = item.mod_rank != null ? Number(item.mod_rank) : 8
   const maxRank = item.mod_max_rank != null ? Number(item.mod_max_rank) : 8
-  // vendedor às vezes lista rank baixo com os valores já no rank máximo: detecta
-  const modRank = effectiveModRank(attrs, category, disposition, configKey, rawRank, maxRank)
-  const rankFixed = modRank !== rawRank
+  // vendedor às vezes lista o rank errado (ex: 0) com valores de outro rank: infere o rank real
+  const inf = inferModRank(attrs, category, disposition, configKey, rawRank, maxRank)
+  const modRank = inf.rank
+  const rankStatus = inf.status // ok | fixed | inferred | inconsistent
 
   const rows = attrs.map((a) => {
     const isPos = a.positive !== false
@@ -584,6 +595,11 @@ function buildAuctionResult(auction) {
     }
   })
 
+  // nenhum rank explica os valores -> anúncio suspeito: sem notas nem projeção (evita "S" falso)
+  if (rankStatus === 'inconsistent') {
+    for (const r of rows) { r.grade = null; r.dev = null; r.proj = null; r.note = 'dados inválidos' }
+  }
+
   // linhas "como na carta do jogo", na ordem original do anúncio
   const lines = rows.map((r) => (r.unit === 'x' ? r.valueText + ' ' + r.label : r.valueText + '% ' + r.label))
 
@@ -604,9 +620,14 @@ function buildAuctionResult(auction) {
     configKey,
     modRank,
     maxRank,
-    rankNote: modRank < maxRank
-      ? 'Rank ' + modRank + ' \u00B7 valores projetados no Rank ' + maxRank
-      : (rankFixed ? 'Anúncio com rank ' + rawRank + ' \u00B7 valores já no Rank ' + maxRank : null),
+    rankStatus,
+    rankNote: rankStatus === 'inconsistent'
+      ? '\u26A0 Valores incompatíveis com qualquer rank: anúncio suspeito, confira no jogo'
+      : rankStatus === 'inferred'
+        ? 'Listado como rank ' + rawRank + ' \u00B7 valores compatíveis com o Rank ' + modRank + ' (inferido) \u00B7 projetados no Rank ' + maxRank
+        : rankStatus === 'fixed'
+          ? 'Listado como rank ' + rawRank + ' \u00B7 valores já no Rank ' + maxRank
+          : (modRank < maxRank ? 'Rank ' + modRank + ' \u00B7 valores projetados no Rank ' + maxRank : null),
     rows,
     card: {
       weapon: weaponName,
