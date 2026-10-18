@@ -77,19 +77,19 @@ async function startBot() {
         }, 30000)
 
         // Steal detector: primeira passagem após 3 min
-      //  setTimeout(() => {
-      //    if (globalSock) {
-      //      const { checkRivenSteals } = require('./src/services/riven/steal')
-       //     checkRivenSteals(globalSock).catch((e) => console.error('steal first:', e.message))
-      //    }
-     //   }, 180000)
-  //    }
+        setTimeout(() => {
+          if (globalSock) {
+            const { checkRivenSteals } = require('./src/services/riven/steal')
+            checkRivenSteals(globalSock).catch((e) => console.error('steal first:', e.message))
+          }
+        }, 180000)
+      }
 
       // Atualizador do Highest em segundo plano
-      setTimeout(() => {
-        runHighestUpdater().catch((e) => console.error('Highest updater:', e.message))
-      }, 60000)
-    }
+     // setTimeout(() => {
+      //  runHighestUpdater().catch((e) => console.error('Highest updater:', e.message))
+     // }, 60000)
+  //  }
 
     if (update.connection === 'close') {
       const code = update.lastDisconnect && update.lastDisconnect.error && update.lastDisconnect.error.output && update.lastDisconnect.error.output.statusCode
