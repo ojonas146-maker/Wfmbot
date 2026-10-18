@@ -20,16 +20,79 @@ const WFM_HEADERS = {
   'Accept-Language': 'en-US,en;q=0.9'
 }
 
+// true quando a última resolução falhou por erro/limite da API (e não porque o item não existe)
+const lookupState = { transient: false }
+
 async function getItemInfo(slug) {
   try {
     const res = await axios.get('https://api.warframe.market/v2/item/' + slug, { headers, timeout: 10000 })
     return res.data && res.data.data ? res.data.data : null
   } catch (e) {
+    const st = e.response && e.response.status
+    if (st !== 404) lookupState.transient = true // 429, 5xx, timeout, rede...
     return null
   }
 }
 
+// ---- catálogo de itens (v2/items) para achar o nome quando o "slug adivinhado" não existe
+let _catalog = null
+let _catalogAt = 0
+const CATALOG_TTL = 60 * 60 * 1000
+
+async function loadItemsCatalog() {
+  if (_catalog && Date.now() - _catalogAt < CATALOG_TTL) return _catalog
+  try {
+    const res = await axios.get('https://api.warframe.market/v2/items', { headers, timeout: 20000 })
+    const list = (res.data && res.data.data) || []
+    if (list.length) {
+      _catalog = list.map((it) => ({
+        slug: it.slug,
+        name: (it.i18n && it.i18n.en && it.i18n.en.name) || String(it.slug || '').replace(/_/g, ' '),
+        raw: it
+      })).filter((it) => it.slug)
+      _catalogAt = Date.now()
+    }
+  } catch (e) {
+    const st = e.response && e.response.status
+    if (st !== 404) lookupState.transient = true
+  }
+  return _catalog || []
+}
+
+function normName(s) {
+  return String(s || '').toLowerCase().replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim()
+}
+
+/** { exact, matches } — exact quando o nome bate inteiro ou só um item contém todas as palavras. */
+async function findInCatalog(name) {
+  const q = normName(name)
+  if (!q) return { exact: null, matches: [] }
+  const cat = await loadItemsCatalog()
+  const words = q.split(' ')
+  const exact = cat.find((it) => normName(it.name) === q) || null
+  if (exact) return { exact, matches: [exact] }
+  const matches = cat.filter((it) => {
+    const n = normName(it.name)
+    return words.every((w) => n.includes(w))
+  }).sort((a, b) => a.name.length - b.name.length)
+  return { exact: matches.length === 1 ? matches[0] : null, matches }
+}
+
+/** Mensagem de "não encontrado" com sugestões / aviso de falha temporária. */
+async function explainItemNotFound(name) {
+  if (lookupState.transient) {
+    return '⚠️ Não consegui consultar o warframe.market agora (erro ou limite de requisições). Tente de novo em instantes.'
+  }
+  let sugg = []
+  try { sugg = (await findInCatalog(name)).matches.slice(0, 5) } catch (e) {}
+  if (sugg.length) {
+    return '❌ Item "' + name + '" não encontrado.\nVocê quis dizer: ' + sugg.map((x) => '*' + x.name + '*').join(', ') + '?'
+  }
+  return '❌ Item "' + name + '" não existe no warframe.market (pode não ser negociável). Confira o nome.'
+}
+
 async function resolveItem(itemName) {
+  lookupState.transient = false
   const base = toSlug(itemName)
   const candidates = [base]
   if (base.indexOf('blueprint') === -1) candidates.push(base + '_blueprint')
@@ -43,6 +106,14 @@ async function resolveItem(itemName) {
     const item = await getItemInfo(slug)
     if (item) return { item, slug }
   }
+  // não achou pelo slug: procura pelo nome no catálogo de itens
+  try {
+    const found = await findInCatalog(itemName)
+    if (found.exact) {
+      const item = (await getItemInfo(found.exact.slug)) || found.exact.raw
+      if (item) return { item, slug: found.exact.slug }
+    }
+  } catch (e) { /* segue como não encontrado */ }
   return null
 }
 
@@ -106,7 +177,7 @@ function cheapestSell(orders) {
 async function getAveragePrice(itemName) {
   try {
     const resolved = await resolveItem(itemName)
-    if (!resolved) return '❌ Item "' + itemName + '" não encontrado.'
+    if (!resolved) return await explainItemNotFound(itemName)
     const item = resolved.item
     const slug = resolved.slug
     const name = (item.i18n && item.i18n.en && item.i18n.en.name) ? item.i18n.en.name : itemName
@@ -360,7 +431,7 @@ async function getRelic(relicName) {
 
 module.exports = {
   headers, WFM_HEADERS,
-  getItemInfo, resolveItem, resolveItemSmart,
+  getItemInfo, resolveItem, resolveItemSmart, explainItemNotFound,
   getTopOrders, calcStatsFromOrders, cheapestSell,
   getAveragePrice, getProfile, getSetPrice, getRelic
 }
