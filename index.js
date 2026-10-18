@@ -2,9 +2,6 @@
 // este arquivo só levanta o socket do WhatsApp e liga os comandos.
 // require('./test-ws')
 
-// setTimeout(() => {
-//   runHighestUpdater().catch((e) => console.error('Highest updater:', e.message))
-// }, 60000)
 
 const { default: makeWASocket, useMultiFileAuthState, DisconnectReason } = require('@whiskeysockets/baileys')
 const pino = require('pino')
@@ -80,13 +77,13 @@ async function startBot() {
         }, 30000)
 
         // Steal detector: primeira passagem após 3 min
-        setTimeout(() => {
-          if (globalSock) {
-            const { checkRivenSteals } = require('./src/services/riven/steal')
-            checkRivenSteals(globalSock).catch((e) => console.error('steal first:', e.message))
-          }
-        }, 180000)
-      }
+      //  setTimeout(() => {
+      //    if (globalSock) {
+      //      const { checkRivenSteals } = require('./src/services/riven/steal')
+       //     checkRivenSteals(globalSock).catch((e) => console.error('steal first:', e.message))
+      //    }
+     //   }, 180000)
+  //    }
 
       // Atualizador do Highest em segundo plano
       setTimeout(() => {
