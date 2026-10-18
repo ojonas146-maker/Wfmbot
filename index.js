@@ -86,9 +86,9 @@ async function startBot() {
       }
 
       // Atualizador do Highest em segundo plano
-     // setTimeout(() => {
-      //  runHighestUpdater().catch((e) => console.error('Highest updater:', e.message))
-     // }, 60000)
+      setTimeout(() => {
+        runHighestUpdater().catch((e) => console.error('Highest updater:', e.message))
+      }, 60000)
     }
 
     if (update.connection === 'close') {
