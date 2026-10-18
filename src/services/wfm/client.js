@@ -20,16 +20,79 @@ const WFM_HEADERS = {
   'Accept-Language': 'en-US,en;q=0.9'
 }
 
+// true quando a última resolução falhou por erro/limite da API (e não porque o item não existe)
+const lookupState = { transient: false }
+
 async function getItemInfo(slug) {
   try {
     const res = await axios.get('https://api.warframe.market/v2/item/' + slug, { headers, timeout: 10000 })
     return res.data && res.data.data ? res.data.data : null
   } catch (e) {
+    const st = e.response && e.response.status
+    if (st !== 404) lookupState.transient = true // 429, 5xx, timeout, rede...
     return null
   }
 }
 
+// ---- catálogo de itens (v2/items) para achar o nome quando o "slug adivinhado" não existe
+let _catalog = null
+let _catalogAt = 0
+const CATALOG_TTL = 60 * 60 * 1000
+
+async function loadItemsCatalog() {
+  if (_catalog && Date.now() - _catalogAt < CATALOG_TTL) return _catalog
+  try {
+    const res = await axios.get('https://api.warframe.market/v2/items', { headers, timeout: 20000 })
+    const list = (res.data && res.data.data) || []
+    if (list.length) {
+      _catalog = list.map((it) => ({
+        slug: it.slug,
+        name: (it.i18n && it.i18n.en && it.i18n.en.name) || String(it.slug || '').replace(/_/g, ' '),
+        raw: it
+      })).filter((it) => it.slug)
+      _catalogAt = Date.now()
+    }
+  } catch (e) {
+    const st = e.response && e.response.status
+    if (st !== 404) lookupState.transient = true
+  }
+  return _catalog || []
+}
+
+function normName(s) {
+  return String(s || '').toLowerCase().replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim()
+}
+
+/** { exact, matches } — exact quando o nome bate inteiro ou só um item contém todas as palavras. */
+async function findInCatalog(name) {
+  const q = normName(name)
+  if (!q) return { exact: null, matches: [] }
+  const cat = await loadItemsCatalog()
+  const words = q.split(' ')
+  const exact = cat.find((it) => normName(it.name) === q) || null
+  if (exact) return { exact, matches: [exact] }
+  const matches = cat.filter((it) => {
+    const n = normName(it.name)
+    return words.every((w) => n.includes(w))
+  }).sort((a, b) => a.name.length - b.name.length)
+  return { exact: matches.length === 1 ? matches[0] : null, matches }
+}
+
+/** Mensagem de "não encontrado" com sugestões / aviso de falha temporária. */
+async function explainItemNotFound(name) {
+  if (lookupState.transient) {
+    return '⚠️ Não consegui consultar o warframe.market agora (erro ou limite de requisições). Tente de novo em instantes.'
+  }
+  let sugg = []
+  try { sugg = (await findInCatalog(name)).matches.slice(0, 5) } catch (e) {}
+  if (sugg.length) {
+    return '❌ Item "' + name + '" não encontrado.\nVocê quis dizer: ' + sugg.map((x) => '*' + x.name + '*').join(', ') + '?'
+  }
+  return '❌ Item "' + name + '" não existe no warframe.market (pode não ser negociável). Confira o nome.'
+}
+
 async function resolveItem(itemName) {
+  lookupState.transient = false
   const base = toSlug(itemName)
   const candidates = [base]
   if (base.indexOf('blueprint') === -1) candidates.push(base + '_blueprint')
@@ -43,6 +106,14 @@ async function resolveItem(itemName) {
     const item = await getItemInfo(slug)
     if (item) return { item, slug }
   }
+  // não achou pelo slug: procura pelo nome no catálogo de itens
+  try {
+    const found = await findInCatalog(itemName)
+    if (found.exact) {
+      const item = (await getItemInfo(found.exact.slug)) || found.exact.raw
+      if (item) return { item, slug: found.exact.slug }
+    }
+  } catch (e) { /* segue como não encontrado */ }
   return null
 }
 
@@ -106,7 +177,7 @@ function cheapestSell(orders) {
 async function getAveragePrice(itemName) {
   try {
     const resolved = await resolveItem(itemName)
-    if (!resolved) return '❌ Item "' + itemName + '" não encontrado.'
+    if (!resolved) return await explainItemNotFound(itemName)
     const item = resolved.item
     const slug = resolved.slug
     const name = (item.i18n && item.i18n.en && item.i18n.en.name) ? item.i18n.en.name : itemName
@@ -304,54 +375,20 @@ async function getSetPrice(setName) {
 
 async function getRelic(relicName) {
   try {
-    const parts = relicName.trim().toLowerCase().split(/\s+/)
-    if (parts.length < 2) return '❌ Use: !relic lith a1   ou   !relic meso n11'
-    const tier = parts[0].charAt(0).toUpperCase() + parts[0].slice(1)
-    const name = parts[1].toUpperCase()
-    const res = await axios.get('https://drops.warframestat.us/data/relics.json', { timeout: 15000 })
-    const relics = Array.isArray(res.data) ? res.data : (res.data.relics || [])
-    const byState = {}
-    for (const r of relics) {
-      if (r.tier === tier && r.relicName === name) byState[r.state] = r
+    const slug = toSlug(relicName)
+    const res = await axios.get('https://api.warframe.market/v1/items/' + slug, { headers, timeout: 10000 })
+    const payload = res.data && res.data.payload ? res.data.payload : null
+    if (!payload || !payload.item) return '❌ Relíquia "' + relicName + '" não encontrada.'
+    const item = payload.item
+    const name = (item.en && item.en.item_name) ? item.en.item_name : relicName
+    let reply = '📦 *' + name + '*\n\n'
+    const drops = item.items_in_set || []
+    for (const d of drops) {
+      const dName = (d.en && d.en.item_name) ? d.en.item_name : (d.url_name || '')
+      const rarity = d.rarity || '?'
+      reply += '• ' + dName + ' (' + rarity + ')\n'
     }
-    if (!byState['Intact']) return '❌ Relíquia "' + tier + ' ' + name + '" não encontrada.'
-    const relicSlug = tier.toLowerCase() + '_' + name.toLowerCase() + '_relic'
-    const relicOrders = await getTopOrders(relicSlug)
-    const relicStats = calcStatsFromOrders(relicOrders.sell)
-    let reply = '📦 *' + tier + ' ' + name + ' Relic*\n'
-    reply += relicStats ? 'Preço médio: *' + relicStats.avg + 'p* (min ' + relicStats.min + 'p)\n\n' : 'Preço: sem ordens online\n\n'
-    const items = {}
-    const states = ['Intact', 'Flawless', 'Radiant']
-    for (const state of states) {
-      const relic = byState[state]
-      if (!relic || !relic.rewards) continue
-      for (const reward of relic.rewards) {
-        const key = reward.itemName
-        if (!items[key]) items[key] = { name: reward.itemName, rarity: reward.rarity, chanceIntact: null, chances: {} }
-        items[key].chances[state] = reward.chance
-        if (state === 'Intact') { items[key].rarity = reward.rarity; items[key].chanceIntact = reward.chance }
-      }
-    }
-    reply += '*Drops + Chances:*\n_(I = Intact | F = Flawless | R = Radiant)_\n🟠 Common | 🟡 Uncommon | 🔴 Rare\n\n'
-    const list = Object.values(items)
-    list.sort((a, b) => (a.chanceIntact != null ? a.chanceIntact : 99) - (b.chanceIntact != null ? b.chanceIntact : 99))
-    for (const item of list) {
-      let priceText = '—'
-      if (item.name.toLowerCase().indexOf('forma') === -1) {
-        const slug = toSlug(item.name)
-        const orders = await getTopOrders(slug)
-        const stats = calcStatsFromOrders(orders.sell)
-        priceText = stats ? stats.min + 'p' : '?'
-      }
-      let emoji = '🟠'
-      const ch = item.chanceIntact
-      if (ch != null) { if (ch <= 5) emoji = '🔴'; else if (ch <= 15) emoji = '🟡' }
-      const cI = item.chances['Intact'] != null ? item.chances['Intact'] + '%' : '-'
-      const cF = item.chances['Flawless'] != null ? item.chances['Flawless'] + '%' : '-'
-      const cR = item.chances['Radiant'] != null ? item.chances['Radiant'] + '%' : '-'
-      reply += emoji + ' *' + item.name + '*\n   I:' + cI + '  F:' + cF + '  R:' + cR + '  → *' + priceText + '*\n'
-    }
-    return reply.trim()
+    return reply.trim() || '❌ Sem dados de drop.'
   } catch (err) {
     console.error(err.message)
     return '❌ Erro ao buscar relíquia.'
@@ -360,7 +397,7 @@ async function getRelic(relicName) {
 
 module.exports = {
   headers, WFM_HEADERS,
-  getItemInfo, resolveItem, resolveItemSmart,
+  getItemInfo, resolveItem, resolveItemSmart, explainItemNotFound,
   getTopOrders, calcStatsFromOrders, cheapestSell,
   getAveragePrice, getProfile, getSetPrice, getRelic
 }
