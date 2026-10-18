@@ -2,7 +2,7 @@
 const fs = require('fs')
 const { ALERTS_FILE } = require('../../config/env')
 const { toSlug } = require('../../utils/text')
-const { resolveItem, getTopOrders, cheapestSell } = require('./client')
+const { explainItemNotFound, resolveItem, getTopOrders, cheapestSell } = require('./client')
 
 function loadAlerts() {
   try {
@@ -46,7 +46,7 @@ async function createAlert(userJid, rawArgs) {
     return '❌ *Como usar o alerta:*\n\nFormato:\n!alerta <item> [rank X] <=40\n\nExemplos:\n• !alerta hildryn prime set <=40\n• !alerta primed flow rank 10 <=70\n• !alerta item 40\n\n<= máximo | >= mínimo | = exato\nrank X para mods/arcanos'
   }
   const resolved = await resolveItem(parsed.itemName)
-  if (!resolved) return '❌ Item "' + parsed.itemName + '" não encontrado.'
+  if (!resolved) return await explainItemNotFound(parsed.itemName)
   const displayName = (resolved.item.i18n && resolved.item.i18n.en && resolved.item.i18n.en.name) ? resolved.item.i18n.en.name : parsed.itemName
   const store = loadAlerts()
   const id = store.nextId++
@@ -81,7 +81,7 @@ function deleteAlert(userJid, arg) {
   const id = parseInt(arg, 10)
   if (!id) return '❌ Use: !delalerta 17  ou  !delalerta all'
   const idx = store.alerts.findIndex((a) => a.id === id && a.userJid === userJid)
-  if (idx === -1) return '❌ Alerta de preço #' + id + ' não encontrado (ou não é seu).\n_Se é um *sniper de riven*, use_ `!delalertariven ' + id + '` _(veja os IDs em_ `!alertasriven`_)_'
+  if (idx === -1) return '❌ Alerta #' + id + ' não encontrado (ou não é seu).'
   store.alerts.splice(idx, 1)
   saveAlerts(store)
   return '✅ Alerta *#' + id + '* removido.'
