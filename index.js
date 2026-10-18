@@ -89,7 +89,7 @@ async function startBot() {
      // setTimeout(() => {
       //  runHighestUpdater().catch((e) => console.error('Highest updater:', e.message))
      // }, 60000)
-  //  }
+    }
 
     if (update.connection === 'close') {
       const code = update.lastDisconnect && update.lastDisconnect.error && update.lastDisconnect.error.output && update.lastDisconnect.error.output.statusCode
