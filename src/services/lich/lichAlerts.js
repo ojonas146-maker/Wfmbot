@@ -39,12 +39,15 @@ function saveStore(store) {
   }
 }
 
-function sameUser(a, jid) {
-  return a.userJid === jid || configHasUser([a.userJid], jid)
+// O mesmo usuário pode chegar como @lid ou como número: aceita os aliases do Baileys.
+function sameUser(a, jid, aliases) {
+  const ids = [jid].concat(Array.isArray(aliases) ? aliases : []).filter(Boolean)
+  const mine = [a.userJid].concat(a.aliases || []).filter(Boolean)
+  return ids.some((j) => mine.includes(j) || configHasUser(mine, j))
 }
 
-function userAlerts(store, userJid) {
-  return store.alerts.filter((a) => sameUser(a, userJid))
+function userAlerts(store, userJid, aliases) {
+  return store.alerts.filter((a) => sameUser(a, userJid, aliases))
 }
 
 async function ensureCatalogs() {
@@ -220,7 +223,7 @@ async function sendCard(sock, jid, n, alertId) {
 
 // ---------------------------------------------------------------- comandos
 
-async function createLichAlert(userJid, rawArgs, isAdmFlag) {
+async function createLichAlert(userJid, rawArgs, isAdmFlag, aliases) {
   await ensureCatalogs()
   const f = parseLichArgs(rawArgs)
   if (f.error) return '❌ ' + f.error + '\n\n' + USAGE
@@ -229,7 +232,7 @@ async function createLichAlert(userJid, rawArgs, isAdmFlag) {
   if (!canUseRivenSnipe(userJid, adm)) return '❌ Os snipes estão *desativados* pelo admin no momento.'
 
   const store = loadStore()
-  const cur = userAlerts(store, userJid).length
+  const cur = userAlerts(store, userJid, aliases).length
   const lim = getRivenAlertLimit(userJid, adm)
   if (!adm && cur >= lim) {
     return '❌ Limite de snipes de lich/sister: *' + lim + '*. Você já tem ' + cur + '.\nUse `!delalertalich all` ou apague alguns.'
@@ -237,7 +240,8 @@ async function createLichAlert(userJid, rawArgs, isAdmFlag) {
 
   const id = store.nextId++
   store.alerts.push({
-    id, userJid, kind: f.kind, weapon: f.weapon, weaponName: f.weaponName, element: f.element,
+    id, userJid, aliases: (Array.isArray(aliases) ? aliases : []).filter((j) => j && j !== userJid),
+    kind: f.kind, weapon: f.weapon, weaponName: f.weaponName, element: f.element,
     ephemera: f.ephemera, ephemeraName: f.ephemeraName, damageMin: f.damageMin, maxPrice: f.maxPrice,
     quirk: f.quirk, createdAt: new Date().toISOString(), notified: []
   })
@@ -253,8 +257,8 @@ async function createLichAlert(userJid, rawArgs, isAdmFlag) {
   )
 }
 
-function listLichAlerts(userJid) {
-  const mine = userAlerts(loadStore(), userJid)
+function listLichAlerts(userJid, aliases) {
+  const mine = userAlerts(loadStore(), userJid, aliases)
   if (!mine.length) return '📋 Você não tem snipes de lich/sister.\nCrie com `!alertalich` (veja `!lichajuda`).'
   let t = '📋 *Seus snipes de lich/sister:*\n'
   for (const a of mine) {
@@ -264,18 +268,18 @@ function listLichAlerts(userJid) {
   return t
 }
 
-function deleteLichAlert(userJid, arg) {
+function deleteLichAlert(userJid, arg, aliases) {
   const store = loadStore()
   if (/^all$/i.test(arg)) {
     const before = store.alerts.length
-    store.alerts = store.alerts.filter((a) => !sameUser(a, userJid))
+    store.alerts = store.alerts.filter((a) => !sameUser(a, userJid, aliases))
     const n = before - store.alerts.length
     saveStore(store)
     return n ? '🗑️ ' + n + ' snipe(s) de lich/sister removido(s).' : '❌ Você não tinha snipes de lich/sister.'
   }
   const id = parseInt(arg, 10)
   if (!id) return '❌ Use `!delalertalich <id>` ou `!delalertalich all`.'
-  const idx = store.alerts.findIndex((a) => a.id === id && sameUser(a, userJid))
+  const idx = store.alerts.findIndex((a) => a.id === id && sameUser(a, userJid, aliases))
   if (idx === -1) return '❌ Snipe de lich/sister #' + id + ' não encontrado (ou não é seu).'
   store.alerts.splice(idx, 1)
   saveStore(store)
