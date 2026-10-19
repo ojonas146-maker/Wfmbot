@@ -4,6 +4,7 @@
 const fs = require('fs')
 const axios = require('axios')
 const { RIVEN_ALERTS_FILE, RIVEN_SEEN_FILE } = require('../../config/env')
+const envCfg = require('../../config/env')
 const { jidToNumber } = require('../../utils/text')
 const { getRivenAlertLimit, canUseRivenSnipe, isAdmin } = require('../../core/adminAuth')
 const { getWeaponMeta, findDisposition, resolveCategoryFromDisp, getDispositionsList } = require('./baseData')
@@ -28,10 +29,18 @@ function saveRivenAlerts(data) {
   fs.writeFileSync(RIVEN_ALERTS_FILE, JSON.stringify(data, null, 2))
 }
 
-function countUserRivenAlerts(userJid) {
+// Dono do alerta: o mesmo usuário pode chegar como @lid ou como número (aliases do Baileys).
+function ownsAlert(a, userJid, aliases) {
+  const { configHasUser } = require('../../core/adminAuth')
+  const ids = [userJid].concat(Array.isArray(aliases) ? aliases : []).filter(Boolean)
+  const mine = [a.userJid].concat(a.aliases || []).filter(Boolean)
+  return ids.some((j) => mine.includes(j) || configHasUser(mine, j))
+}
+
+function countUserRivenAlerts(userJid, aliases) {
   const { configHasUser } = require('../../core/adminAuth')
   try {
-    return loadRivenAlerts().alerts.filter((a) => configHasUser([a.userJid], userJid) || a.userJid === userJid).length
+    return loadRivenAlerts().alerts.filter((a) => ownsAlert(a, userJid, aliases)).length
   } catch (e) {
     return 0
   }
@@ -87,7 +96,7 @@ function parseRivenAlertArgs(raw) {
 }
 
 // ---------------------------------------------------------------- CRUD
-function createRivenAlert(userJid, rawArgs, isAdmFlag) {
+function createRivenAlert(userJid, rawArgs, isAdmFlag, aliases) {
   const parsed = parseRivenAlertArgs(rawArgs)
   if (!parsed) {
     return (
@@ -106,7 +115,7 @@ function createRivenAlert(userJid, rawArgs, isAdmFlag) {
 
   const adm = isAdmFlag === true || isAdmin(userJid)
   if (!canUseRivenSnipe(userJid, adm)) return '❌ Snipe de riven está *desativado* pelo admin no momento.'
-  const cur = countUserRivenAlerts(userJid)
+  const cur = countUserRivenAlerts(userJid, aliases)
   const lim = getRivenAlertLimit(userJid, adm)
   if (!adm && cur >= lim) {
     return '❌ Limite de snipes de riven: *' + lim + '*. Você já tem ' + cur + '.\nUse `!delalertariven all` ou apague alguns.'
@@ -117,7 +126,8 @@ function createRivenAlert(userJid, rawArgs, isAdmFlag) {
   const statLabels = (parsed.stats || []).map((s) => RIVEN_STAT_LABEL[s] || s)
 
   store.alerts.push({
-    id, userJid, weapon: parsed.weapon, stats: parsed.stats || [], maxPrice: parsed.maxPrice,
+    id, userJid, aliases: (Array.isArray(aliases) ? aliases : []).filter((j) => j && j !== userJid),
+    weapon: parsed.weapon, stats: parsed.stats || [], maxPrice: parsed.maxPrice,
     useMeta: !!parsed.useMeta, minGrade: parsed.minGrade || null,
     minPositives: parsed.minPositives != null ? parsed.minPositives : ((parsed.stats || []).length >= 3 ? 3 : 2),
     maxPositives: parsed.maxPositives != null ? parsed.maxPositives : 3,
@@ -135,14 +145,13 @@ function createRivenAlert(userJid, rawArgs, isAdmFlag) {
   reply += ' Positivos: ' + posLabel + '\n'
   reply += '\nID: #' + id + '\n'
   reply += 'Só anúncios novos após este alerta.\n'
-  reply += 'Verificação a cada ~4 min.'
+  reply += 'Verificação a cada ~' + Math.max(1, Math.round((envCfg.CHECK_INTERVAL_MS || 240000) / 60000)) + ' min.'
   return reply
 }
 
-function listRivenAlerts(userJid) {
-  const { configHasUser } = require('../../core/adminAuth')
+function listRivenAlerts(userJid, aliases) {
   const store = loadRivenAlerts()
-  const mine = store.alerts.filter((a) => a.userJid === userJid || configHasUser([a.userJid], userJid))
+  const mine = store.alerts.filter((a) => ownsAlert(a, userJid, aliases))
   if (!mine.length) return '🔔 Sem alertas de riven.\nCrie: !alertariven torid meta max 2500'
   let reply = '🎯 *SEUS RIVEN SNIPERS*\n\n'
   for (const a of mine) {
@@ -158,19 +167,18 @@ function listRivenAlerts(userJid) {
   return reply.trim()
 }
 
-function deleteRivenAlert(userJid, arg) {
-  const { configHasUser } = require('../../core/adminAuth')
+function deleteRivenAlert(userJid, arg, aliases) {
   const store = loadRivenAlerts()
   if (/^all$/i.test(arg)) {
     const before = store.alerts.length
-    store.alerts = store.alerts.filter((a) => !(a.userJid === userJid || configHasUser([a.userJid], userJid)))
+    store.alerts = store.alerts.filter((a) => !ownsAlert(a, userJid, aliases))
     const removed = before - store.alerts.length
     saveRivenAlerts(store)
     return removed ? '🔕 ' + removed + ' alerta(s) de riven removido(s).' : 'Você não tinha alertas de riven.'
   }
   const id = parseInt(arg, 10)
   if (!id) return '❌ Use: !delalertariven 1  ou  !delalertariven all'
-  const idx = store.alerts.findIndex((a) => a.id === id && (a.userJid === userJid || configHasUser([a.userJid], userJid)))
+  const idx = store.alerts.findIndex((a) => a.id === id && ownsAlert(a, userJid, aliases))
   if (idx === -1) return '❌ Alerta de riven #' + id + ' não encontrado.'
   store.alerts.splice(idx, 1)
   saveRivenAlerts(store)
