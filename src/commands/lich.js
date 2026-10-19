@@ -1,6 +1,7 @@
 // src/commands/lich.js
 // Snipers e consultas de Kuva Lich / Sisters of Parvos.
 const { register } = require('./router')
+const { getSenderAliases } = require('../core/adminAuth')
 const {
   createLichAlert, listLichAlerts, deleteLichAlert, searchLichNow, lichHelpMessages
 } = require('../services/lich/lichAlerts')
@@ -9,9 +10,9 @@ const {
 const lastSearch = {}
 const SEARCH_COOLDOWN_MS = 15 * 1000
 
-register(/^!alertalich\s+(.+)/i, async ({ sock, from, senderJid, isAdmin, match }) => {
+register(/^!alertalich\s+(.+)/i, async ({ sock, from, senderJid, isAdmin, match, msg }) => {
   const ownerJid = senderJid || from
-  await sock.sendMessage(from, { text: await createLichAlert(ownerJid, match[1].trim(), isAdmin) })
+  await sock.sendMessage(from, { text: await createLichAlert(ownerJid, match[1].trim(), isAdmin, getSenderAliases(msg)) })
 })
 
 register(/^!alertalich$/i, async ({ sock, from }) => {
@@ -19,12 +20,12 @@ register(/^!alertalich$/i, async ({ sock, from }) => {
   await sock.sendMessage(from, { text: guide })
 })
 
-register(/^!alertaslich$/i, async ({ sock, from, senderJid }) => {
-  await sock.sendMessage(from, { text: listLichAlerts(senderJid || from) })
+register(/^!alertaslich$/i, async ({ sock, from, senderJid, msg }) => {
+  await sock.sendMessage(from, { text: listLichAlerts(senderJid || from, getSenderAliases(msg)) })
 })
 
-register(/^!delalertalich\s+(.+)/i, async ({ sock, from, senderJid, match }) => {
-  await sock.sendMessage(from, { text: deleteLichAlert(senderJid || from, match[1].trim()) })
+register(/^!delalertalich\s+#?(.+)/i, async ({ sock, from, senderJid, match, msg }) => {
+  await sock.sendMessage(from, { text: deleteLichAlert(senderJid || from, match[1].trim(), getSenderAliases(msg)) })
 })
 
 // !lich <filtros>: mostra agora os 3 mais baratos
