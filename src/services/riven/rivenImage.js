@@ -11,7 +11,7 @@ const axios = require('axios')
 
 const env = require('../../config/env')
 const { loadBaseValues, findDisposition, getDispositionsList, resolveCategoryFromDisp } = require('./baseData')
-const { gradeOneStat, gradeRank, getConfigKey, RIVEN_STAT_LABEL, projectToMaxRank, inferModRank } = require('./grading')
+const { gradeOneStat, gradeRank, getConfigKey, RIVEN_STAT_LABEL, projectToMaxRank, inferModRank, findVariants } = require('./grading')
 
 // Modelo de visão da Groq. Se a Groq aposentar este, troque via variável de ambiente.
 // tira espaços e aspas que às vezes vêm coladas junto do valor da variável
@@ -282,6 +282,42 @@ function fmtValue(base, unit, v) {
   return sign + Math.abs(n).toFixed(1)
 }
 
+// ---------------------------------------------------------------------------
+// Variantes da arma (Prime, Kuva, Prisma, Vandal, Wraith, MK1, Coda, Tenet...)
+// O mesmo riven vira valores diferentes em cada variante, pois cada uma tem sua disposição.
+// ---------------------------------------------------------------------------
+
+const MAX_VARIANT_COLS = 4
+
+function variantCell(num, unit, neg, scale, modRank, maxRank) {
+  const mul = modRank < maxRank ? (maxRank + 1) / (modRank + 1) : 1
+  if (unit === 'x') return 'x' + (1 + (Number(num) - 1) * scale * mul).toFixed(2)
+  return (neg ? '-' : '+') + fmtNum(Math.abs(Number(num)) * scale * mul) + (unit === '%' ? '%' : '')
+}
+
+/** Tabela { cols, rows } com os valores do riven em cada variante; null se a arma não tem variantes. */
+function computeVariantTable(weaponName, baseDispo, rows, modRank, maxRank) {
+  if (baseDispo == null || !(Number(baseDispo) > 0) || !rows.length) return null
+  let vs = []
+  try { vs = findVariants(weaponName, getDispositionsList()) || [] } catch (e) { vs = [] }
+  vs = vs.filter((v) => v && v.disposition != null && Number(v.disposition) > 0)
+  if (!vs.length) return null
+  const shown = vs.slice(0, MAX_VARIANT_COLS)
+  const cols = [{ name: weaponName, dispo: Number(baseDispo), base: true }]
+    .concat(shown.map((v) => ({ name: v.name, dispo: Number(v.disposition) })))
+  return {
+    cols,
+    maxRank,
+    projected: modRank < maxRank,
+    extra: vs.length - shown.length,
+    rows: rows.map((r) => ({
+      label: r.label,
+      grade: r.grade || null,
+      cells: cols.map((c) => variantCell(r.num, r.unit, r.neg, c.dispo / Number(baseDispo), modRank, maxRank))
+    }))
+  }
+}
+
 // Valor do stat projetado para o rank máximo (ex: rank 0 -> x9). null se já está no máximo.
 function projectedText(unit, num, neg, modRank, maxRank) {
   if (modRank >= maxRank) return null
@@ -294,22 +330,56 @@ function projectedText(unit, num, neg, modRank, maxRank) {
   return (neg ? '-' : '+') + fmtNum(p) + (unit === '%' ? '%' : '')
 }
 
+function worstDevFor(attrs, category, dispo, configKey, modRank, maxRank) {
+  let w = 0
+  for (const a of attrs) {
+    const g = gradeOneStat(a, category, dispo, configKey, modRank, maxRank)
+    if (g && g.dev != null && isFinite(g.dev)) w = Math.max(w, Math.abs(g.dev))
+  }
+  return w
+}
+
+/** Se os valores não batem com a arma, mas batem (<=15%) com uma variante dela, devolve { weapon }. */
+function inferVariantByValues(attrs, category, weapon, configKey, modRank, maxRank) {
+  const base = Number(weapon.disposition)
+  if (!(base > 0) || worstDevFor(attrs, category, base, configKey, modRank, maxRank) <= 15) return null
+  const list = getDispositionsList()
+  let vs = []
+  try { vs = findVariants(weapon.name, list) || [] } catch (e) { return null }
+  let best = null
+  for (const v of vs) {
+    const dv = Number(v.disposition)
+    if (!(dv > 0)) continue
+    const w = worstDevFor(attrs, category, dv, configKey, modRank, maxRank)
+    if (!best || w < best.w) best = { v, w }
+  }
+  if (!best || best.w > 15) return null
+  const full = list.find((x) => x && x.name === best.v.name) || { name: best.v.name, disposition: Number(best.v.disposition) }
+  return { weapon: full }
+}
+
 function gradeExtracted(data, opts) {
   const bv = loadBaseValues()
   const title = String(data.riven_name || '').trim()
-  const weapon = findWeaponFromTitle(title, data.weapon)
-  if (!weapon) {
-    return { error: 'Não achei a arma "' + (title.split(' ')[0] || '?') + '" na tabela de disposições.' }
+  let weapon = null
+  if (opts && opts.weapon) {
+    weapon = findDisposition(opts.weapon)
+    if (!weapon) return { error: 'Não achei a arma "' + opts.weapon + '" na tabela de disposições.' }
+  } else {
+    weapon = findWeaponFromTitle(title, data.weapon)
+    if (!weapon) {
+      return { error: 'Não achei a arma "' + (title.split(' ')[0] || '?') + '" na tabela de disposições.' }
+    }
   }
 
-  const category = resolveCategoryFromDisp(weapon)
-  const disposition = Number(weapon.disposition)
+  let category = resolveCategoryFromDisp(weapon)
+  let disposition = Number(weapon.disposition)
 
   // monta attrs no formato do warframe.market (positive = buff, não o sinal)
   const parsed = []
   for (const s of data.stats) {
-    const raw = Number(s.value)
-    if (isNaN(raw)) continue
+    const raw = Number(String(s.value).replace(',', '.').replace(/[^0-9.\-]/g, ''))
+    if (s.value == null || isNaN(raw)) continue
     const base = resolveBaseStat(s.name)
     const entry = base ? bv.stats[base] : null
     const unit = entry ? entry.unit : '%'
@@ -344,6 +414,21 @@ function gradeExtracted(data, opts) {
     if (modRank < maxRank) rankNote = 'Rank ' + modRank + ' \u00B7 valores projetados no Rank ' + maxRank
   }
 
+  // O riven pode estar equipado numa variante (ex: Sobek -> Kuva Sobek): a carta mostra os
+  // valores escalados para ESSA arma. Se nada bate com a arma do título mas bate com uma
+  // variante, usa a variante.
+  let weaponNote = null
+  if (!(opts && opts.weapon)) {
+    const fit = inferVariantByValues(attrs, category, weapon, configKey, modRank, maxRank)
+    if (fit) {
+      weaponNote = 'Valores compatíveis com ' + fit.weapon.name + ' (dispo ' + fit.weapon.disposition + '), não com ' + weapon.name
+      weapon = fit.weapon
+      category = resolveCategoryFromDisp(weapon)
+      disposition = Number(weapon.disposition)
+    }
+  }
+  if (weaponNote) rankNote = weaponNote + (rankNote ? ' \u00B7 ' + rankNote : '')
+
   const rows = parsed.map((p) => {
     const g = gradeOneStat(p.attr, category, disposition, configKey, modRank, maxRank)
     return {
@@ -353,7 +438,10 @@ function gradeExtracted(data, opts) {
       grade: g.grade || null,
       dev: g.dev != null ? g.dev : null,
       note: g.note || null,
-      proj: projectedText(p.unit, p.raw, p.raw < 0, modRank, maxRank)
+      proj: projectedText(p.unit, p.raw, p.raw < 0, modRank, maxRank),
+      unit: p.unit,
+      num: p.raw,
+      neg: p.raw < 0
     }
   })
 
@@ -374,7 +462,8 @@ function gradeExtracted(data, opts) {
     rankNote,
     mastery: data.mastery_rank,
     rerolls: data.rerolls,
-    rows
+    rows,
+    variants: (opts && opts.variants === false) ? null : computeVariantTable(weapon.name, disposition, rows, modRank, maxRank)
   }
 }
 
@@ -454,6 +543,52 @@ function buildCardPanel(card, W, H) {
   return s
 }
 
+function tableLabel(l) {
+  let t = String(l)
+    .replace('Critical Chance', 'Crit Chance').replace('Critical Damage', 'Crit Damage')
+    .replace(' / Attack Speed', '').replace('Melee Damage On Heavy Attack', 'Dmg Heavy Atk')
+    .replace('Heavy Attack Wind Up Speed', 'Heavy Wind Up')
+  if (t.length > 22) t = t.slice(0, 21) + '\u2026'
+  return t
+}
+
+function variantTableHeight(vt) {
+  return 112 + vt.rows.length * 34 + (vt.extra > 0 ? 26 : 10)
+}
+
+/** Tabela de variantes desenhada abaixo dos dois painéis (y0 = onde começa). */
+function buildVariantTable(vt, W, y0) {
+  const pad = 28
+  const labelW = 190
+  const tableW = W - pad * 2
+  const n = vt.cols.length
+  const colW = Math.min(150, (tableW - labelW) / n)
+  let s = ''
+  s += '<line x1="' + pad + '" y1="' + (y0 + 6) + '" x2="' + (W - pad) + '" y2="' + (y0 + 6) + '" stroke="#2a2a31" stroke-width="1.5"/>'
+  s += txt(pad, y0 + 34, 16, '#8b8b96', 'Valores nas variantes' + (vt.projected ? ' (projetados no Rank ' + vt.maxRank + ')' : ''), { bold: true })
+
+  vt.cols.forEach((c, i) => {
+    const cx = Math.round(pad + labelW + colW * i + colW / 2)
+    let nm = c.name.length > 17 ? c.name.slice(0, 16) + '\u2026' : c.name
+    s += txt(cx, y0 + 66, c.name.length > 13 ? 13 : 15, c.base ? '#ffffff' : '#cbbcf0', nm, { bold: true, middle: true })
+    s += txt(cx, y0 + 85, 12, '#6f6f7a', 'dispo ' + c.dispo, { middle: true })
+  })
+
+  let y = y0 + 98
+  vt.rows.forEach((r, ri) => {
+    if (ri % 2 === 0) s += '<rect x="' + pad + '" y="' + y + '" width="' + tableW + '" height="34" rx="6" fill="#101015"/>'
+    const color = r.grade ? (GRADE_COLORS[r.grade] || '#f5c542') : '#8b8b96'
+    s += txt(pad + 10, y + 23, 15, '#d8d8de', tableLabel(r.label))
+    r.cells.forEach((cell, i) => {
+      const cx = Math.round(pad + labelW + colW * i + colW / 2)
+      s += txt(cx, y + 24, 17, color, cell, { bold: true, middle: true })
+    })
+    y += 34
+  })
+  if (vt.extra > 0) s += txt(pad + 10, y + 18, 13, '#6f6f7a', '+' + vt.extra + ' variante(s) não exibida(s)')
+  return s
+}
+
 // Estilo "referência": riven original ocupando a esquerda inteira, painel preto à direita.
 function buildCardSvg(result, imgBuf) {
   const LEFT_W = 460
@@ -473,10 +608,13 @@ function buildCardSvg(result, imgBuf) {
   const RX = LEFT_W + 36
   const RR = W - 28
 
+  const vt = result.variants || null
+  const HT = H + (vt ? variantTableHeight(vt) : 0)
+
   let svg = ''
-  svg += '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '">'
+  svg += '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="' + W + '" height="' + HT + '" viewBox="0 0 ' + W + ' ' + HT + '">'
   svg += '<defs><clipPath id="imgclip"><rect x="0" y="0" width="' + LEFT_W + '" height="' + H + '"/></clipPath></defs>'
-  svg += '<rect width="' + W + '" height="' + H + '" fill="#08080a"/>'
+  svg += '<rect width="' + W + '" height="' + HT + '" fill="#08080a"/>'
 
   if (!imgBuf && result.card) svg += buildCardPanel(result.card, LEFT_W, H)
   if (imgBuf) {
@@ -528,6 +666,8 @@ function buildCardSvg(result, imgBuf) {
     })
   }
 
+  if (vt) svg += buildVariantTable(vt, W, H)
+
   svg += '</svg>'
   return svg
 }
@@ -557,7 +697,7 @@ function fmtNum(n) {
   return String(Number(Number(n).toFixed(1)))
 }
 
-function buildAuctionResult(auction) {
+function buildAuctionResult(auction, opts) {
   const item = (auction && auction.item) || {}
   const weaponUrl = item.weapon_url_name || ''
   const disp = findDisposition(weaponUrl)
@@ -591,7 +731,9 @@ function buildAuctionResult(auction) {
       grade: g.grade || null,
       dev: g.dev != null ? g.dev : null,
       note: g.note || null,
-      proj: projectedText(unit, num, isPos ? num < 0 : true, modRank, maxRank)
+      proj: projectedText(unit, num, isPos ? num < 0 : true, modRank, maxRank),
+      num,
+      neg: isPos ? num < 0 : true
     }
   })
 
@@ -609,6 +751,8 @@ function buildAuctionResult(auction) {
   })
 
   const weaponName = disp && disp.name ? disp.name : prettyName(weaponUrl)
+  const variants = (rankStatus === 'inconsistent' || (opts && opts.variants === false)) ? null
+    : computeVariantTable(weaponName, disposition, rows, modRank, maxRank)
   const price = auction.buyout_price != null ? auction.buyout_price : auction.starting_price
   const owner = auction.owner || {}
   const rivenName = String(item.name || '')
@@ -621,6 +765,7 @@ function buildAuctionResult(auction) {
     modRank,
     maxRank,
     rankStatus,
+    variants,
     rankNote: rankStatus === 'inconsistent'
       ? '\u26A0 Valores incompatíveis com qualquer rank: anúncio suspeito, confira no jogo'
       : rankStatus === 'inferred'
@@ -642,8 +787,8 @@ function buildAuctionResult(auction) {
   }
 }
 
-function renderAuctionPng(auction) {
-  return renderPng(buildCardSvg(buildAuctionResult(auction), null))
+function renderAuctionPng(auction, opts) {
+  return renderPng(buildCardSvg(buildAuctionResult(auction, opts), null))
 }
 
 // ---------------------------------------------------------------------------
