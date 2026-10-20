@@ -899,6 +899,9 @@ function metaCaptionLine(weapon, attrs) {
   return ''
 }
 
+// Tabela de variantes (Prime, Kuva...) no cartão do snipe. Ligue se quiser ver em todo aviso.
+const SNIPE_CARD_VARIANTS = false
+
 // Linha de sussurro pronta pra copiar e colar no jogo (mensagem separada, só o comando)
 function whisperText(auction) {
   const owner = (auction && auction.owner) || {}
@@ -921,7 +924,7 @@ function rankWarningLine(auction) {
 async function sendAuctionWithCard(sock, jid, auction, msg) {
   let png = null
   try {
-    png = require('./rivenImage').renderAuctionPng(auction)
+    png = require('./rivenImage').renderAuctionPng(auction, { variants: SNIPE_CARD_VARIANTS })
   } catch (e) {
     console.error('card riven (render):', e.message)
   }
