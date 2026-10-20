@@ -1,0 +1,491 @@
+{
+  "factionSyndicates": {
+    "steelMeridian": {
+      "name": "Steel Meridian",
+      "prefix": "Vaykor",
+      "requiredRank": 5,
+      "items": [
+        {"name": "Vaykor Marelok", "type": "secondary", "cost": 100000, "currency": "standing"},
+        {"name": "Vaykor Hek", "type": "primary", "cost": 125000, "currency": "standing"},
+        {"name": "Vaykor Sydon", "type": "melee", "cost": 125000, "currency": "standing"}
+      ]
+    },
+    "arbitersOfHexis": {
+      "name": "Arbiters of Hexis",
+      "prefix": "Telos",
+      "requiredRank": 5,
+      "items": [
+        {"name": "Telos Akbolto", "type": "secondary", "cost": 100000, "currency": "standing"},
+        {"name": "Telos Boltor", "type": "primary", "cost": 125000, "currency": "standing"},
+        {"name": "Telos Boltace", "type": "melee", "cost": 125000, "currency": "standing"}
+      ]
+    },
+    "cephalonSuda": {
+      "name": "Cephalon Suda",
+      "prefix": "Synoid",
+      "requiredRank": 5,
+      "items": [
+        {"name": "Synoid Gammacor", "type": "secondary", "cost": 100000, "currency": "standing"},
+        {"name": "Synoid Simulor", "type": "primary", "cost": 125000, "currency": "standing"},
+        {"name": "Synoid Heliocor", "type": "melee", "cost": 125000, "currency": "standing"}
+      ]
+    },
+    "perrinSequence": {
+      "name": "The Perrin Sequence",
+      "prefix": "Secura",
+      "requiredRank": 5,
+      "items": [
+        {"name": "Secura Dual Cestra", "type": "secondary", "cost": 100000, "currency": "standing"},
+        {"name": "Secura Penta", "type": "primary", "cost": 125000, "currency": "standing"},
+        {"name": "Secura Lecta", "type": "melee", "cost": 125000, "currency": "standing"}
+      ]
+    },
+    "redVeil": {
+      "name": "Red Veil",
+      "prefix": "Rakta",
+      "requiredRank": 5,
+      "items": [
+        {"name": "Rakta Ballistica", "type": "secondary", "cost": 100000, "currency": "standing"},
+        {"name": "Rakta Cernos", "type": "primary", "cost": 125000, "currency": "standing"},
+        {"name": "Rakta Dark Dagger", "type": "melee", "cost": 125000, "currency": "standing"}
+      ]
+    },
+    "newLoka": {
+      "name": "New Loka",
+      "prefix": "Sancti",
+      "requiredRank": 5,
+      "items": [
+        {"name": "Sancti Castanas", "type": "secondary", "cost": 100000, "currency": "standing"},
+        {"name": "Sancti Tigris", "type": "primary", "cost": 125000, "currency": "standing"},
+        {"name": "Sancti Magistar", "type": "melee", "cost": 125000, "currency": "standing"}
+      ]
+    }
+  },
+  "openWorld": {
+    "cetus": {
+      "location": "Earth - Cetus",
+      "vendors": {
+        "hok": {
+          "name": "Hok",
+          "syndicate": "Ostron",
+          "currency": "standing",
+          "items": [
+            {"name": "Exodia Brave", "type": "arcane", "cost": 10000, "maxRank": 3, "copiesForMax": 10},
+            {"name": "Exodia Force", "type": "arcane", "cost": 10000, "maxRank": 3, "copiesForMax": 10},
+            {"name": "Exodia Hunt", "type": "arcane", "cost": 10000, "maxRank": 3, "copiesForMax": 10},
+            {"name": "Exodia Might", "type": "arcane", "cost": 10000, "maxRank": 3, "copiesForMax": 10},
+            {"name": "Exodia Triumph", "type": "arcane", "cost": 10000, "maxRank": 3, "copiesForMax": 10},
+            {"name": "Exodia Valor", "type": "arcane", "cost": 10000, "maxRank": 3, "copiesForMax": 10}
+          ]
+        },
+        "onkko": {
+          "name": "Quill Onkko",
+          "syndicate": "The Quills",
+          "currency": "standing",
+          "items": [
+            {"name": "Magus Vigor", "type": "arcane", "cost": 2500, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Virtuos Null", "type": "arcane", "cost": 2500, "maxRank": 3, "copiesForMax": 10},
+            {"name": "Magus Husk", "type": "arcane", "cost": 5000, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Virtuos Tempo", "type": "arcane", "cost": 5000, "maxRank": 3, "copiesForMax": 10},
+            {"name": "Virtuos Fury", "type": "arcane", "cost": 7500, "maxRank": 3, "copiesForMax": 10},
+            {"name": "Magus Cloud", "type": "arcane", "cost": 10000, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Magus Cadence", "type": "arcane", "cost": 10000, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Magus Replenish", "type": "arcane", "cost": 10000, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Virtuos Strike", "type": "arcane", "cost": 10000, "maxRank": 3, "copiesForMax": 10},
+            {"name": "Magus Elevate", "type": "arcane", "cost": 10000, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Magus Nourish", "type": "arcane", "cost": 10000, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Virtuos Shadow", "type": "arcane", "cost": 10000, "maxRank": 3, "copiesForMax": 10},
+            {"name": "Virtuos Ghost", "type": "arcane", "cost": 10000, "maxRank": 3, "copiesForMax": 10}
+          ]
+        },
+        "teasonai": {
+          "name": "Master Teasonai",
+          "syndicate": "Ostron",
+          "currency": "mixed",
+          "items": [
+            {"name": "Covert Bond", "type": "mod", "cost": 20000, "currency": "standing", "maxRank": null, "copiesForMax": 1},
+            {"name": "Manifold Bond", "type": "mod", "cost": 20000, "currency": "standing", "maxRank": null, "copiesForMax": 1},
+            {"name": "Mystic Bond", "type": "mod", "cost": 20000, "currency": "standing", "maxRank": null, "copiesForMax": 1},
+            {"name": "Restorative Bond", "type": "mod", "cost": 20000, "currency": "standing", "maxRank": null, "copiesForMax": 1},
+            {"name": "Tandem Bond", "type": "mod", "cost": 75000, "currency": "standing", "maxRank": null, "copiesForMax": 1},
+            {"name": "Elusive Posture", "type": "mod", "cost": null, "currency": "tags", "tags": {"Plains Kuaka Tag": 3, "Ashen Kuaka Tag": 3, "Ghost Kuaka Tag": 3}, "maxRank": null, "copiesForMax": 1},
+            {"name": "Balanced Posture", "type": "mod", "cost": null, "currency": "tags", "tags": {"Coastal Mergoo Tag": 3, "Ashen Kuaka Tag": 3}, "maxRank": null, "copiesForMax": 1},
+            {"name": "Loyal Retriever", "type": "mod", "cost": null, "currency": "tags", "tags": {"Plains Kuaka Tag": 1, "Common Condroc Tag": 1, "Ostia Vasca Kavat Tag": 1, "Coastal Mergoo Tag": 1}, "maxRank": null, "copiesForMax": 1},
+            {"name": "Precision Conditioning", "type": "mod", "cost": null, "currency": "tags", "tags": {"Splendid Mergoo Tag": 3, "Bau Vasca Kavat Tag": 3}, "maxRank": null, "copiesForMax": 1},
+            {"name": "Cull the Weak", "type": "mod", "cost": null, "currency": "tags", "tags": {"Rogue Condroc Tag": 5, "Emperor Condroc Tag": 5}, "maxRank": null, "copiesForMax": 1},
+            {"name": "Bloodthirst", "type": "mod", "cost": null, "currency": "tags", "tags": {"Ostia Vasca Kavat Tag": 3, "Nephil Vasca Kavat Tag": 3}, "maxRank": null, "copiesForMax": 1}
+          ]
+        }
+      }
+    },
+    "fortuna": {
+      "location": "Venus - Fortuna",
+      "vendors": {
+        "rudeZuud": {
+          "name": "Rude Zuud",
+          "syndicate": "Solaris United",
+          "currency": "standing",
+          "items": [
+            {"name": "Pax Bolt", "type": "arcane", "cost": 10000, "maxRank": 3, "copiesForMax": 10},
+            {"name": "Pax Charge", "type": "arcane", "cost": 10000, "maxRank": 3, "copiesForMax": 10},
+            {"name": "Pax Seeker", "type": "arcane", "cost": 10000, "maxRank": 3, "copiesForMax": 10},
+            {"name": "Pax Soar", "type": "arcane", "cost": 10000, "maxRank": 3, "copiesForMax": 10}
+          ]
+        },
+        "littleDuck": {
+          "name": "Little Duck",
+          "syndicate": "Vox Solaris",
+          "currency": "standing",
+          "items": [
+            {"name": "Virtuos Spike", "type": "arcane", "cost": 5000, "maxRank": 3, "copiesForMax": 10},
+            {"name": "Virtuos Surge", "type": "arcane", "cost": 5000, "maxRank": 3, "copiesForMax": 10},
+            {"name": "Virtuos Forge", "type": "arcane", "cost": 7500, "maxRank": 3, "copiesForMax": 10},
+            {"name": "Virtuos Trojan", "type": "arcane", "cost": 7500, "maxRank": 3, "copiesForMax": 10},
+            {"name": "Magus Anomaly", "type": "arcane", "cost": 10000, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Magus Destruct", "type": "arcane", "cost": 10000, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Magus Drive", "type": "arcane", "cost": 10000, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Magus Firewall", "type": "arcane", "cost": 10000, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Magus Lockdown", "type": "arcane", "cost": 10000, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Magus Accelerant", "type": "arcane", "cost": 10000, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Magus Glitch", "type": "arcane", "cost": 10000, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Magus Melt", "type": "arcane", "cost": 10000, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Magus Overload", "type": "arcane", "cost": 10000, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Magus Repair", "type": "arcane", "cost": 10000, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Magus Revert", "type": "arcane", "cost": 10000, "maxRank": 5, "copiesForMax": 21}
+          ]
+        },
+        "nightcap": {
+          "name": "Nightcap",
+          "syndicate": "Nightcap",
+          "currency": "fergolyte",
+          "items": [
+            {"name": "Conjunction Voltage", "type": "arcane", "cost": 10, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Primary Blight", "type": "arcane", "cost": 10, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Primary Frostbite", "type": "arcane", "cost": 10, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Secondary Encumber", "type": "arcane", "cost": 10, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Secondary Fortifier", "type": "arcane", "cost": 10, "maxRank": 5, "copiesForMax": 21}
+          ]
+        },
+        "theBusiness": {
+          "name": "The Business",
+          "syndicate": "Solaris United",
+          "currency": "tags",
+          "items": [
+            {"name": "Assassin Posture", "type": "mod", "cost": null, "currency": "tags", "tags": {"Brindle Kubrodon Tag": 3, "Vallis Kubrodon Tag": 3, "Kubrodon Incarnadine Tag": 3}, "maxRank": null, "copiesForMax": 1},
+            {"name": "Protector Posture", "type": "mod", "cost": null, "currency": "tags", "tags": {"Spotted Bolarola Tag": 3, "Black-Banded Bolarola Tag": 3, "Thorny Bolarola Tag": 3}, "maxRank": null, "copiesForMax": 1},
+            {"name": "Persistent Posture", "type": "mod", "cost": null, "currency": "tags", "tags": {"Dappled Horrasque Tag": 3, "Swimmer Horrasque Tag": 3, "Horrasque Stormer Tag": 3}, "maxRank": null, "copiesForMax": 1},
+            {"name": "Shocking Claws", "type": "mod", "cost": null, "currency": "tags", "tags": {"Delicate Pobber Tag": 5, "Horrasque Stormer Tag": 3}, "maxRank": null, "copiesForMax": 1},
+            {"name": "Chilling Claws", "type": "mod", "cost": null, "currency": "tags", "tags": {"Alpine Monitor Sawgaw Tag": 3, "Red-Crested Virmink Tag": 3}, "maxRank": null, "copiesForMax": 1},
+            {"name": "Burning Claws", "type": "mod", "cost": null, "currency": "tags", "tags": {"Fuming Dax Stover Tag": 5, "Fire-Veined Stover Tag": 3}, "maxRank": null, "copiesForMax": 1},
+            {"name": "Disabling Conditioning", "type": "mod", "cost": null, "currency": "tags", "tags": {"Black-Banded Bolarola Tag": 3, "Thorny Bolarola Tag": 3}, "maxRank": null, "copiesForMax": 1},
+            {"name": "Brute Conditioning", "type": "mod", "cost": null, "currency": "tags", "tags": {"Vallis Kubrodon Tag": 3, "Kubrodon Incarnadine Tag": 3}, "maxRank": null, "copiesForMax": 1},
+            {"name": "Prosperous Retriever", "type": "mod", "cost": null, "currency": "tags", "tags": {"Sunny Pobber Tag": 1, "White-Breasted Virmink Tag": 1, "Flossy Sawgaw Tag": 1, "Spotted Bolarola Tag": 1, "Dappled Horrasque Tag": 1, "Sentinel Stover Tag": 1, "Brindle Kubrodon Tag": 1}, "maxRank": null, "copiesForMax": 1}
+          ]
+        },
+        "boon": {
+          "name": "Boon (Ventkids)",
+          "syndicate": "Ventkids",
+          "currency": "standing",
+          "items": [
+            {"name": "Air Time", "type": "mod", "cost": 7500, "currency": "standing", "maxRank": null, "copiesForMax": 1},
+            {"name": "Mag Locks", "type": "mod", "cost": 7500, "currency": "standing", "maxRank": null, "copiesForMax": 1},
+            {"name": "Rail Guards", "type": "mod", "cost": 7500, "currency": "standing", "maxRank": null, "copiesForMax": 1},
+            {"name": "Trail Blazer", "type": "mod", "cost": 7500, "currency": "standing", "maxRank": null, "copiesForMax": 1},
+            {"name": "Perfect Balance", "type": "mod", "cost": 7500, "currency": "standing", "maxRank": null, "copiesForMax": 1},
+            {"name": "Pop Top", "type": "mod", "cost": 7500, "currency": "standing", "maxRank": null, "copiesForMax": 1},
+            {"name": "Poppin Vert", "type": "mod", "cost": 7500, "currency": "standing", "maxRank": null, "copiesForMax": 1},
+            {"name": "Inertia Dampeners", "type": "mod", "cost": 12500, "currency": "standing", "maxRank": null, "copiesForMax": 1},
+            {"name": "Kinetic Friction", "type": "mod", "cost": 12500, "currency": "standing", "maxRank": null, "copiesForMax": 1},
+            {"name": "Slay Board", "type": "mod", "cost": 12500, "currency": "standing", "maxRank": null, "copiesForMax": 1},
+            {"name": "Venerdo Hoverdrive", "type": "mod", "cost": 12500, "currency": "standing", "maxRank": null, "copiesForMax": 1},
+            {"name": "Cold Arrival", "type": "mod", "cost": 20000, "currency": "standing", "maxRank": null, "copiesForMax": 1},
+            {"name": "Mad Stack", "type": "mod", "cost": 20000, "currency": "standing", "maxRank": null, "copiesForMax": 1},
+            {"name": "Quick Escape", "type": "mod", "cost": 20000, "currency": "standing", "maxRank": null, "copiesForMax": 1},
+            {"name": "Bomb The Landin", "type": "mod", "cost": 20000, "currency": "standing", "maxRank": null, "copiesForMax": 1},
+            {"name": "Extreme Velocity", "type": "mod", "cost": 20000, "currency": "standing", "maxRank": null, "copiesForMax": 1},
+            {"name": "Juice", "type": "mod", "cost": 20000, "currency": "standing", "maxRank": null, "copiesForMax": 1},
+            {"name": "Nitro Boost", "type": "mod", "cost": 20000, "currency": "standing", "maxRank": null, "copiesForMax": 1},
+            {"name": "Primo Flair", "type": "mod", "cost": 20000, "currency": "standing", "maxRank": null, "copiesForMax": 1},
+            {"name": "Sonic Boost", "type": "mod", "cost": 20000, "currency": "standing", "maxRank": null, "copiesForMax": 1},
+            {"name": "Thrash Landing", "type": "mod", "cost": 20000, "currency": "standing", "maxRank": null, "copiesForMax": 1},
+            {"name": "Vapor Trail", "type": "mod", "cost": 20000, "currency": "standing", "maxRank": null, "copiesForMax": 1}
+          ]
+        }
+      }
+    },
+    "deimos": {
+      "location": "Deimos - Necralisk",
+      "vendors": {
+        "loid": {
+          "name": "Loid",
+          "syndicate": "Necraloid",
+          "currency": "standing",
+          "items": [
+            {"name": "Necramech Refuel", "type": "mod", "cost": 10000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Necramech Vitality", "type": "mod", "cost": 10000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Necramech Drift", "type": "mod", "cost": 25000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Necramech Efficiency", "type": "mod", "cost": 25000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Necramech Flow", "type": "mod", "cost": 25000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Necramech Friction", "type": "mod", "cost": 25000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Necramech Intensify", "type": "mod", "cost": 25000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Necramech Pressure Point", "type": "mod", "cost": 25000, "maxRank": null, "copiesForMax": 1}
+          ]
+        },
+        "bird3": {
+          "name": "Bird 3",
+          "syndicate": "Cavia",
+          "currency": "standing",
+          "items": [
+            {"name": "Melee Fortification", "type": "arcane", "cost": 5000, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Melee Retaliation", "type": "arcane", "cost": 5000, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Melee Animosity", "type": "arcane", "cost": 7500, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Melee Exposure", "type": "arcane", "cost": 7500, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Melee Influence", "type": "arcane", "cost": 7500, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Melee Vortex", "type": "arcane", "cost": 7500, "maxRank": 5, "copiesForMax": 21}
+          ]
+        },
+        "vilcor": {
+          "name": "Vilcor / Father",
+          "syndicate": "Entrati",
+          "currency": "standing",
+          "items": [
+            {"name": "Bhisaj-Bal", "type": "mod", "cost": 20000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Damzav-Vati", "type": "mod", "cost": 20000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Hata-Satya", "type": "mod", "cost": 20000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Zazvat-Kar", "type": "mod", "cost": 20000, "maxRank": null, "copiesForMax": 1}
+          ]
+        },
+        "kermerros": {
+          "name": "Kermerros / Son",
+          "syndicate": "Entrati",
+          "currency": "mixed",
+          "items": [
+            {"name": "Contagious Bond", "type": "mod", "cost": 20000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Duplex Bond", "type": "mod", "cost": 20000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Martyr Symbiosis", "type": "mod", "cost": 10000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Seismic Bond", "type": "mod", "cost": 20000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Vicious Bond", "type": "mod", "cost": 20000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Volatile Parasite", "type": "mod", "cost": 10000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Resourceful Retriever", "type": "mod", "cost": null, "currency": "tags", "tags": {"Sly Vulpaphyla Tag": 1, "Purple Velocipod Tag": 1, "Burrowing Cryptilex Tag": 1, "Common Avichaea Tag": 1, "Amethyst Nexifera Tag": 1, "Vizier Predasite Tag": 1, "Umber Undazoa Tag": 1}, "maxRank": null, "copiesForMax": 1},
+            {"name": "Sepsis Claws", "type": "mod", "cost": null, "currency": "tags", "tags": {"note": "Conservation tags from Son (exact combination from wiki/vendor)"}, "maxRank": null, "copiesForMax": 1},
+            {"name": "Frenzied Posture", "type": "mod", "cost": null, "currency": "tags", "tags": {"Sly Vulpaphyla Tag": 3, "Crescent Vulpaphyla Tag": 3, "Panzer Vulpaphyla Tag": 3}, "maxRank": null, "copiesForMax": 1},
+            {"name": "Magnetic Strike", "type": "mod", "cost": null, "currency": "tags", "tags": {"note": "Conservation tags from Son"}, "maxRank": null, "copiesForMax": 1},
+            {"name": "Immunity Resistance", "type": "mod", "cost": null, "currency": "tags", "tags": {"note": "Conservation tags from Son"}, "maxRank": null, "copiesForMax": 1},
+            {"name": "Bell Ringer", "type": "mod", "cost": null, "currency": "tags", "tags": {"note": "Conservation tags from Son"}, "maxRank": null, "copiesForMax": 1}
+          ]
+        }
+      }
+    },
+    "zariman": {
+      "location": "Zariman - Chrysalith",
+      "vendors": {
+        "cavalero": {
+          "name": "Cavalero",
+          "syndicate": "The Holdfasts",
+          "currency": "standing",
+          "items": [
+            {"name": "Cascadia Accuracy", "type": "arcane", "cost": 5000, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Emergence Savior", "type": "arcane", "cost": 5000, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Eternal Eradicate", "type": "arcane", "cost": 5000, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Fractalized Reset", "type": "arcane", "cost": 5000, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Molt Vigor", "type": "arcane", "cost": 5000, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Cascadia Flare", "type": "arcane", "cost": 5500, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Eternal Onslaught", "type": "arcane", "cost": 5500, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Cascadia Empowered", "type": "arcane", "cost": 7500, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Emergence Renewed", "type": "arcane", "cost": 7500, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Molt Efficiency", "type": "arcane", "cost": 7500, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Eternal Logistics", "type": "arcane", "cost": 8500, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Molt Reconstruct", "type": "arcane", "cost": 8500, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Cascadia Overcharge", "type": "arcane", "cost": 10000, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Emergence Dissipate", "type": "arcane", "cost": 10000, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Molt Augmented", "type": "arcane", "cost": 10000, "maxRank": 5, "copiesForMax": 21}
+          ]
+        },
+        "yonta": {
+          "name": "Archimedean Yonta",
+          "syndicate": "The Holdfasts",
+          "currency": "luaThraxPlasm",
+          "items": [
+            {"name": "Arcane Blessing", "type": "arcane", "cost": 15, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Arcane Rise", "type": "arcane", "cost": 15, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Primary Frostbite", "type": "arcane", "cost": 15, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Conjunction Voltage", "type": "arcane", "cost": 15, "maxRank": 5, "copiesForMax": 21}
+          ]
+        }
+      }
+    },
+    "hex": {
+      "location": "Höllvania - The Hex",
+      "vendors": {
+        "eleanor": {
+          "name": "Eleanor",
+          "syndicate": "The Hex",
+          "currency": "standing",
+          "items": [
+            {"name": "Melee Doughty", "type": "arcane", "cost": 7500, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Primary Crux", "type": "arcane", "cost": 7500, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Arcane Camisado", "type": "arcane", "cost": 7500, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Arcane Impetus", "type": "arcane", "cost": 7500, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Arcane Bellicose", "type": "arcane", "cost": 7500, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Arcane Truculence", "type": "arcane", "cost": 7500, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Arcane Crepuscular", "type": "arcane", "cost": 7500, "maxRank": 5, "copiesForMax": 21},
+            {"name": "Secondary Enervate", "type": "arcane", "cost": 7500, "maxRank": 5, "copiesForMax": 21}
+          ]
+        }
+      }
+    },
+    "simaris": {
+      "location": "Relay - Cephalon Simaris",
+      "vendors": {
+        "simaris": {
+          "name": "Cephalon Simaris",
+          "syndicate": "Cephalon Simaris",
+          "currency": "standing",
+          "items": [
+            {"name": "Ambush", "type": "mod", "cost": 75000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Astral Autopsy", "type": "mod", "cost": 100000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Botanist", "type": "mod", "cost": 75000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Companion Weapon Riven Mod", "type": "riven", "cost": 100000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Detect Vulnerability", "type": "mod", "cost": 75000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Energy Conversion", "type": "mod", "cost": 100000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Energy Generator", "type": "mod", "cost": 75000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Health Conversion", "type": "mod", "cost": 100000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Looter", "type": "mod", "cost": 75000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Madurai Transmute Core", "type": "transmuteCore", "cost": 5000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Naramon Transmute Core", "type": "transmuteCore", "cost": 5000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Negate", "type": "mod", "cost": 75000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Reawaken", "type": "mod", "cost": 75000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Vazarin Transmute Core", "type": "transmuteCore", "cost": 5000, "maxRank": null, "copiesForMax": 1}
+          ]
+        }
+      }
+    },
+    "conclave": {
+      "location": "Relay - Teshin (Conclave)",
+      "vendors": {
+        "teshin": {
+          "name": "Teshin",
+          "syndicate": "Conclave",
+          "currency": "standing",
+          "items": [
+            {"name": "Power of Three", "type": "mod", "cost": 25000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Prism Guard", "type": "mod", "cost": 25000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Purging Slash", "type": "mod", "cost": 25000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Purifying Flames", "type": "mod", "cost": 25000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Push & Pull", "type": "mod", "cost": 25000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Recharge Barrier", "type": "mod", "cost": 25000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Rumbled", "type": "mod", "cost": 25000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Sapping Reach", "type": "mod", "cost": 25000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Shield Overload", "type": "mod", "cost": 25000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Signal Flare", "type": "mod", "cost": 25000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Singularity", "type": "mod", "cost": 25000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Tear Gas", "type": "mod", "cost": 25000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Ward Recovery", "type": "mod", "cost": 25000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Calculated Victory", "type": "mod", "cost": 25000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Momentary Pause", "type": "mod", "cost": 30000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Overcharged", "type": "mod", "cost": 25000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Prize Kill", "type": "mod", "cost": 30000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Quick Charge", "type": "mod", "cost": 25000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Recover", "type": "mod", "cost": 30000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Recuperate", "type": "mod", "cost": 25000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Rime Vault", "type": "mod", "cost": 25000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Searing Leap", "type": "mod", "cost": 25000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Spring-Loaded Broadhead", "type": "mod", "cost": 25000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Stand Ground", "type": "mod", "cost": 25000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Vanquished Prey", "type": "mod", "cost": 30000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Venomous Rise", "type": "mod", "cost": 25000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Voltaic Lance", "type": "mod", "cost": 25000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Eject Magazine", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Explosive Demise", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Follow Through", "type": "mod", "cost": 30000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Gun Glide", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Heartseeker", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Impenetrable Offense", "type": "mod", "cost": 25000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Lie In Wait", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Lock and Load", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Martial Fury", "type": "mod", "cost": 25000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Relentless Assault", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Strafing Slide", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Surplus Diverters", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Sword Alone", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Tactical Reload", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Afterburn", "type": "mod", "cost": 25000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Antimatter Mine", "type": "mod", "cost": 25000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Deceptive Bond", "type": "mod", "cost": 25000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Defiled Reckoning", "type": "mod", "cost": 25000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Discharge Strike", "type": "mod", "cost": 25000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Hysterical Fixation", "type": "mod", "cost": 25000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Ice Wave Impedance", "type": "mod", "cost": 25000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Iron Shrapnel", "type": "mod", "cost": 25000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Kinetic Collision", "type": "mod", "cost": 25000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Mesa's Waltz", "type": "mod", "cost": 25000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Night Stalker", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "No Current Leap", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Noble Cadence", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Overcharge Detectors", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Overview", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Piercing Fury", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Quaking Hand", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Razor Munitions", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Reflex Draw", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Rending Wind", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Ripper Rounds", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Rising Skill", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Rising Steel", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Scarlet Hurricane", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Serrated Edges", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Serrated Rounds", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Shadow Harvest", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Sharpened Blade", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Shred Shot", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Snap Shot", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Soft Hands", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Spry Sights", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Star Divide", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Tainted Hydra", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Tempered Bound", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Twitch", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Vicious Approach", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Anti-Flak Plating", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Armored Acrobatics", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Armored Evade", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Armored Recovery", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Double-Barrel Drift", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Adept Surge", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Agile Aim", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Air Recon", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Air Thrusters", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Anticipation", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Apex Predator", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Argent Scourge", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Biting Piranha", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Bounty Hunter", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Broad Eye", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Calculated Spring", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Celestial Nightfall", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Comet Rounds", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Counterweight", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Crash Shot", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Crashing Havoc", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Crashing Timber", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Cunning Aspect", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Dividing Blades", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Fateful Truth", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Flak Shot", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Full Capacity", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Impaler Munitions", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Lashing Coil", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Last Herald", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Loaded Capacity", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Loose Chamber", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Loose Hatch", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Loose Magazine", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Mafic Rain", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Maximum Capacity", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1},
+            {"name": "Meteor Munitions", "type": "mod", "cost": 15000, "maxRank": null, "copiesForMax": 1}
+          ]
+        }
+      }
+    }
+  }
+}
