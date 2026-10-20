@@ -64,7 +64,7 @@ register(/^!grade\s+(.+)/i, async ({ sock, from, msg, match }) => {
     const card = await getRivenGradeImage(link)
     if (card && card.png) {
       await sock.sendMessage(from, { image: card.png, caption: card.caption }, { quoted: msg })
-      if (card.whisper) await sock.sendMessage(from, { text: card.whisper })
+      // if (card.whisper) await sock.sendMessage(from, { text: card.whisper }) nao quero que envie mensagem 
       return
     }
   }
