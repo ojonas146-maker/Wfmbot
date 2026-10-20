@@ -33,15 +33,20 @@ register(/^!riven(?:\s+(.+))?$/i, async ({ sock, from, match }) => {
 })
 
 // /grade com imagem: legenda "/grade" no print do riven, ou resposta a uma imagem com "/grade".
-// Rank diferente de 8: "/grade r5". Fica ANTES de !grade <link> para ter prioridade.
-register(/^!grade(?:\s+(?:r|rank)\s*(\d{1,2}))?\s*$/i, async ({ sock, from, msg, match }) => {
+// Rank diferente de 8: "/grade r5". Arma onde o riven está equipado: "/grade kuva sobek".
+// Pode combinar: "/grade kuva sobek r5". Fica ANTES de !grade <link> (que tem link/ID).
+register(/^!grade(?:\s+(?!https?:\/\/|#?[0-9a-f]{24}\b)(.+))?$/i, async ({ sock, from, msg, match }) => {
   const { gradeRivenFromMessage } = require('../services/riven/rivenImage')
   const hasImage = !!(msg && msg.message && (msg.message.imageMessage ||
     (msg.message.extendedTextMessage && msg.message.extendedTextMessage.contextInfo &&
       msg.message.extendedTextMessage.contextInfo.quotedMessage &&
       msg.message.extendedTextMessage.contextInfo.quotedMessage.imageMessage)))
   if (hasImage) await sock.sendMessage(from, { text: '📐 Lendo o riven...' })
-  const res = await gradeRivenFromMessage(sock, msg, { rank: match[1] != null ? Number(match[1]) : null })
+  const rest = (match[1] || '').trim()
+  const rm = rest.match(/(?:^|\s)(?:r|rank)\s*(\d{1,2})(?=\s|$)/i)
+  const rank = rm ? Number(rm[1]) : null
+  const weapon = (rm ? rest.replace(rm[0], ' ') : rest).trim() || null
+  const res = await gradeRivenFromMessage(sock, msg, { rank, weapon })
   if (res.error) {
     await sock.sendMessage(from, { text: res.error })
     return
