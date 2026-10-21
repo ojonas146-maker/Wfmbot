@@ -60,6 +60,13 @@ function getHelp() {
     '💎 Detector automático de rivens roubados (compara com o top da semana)\n\n' +
 
     '━━━━━━━━━━━━━━━━━\n' +
+    '🏪 *VENDEDORES / NPCs*\n' +
+    '━━━━━━━━━━━━━━━━━\n' +
+    '🏪 *!npc <vendedor> [MR] [filtros]* — o que ele vende: standing (R0 → Max) + preço no mercado\n' +
+    '   Ex: `!npc little duck` · `!npc little duck 25` (dias de farm + melhor retorno por dia)\n' +
+    '   Filtros: arcane · mod · tags · plasm · caro · barato · lucro · rapido (sem mercado)\n' +
+    '   `!npc fortuna` mostra todos os vendedores da região · `!npc` lista todos\n\n' +
+    '━━━━━━━━━━━━━━━━━\n' +
     '🧬 *KUVA LICH / SISTERS OF PARVOS*\n' +
     '━━━━━━━━━━━━━━━━━\n' +
     '🔎 *!lich <filtros>* — mostra agora os 3 mais baratos (cartão + /w pronto)\n' +
