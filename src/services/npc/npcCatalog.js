@@ -157,7 +157,13 @@ const TYPE_WORDS = {
   arma: 'weapon', armas: 'weapon', weapon: 'weapon', weapons: 'weapon'
 }
 const CURRENCY_WORDS = { standing: 'standing', tags: 'tags', tag: 'tags', fergolyte: 'fergolyte', plasm: 'luaThraxPlasm', lua: 'luaThraxPlasm', thrax: 'luaThraxPlasm' }
-const SORT_WORDS = { caro: 'desc', caros: 'desc', dias: 'desc', demorado: 'desc', barato: 'asc', baratos: 'asc', nome: 'name', alfabetica: 'name' }
+const SORT_WORDS = {
+  caro: 'cost_desc', caros: 'cost_desc', dias: 'cost_desc', demorado: 'cost_desc',
+  barato: 'cost_asc', baratos: 'cost_asc', nome: 'name', alfabetica: 'name',
+  preco: 'market', precos: 'market', plat: 'market', mercado: 'market', market: 'market',
+  lucro: 'profit', retorno: 'profit'
+}
+const NO_MARKET_WORDS = new Set(['semmercado', 'nomarket', 'rapido', 'semplat'])
 
 /**
  * @returns {{ query, mr, typeFilter, currencyFilter, sort, market }}
@@ -165,7 +171,7 @@ const SORT_WORDS = { caro: 'desc', caros: 'desc', dias: 'desc', demorado: 'desc'
  */
 function parseNpcArgs(raw) {
   const tokens = String(raw || '').trim().split(/\s+/).filter(Boolean)
-  const o = { query: '', mr: null, typeFilter: null, currencyFilter: null, sort: 'desc', market: false }
+  const o = { query: '', mr: null, typeFilter: null, currencyFilter: null, sort: 'market', market: true }
   const rest = []
   for (const t of tokens) {
     const k = norm(t)
@@ -173,7 +179,7 @@ function parseNpcArgs(raw) {
     if (TYPE_WORDS[k]) { o.typeFilter = TYPE_WORDS[k]; continue }
     if (CURRENCY_WORDS[k]) { o.currencyFilter = CURRENCY_WORDS[k]; continue }
     if (SORT_WORDS[k]) { o.sort = SORT_WORDS[k]; continue }
-    if (k === 'mercado' || k === 'market' || k === 'preco' || k === 'precos') { o.market = true; continue }
+    if (NO_MARKET_WORDS.has(k)) { o.market = false; continue }
     if ((m = k.match(/^mr(\d{1,2})$/))) { o.mr = Number(m[1]); continue }
     rest.push(t)
   }
@@ -210,7 +216,33 @@ function itemTotals(it) {
   }
 }
 
-function applyFilters(items, o) {
+/** 10000 -> "10k", 7500 -> "7,5k", 1200000 -> "1,2M" */
+function fmtK(n) {
+  n = Number(n)
+  if (n >= 1000000) return (Math.round(n / 100000) / 10).toString().replace('.', ',') + 'M'
+  if (n >= 1000) return (Math.round(n / 100) / 10).toString().replace('.', ',') + 'k'
+  return String(n)
+}
+
+function daysOf(total, cap) {
+  return Math.max(1, Math.ceil(total / cap))
+}
+
+// valor usado para ordenar
+function sortKey(it, o, market) {
+  const t = itemTotals(it)
+  const m = market && market[it.name]
+  const standingMax = t.max != null ? t.max : (t.r0 != null ? t.r0 : -1)
+  const plat = m ? (t.ranked ? (m.max != null ? m.max : m.r0) : m.r0) : null
+  if (o.sort === 'cost_desc' || o.sort === 'cost_asc') return standingMax
+  if (o.sort === 'profit' && o.mr != null && plat != null && it.currency === 'standing' && t.max != null) {
+    return plat / daysOf(t.max, dailyCap(o.mr))
+  }
+  // 'market' (padrão): preço no mercado; sem preço vai para o fim
+  return plat != null ? plat : -1
+}
+
+function applyFilters(items, o, market) {
   let list = items.slice()
   if (o.typeFilter) {
     if (o.typeFilter === 'weapon') list = list.filter((i) => ['primary', 'secondary', 'melee'].includes(i.type))
@@ -218,94 +250,107 @@ function applyFilters(items, o) {
   }
   if (o.currencyFilter) list = list.filter((i) => i.currency === o.currencyFilter)
 
-  const key = (i) => {
-    const t = itemTotals(i)
-    return t.max != null ? t.max : (t.r0 != null ? t.r0 : -1)
-  }
+  const hasMarket = market && Object.keys(market).length
   if (o.sort === 'name') list.sort((a, b) => a.name.localeCompare(b.name))
-  else if (o.sort === 'asc') list.sort((a, b) => key(a) - key(b) || a.name.localeCompare(b.name))
-  else list.sort((a, b) => key(b) - key(a) || a.name.localeCompare(b.name))
+  else if (o.sort === 'cost_asc') list.sort((a, b) => sortKey(a, o, market) - sortKey(b, o, market) || a.name.localeCompare(b.name))
+  else if (o.sort === 'cost_desc' || !hasMarket) list.sort((a, b) => sortKey(b, { sort: 'cost_desc' }, market) - sortKey(a, { sort: 'cost_desc' }, market) || a.name.localeCompare(b.name))
+  else list.sort((a, b) => sortKey(b, o, market) - sortKey(a, o, market) || a.name.localeCompare(b.name))
   return list
 }
 
-const TYPE_TITLE = { arcane: '🔮 Arcanes', mod: '🧩 Mods', riven: '🎲 Rivens', transmuteCore: '⚗️ Transmute Cores', primary: '🔫 Armas primárias', secondary: '🔫 Armas secundárias', melee: '🗡️ Armas corpo a corpo' }
+const TYPE_TITLE = { arcane: '🔮 Arcanes', mod: '🧩 Mods', riven: '🎲 Rivens', transmuteCore: '⚗️ Transmute Cores', primary: '🔫 Primárias', secondary: '🔫 Secundárias', melee: '🗡️ Corpo a corpo' }
 const TYPE_ORDER = ['arcane', 'mod', 'riven', 'transmuteCore', 'primary', 'secondary', 'melee']
 
+/** Uma linha por item quando cabe (sem MR); senão nome + linha de dados. Setas coladas p/ economizar largura. */
 function itemLines(it, mr, market) {
-  const cur = CURRENCY_LABEL[it.currency] || it.currency
   const t = itemTotals(it)
   const cap = mr != null ? dailyCap(mr) : null
-  const lines = []
+  const isStanding = it.currency === 'standing'
+  const unit = isStanding ? '' : ' ' + (CURRENCY_LABEL[it.currency] || it.currency)
+  const parts = []
 
-  if (it.cost == null && it.tags) {
-    lines.push('• *' + it.name + '* — ' + tagsText(it.tags))
-  } else if (t.ranked) {
-    const suf = it.currency === 'standing' ? '' : ' ' + cur
-    lines.push('• *' + it.name + '* — R0: ' + fmt(t.r0) + suf + ' · Max (R' + it.maxRank + ', ' + it.copiesForMax + 'x): ' + fmt(t.max) + suf)
-  } else {
-    lines.push('• *' + it.name + '* — ' + fmt(it.cost) + ' ' + cur)
+  if (it.cost == null && it.tags) parts.push(tagsText(it.tags))
+  else if (t.ranked) parts.push(fmtK(t.r0) + '→' + fmtK(t.max) + unit)
+  else parts.push(fmtK(it.cost) + unit)
+
+  if (cap && isStanding && it.cost != null) {
+    parts.push('⏱' + (t.ranked ? daysOf(t.r0, cap) + 'd→' + daysOf(t.max, cap) + 'd' : daysOf(t.r0, cap) + 'd'))
   }
 
-  if (cap && it.currency === 'standing' && it.cost != null) {
-    lines.push(t.ranked
-      ? '   ⏱ R0: ' + fmtDays(t.r0, cap) + ' · Max: ' + fmtDays(t.max, cap)
-      : '   ⏱ ' + fmtDays(t.r0, cap))
+  const m = market && market[it.name]
+  if (m && (m.r0 != null || m.max != null)) {
+    if (t.ranked) parts.push('💎' + (m.r0 != null ? m.r0 + 'p' : '—') + '→' + (m.max != null ? m.max + 'p' : '—'))
+    else parts.push('💎' + m.r0 + 'p')
   }
 
-  if (market && market[it.name]) {
-    const m = market[it.name]
-    const parts = []
-    if (m.r0 != null) parts.push((t.ranked ? 'R0 ' : '') + '~' + m.r0 + 'p')
-    if (t.ranked && m.max != null) parts.push('Max ~' + m.max + 'p')
-    if (parts.length) lines.push('   💎 mercado: ' + parts.join(' · '))
-    else lines.push('   💎 mercado: sem ofertas online')
-  }
-  return lines
+  const data = parts.join(' · ')
+  if (!cap && !it.tags && it.name.length + data.length + 3 <= 46) return ['*' + it.name + '* · ' + data]
+  return ['*' + it.name + '*', '  ' + data]
 }
 
-/** Divide um texto longo em mensagens de até `limit` caracteres, quebrando em linhas. */
-function chunkLines(lines, limit) {
+/** Divide em mensagens de até `limit` caracteres, quebrando entre itens (pares de linhas). */
+function chunkBlocks(blocks, limit) {
   const out = []
   let cur = ''
-  for (const ln of lines) {
-    if ((cur + '\n' + ln).length > limit && cur) { out.push(cur); cur = ln } else cur = cur ? cur + '\n' + ln : ln
+  for (const b of blocks) {
+    if (cur && (cur + '\n' + b).length > limit) { out.push(cur); cur = b } else cur = cur ? cur + '\n' + b : b
   }
   if (cur) out.push(cur)
   return out
 }
 
-/** Mensagens (texto) de um vendedor, já com filtros/ordenação/MR. */
-function formatVendor(v, o, market) {
-  const items = applyFilters(v.items, o)
+/** Mensagens (texto) de um vendedor, com filtros/ordenação/MR/mercado. */
+function formatVendor(v, o, market, info) {
+  const items = applyFilters(v.items, o, market)
   const head = []
-  head.push('🏪 *' + v.name + '* — ' + v.syndicate + (v.area ? ' (' + v.area + ')' : ''))
+  head.push('🏪 *' + v.name + '* · ' + v.syndicate)
   const curs = [...new Set(v.items.map((i) => CURRENCY_LABEL[i.currency] || i.currency))]
-  head.push('Moeda: ' + curs.join(' / ') + (v.requiredRank ? ' · exige rank ' + v.requiredRank + ' no sindicato' : ''))
-  if (o.mr != null) {
-    head.push('📆 MR ' + o.mr + ' → cap diário: *' + fmt(dailyCap(o.mr)) + ' standing/dia* (por sindicato, reseta 00:00 UTC)')
-  }
+  head.push(v.area + ' · ' + curs.join('/') + (v.requiredRank ? ' · exige rank ' + v.requiredRank : ''))
+  if (o.mr != null) head.push('📆 MR ' + o.mr + ' → *' + fmt(dailyCap(o.mr)) + '*/dia (reseta 00:00 UTC)')
+  const legend = ['standing R0 → Max']
+  if (o.mr != null) legend.push('⏱ dias')
+  if (market) legend.push('💎 mercado')
+  head.push('_' + legend.join(' · ') + '_')
   const fl = []
   if (o.typeFilter) fl.push(o.typeFilter)
   if (o.currencyFilter) fl.push(o.currencyFilter)
   if (fl.length) head.push('Filtro: ' + fl.join(' + '))
 
-  if (!items.length) {
-    return [head.join('\n') + '\n\n_Nenhum item com esses filtros._']
-  }
+  if (!items.length) return [head.join('\n') + '\n\n_Nenhum item com esses filtros._']
 
-  const body = []
+  const blocks = [head.join('\n')]
   const types = TYPE_ORDER.filter((t) => items.some((i) => i.type === t)).concat([...new Set(items.map((i) => i.type))].filter((t) => !TYPE_ORDER.includes(t)))
   for (const type of types) {
     const group = items.filter((i) => i.type === type)
-    body.push('')
-    body.push('*' + (TYPE_TITLE[type] || type) + '* (' + group.length + ')')
-    for (const it of group) for (const ln of itemLines(it, o.mr, market)) body.push(ln)
+    blocks.push('\n*' + (TYPE_TITLE[type] || type) + '*')
+    for (const it of group) blocks.push(itemLines(it, o.mr, market).join('\n'))
   }
 
-  const note = []
-  if (o.mr != null) note.push('_Dias = standing necessário ÷ cap diário, sem contar o que você já tem._')
-  const msgs = chunkLines(head.concat(body).concat(note.length ? [''].concat(note) : []), 3400)
-  return msgs
+  // melhor retorno em plat/dia (só com MR + mercado)
+  if (o.mr != null && market) {
+    const cap = dailyCap(o.mr)
+    const best = items
+      .map((it) => {
+        const t = itemTotals(it)
+        const m = market[it.name]
+        if (!m || it.currency !== 'standing' || t.max == null) return null
+        const plat = t.ranked ? (m.max != null ? m.max : m.r0) : m.r0
+        return plat != null ? { name: it.name, perDay: plat / daysOf(t.max, cap), plat, days: daysOf(t.max, cap) } : null
+      })
+      .filter(Boolean)
+      .sort((a, b) => b.perDay - a.perDay)
+      .slice(0, 3)
+    if (best.length) {
+      blocks.push('\n🏆 *Melhor retorno por dia de farm*')
+      best.forEach((b, i) => blocks.push((i + 1) + '. ' + b.name + ' — ≈ ' + Math.round(b.perDay) + 'p/dia (' + b.plat + 'p em ' + b.days + 'd)'))
+    }
+  }
+
+  const foot = []
+  if (market && info && info.pending > 0) foot.push('⏳ ' + info.pending + ' preço(s) ainda carregando — repita o comando em instantes.')
+  if (o.mr != null) foot.push('_Dias = standing ÷ cap diário, sem contar o que você já tem._')
+  if (foot.length) blocks.push('\n' + foot.join('\n'))
+  return chunkBlocks(blocks, 3400)
 }
 
 /** Lista de vendedores disponíveis (quando o comando vem sem argumento). */
@@ -323,14 +368,14 @@ function listVendorsMessage() {
     for (const v of byArea[area]) t += '• ' + v.name + ' — ' + v.syndicate + ' (' + v.items.length + ')\n'
   }
   t += '\n*Exemplos*\n' +
-    '• `!npc little duck` — tudo que ele vende, com R0 e Max\n' +
-    '• `!npc little duck 25` — + dias de farm para MR 25\n' +
-    '• `!npc little duck 25 arcane barato` — só arcanes, do mais barato\n' +
+    '• `!npc little duck` — itens, preço em standing (R0 → Max) e preço no mercado\n' +
+    '• `!npc little duck 25` — + dias de farm para MR 25 e melhor retorno por dia\n' +
+    '• `!npc little duck 25 arcane` — só arcanes\n' +
     '• `!npc teasonai tags` — só o que se paga com tags\n' +
-    '• `!npc fortuna` — todos os vendedores de Fortuna\n' +
-    '• `!npc little duck mercado` — compara com o preço no warframe.market\n\n' +
+    '• `!npc fortuna` — todos os vendedores de Fortuna\n\n' +
     '*Filtros:* arcane · mod · riven · core · arma · standing · tags · fergolyte · plasm\n' +
-    '*Ordem:* caro (padrão) · barato · nome'
+    '*Ordem:* mercado (padrão) · caro · barato · nome · lucro (com MR)\n' +
+    '*Mais rápido:* `rapido` (sem preços do mercado)'
   return t.trim()
 }
 
