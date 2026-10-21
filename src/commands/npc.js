@@ -1,49 +1,15 @@
 // src/commands/npc.js
-// !npc <vendedor> [MR] [filtros] — o que cada NPC/sindicato vende, preço R0 e Rank Max,
-// dias de farm (cap diário de standing = 16.000 + 500 x MR) e comparação com o mercado.
+// !npc <vendedor> [MR] [filtros] — o que cada NPC/sindicato vende, preço em standing (R0 -> Max),
+// dias de farm (cap diário = 16.000 + 500 x MR) e preço no warframe.market (cache do highest).
 const { register } = require('./router')
 const npc = require('../services/npc/npcCatalog')
-const { resolveItem, getTopOrders } = require('../services/wfm/client')
+const { getMarketPrices } = require('../services/npc/npcMarket')
 
 const MAX_VENDORS = 6
-const MAX_MARKET_ITEMS = 18
-const lastMarket = {}
-const MARKET_COOLDOWN_MS = 30 * 1000
+const MAX_MARKET_ITEMS = 40
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 
-// menor preço de venda: prioriza ingame, depois online, depois qualquer um
-function bestPrice(sell) {
-  const ok = (sell || []).filter((o) => o && o.platinum > 0)
-  if (!ok.length) return null
-  const pick = (status) => ok.filter((o) => o.user && o.user.status === status).sort((a, b) => a.platinum - b.platinum)[0]
-  const o = pick('ingame') || pick('online') || ok.sort((a, b) => a.platinum - b.platinum)[0]
-  return o ? o.platinum : null
-}
-
-async function fetchMarket(items) {
-  const out = {}
-  for (const it of items) {
-    try {
-      const resolved = await resolveItem(it.name)
-      if (!resolved) { out[it.name] = { r0: null, max: null }; continue }
-      const ranked = it.maxRank != null && it.copiesForMax > 1
-      const first = ranked ? await getTopOrders(resolved.slug, 0) : await getTopOrders(resolved.slug)
-      const entry = { r0: bestPrice(first.sell), max: null }
-      if (ranked) {
-        await sleep(250)
-        const mx = await getTopOrders(resolved.slug, it.maxRank)
-        entry.max = bestPrice(mx.sell)
-      }
-      out[it.name] = entry
-    } catch (e) {
-      out[it.name] = { r0: null, max: null }
-    }
-    await sleep(250)
-  }
-  return out
-}
-
-register(/^!(?:npc|npcs|vendedor|vendedores)(?:\s+(.+))?$/i, async ({ sock, from, senderJid, isAdmin, match }) => {
+register(/^!(?:npc|npcs|vendedor|vendedores)(?:\s+(.+))?$/i, async ({ sock, from, match }) => {
   const raw = (match[1] || '').trim()
   if (!raw) {
     await sock.sendMessage(from, { text: npc.listVendorsMessage() })
@@ -59,30 +25,32 @@ register(/^!(?:npc|npcs|vendedor|vendedores)(?:\s+(.+))?$/i, async ({ sock, from
   let extra = 0
   if (vendors.length > MAX_VENDORS) { extra = vendors.length - MAX_VENDORS; vendors = vendors.slice(0, MAX_VENDORS) }
 
+  // preços: cache do highest (instantâneo) + poucos pedidos ao vivo para o que faltar
   let market = null
+  let info = null
   if (o.market) {
-    const who = senderJid || from
-    const now = Date.now()
-    if (!isAdmin && lastMarket[who] && now - lastMarket[who] < MARKET_COOLDOWN_MS) {
-      await sock.sendMessage(from, { text: '⏳ Aguarde alguns segundos antes de consultar o mercado de novo.' })
-      return
+    const items = []
+    for (const v of vendors) {
+      for (const it of npc.applyFilters(v.items, Object.assign({}, o, { sort: 'cost_desc' }), null)) {
+        if (items.length < MAX_MARKET_ITEMS && !items.find((x) => x.name === it.name)) items.push(it)
+      }
     }
-    lastMarket[who] = now
-    const toFetch = []
-    for (const v of vendors) for (const it of npc.applyFilters(v.items, o)) if (toFetch.length < MAX_MARKET_ITEMS && !toFetch.find((x) => x.name === it.name)) toFetch.push(it)
-    await sock.sendMessage(from, { text: '💎 Consultando o mercado (' + toFetch.length + ' itens, leva alguns segundos)...' })
-    market = await fetchMarket(toFetch)
+    try {
+      const res = await getMarketPrices(items)
+      market = res.prices
+      info = res
+    } catch (e) {
+      console.error('npc mercado:', e.message)
+      market = null
+    }
   }
 
   for (const v of vendors) {
-    const msgs = npc.formatVendor(v, o, market)
+    const msgs = npc.formatVendor(v, o, market, info)
     for (const text of msgs) {
       await sock.sendMessage(from, { text })
       if (msgs.length > 1) await sleep(400)
     }
   }
-  const tail = []
-  if (extra) tail.push('➕ Há mais ' + extra + ' vendedor(es) nessa busca. Use o nome de um deles para ver.')
-  if (market) tail.push('💎 Preços do mercado: menor oferta online/ingame, só dos ' + MAX_MARKET_ITEMS + ' primeiros itens. Use filtros (arcane, mod) para focar.')
-  if (tail.length) await sock.sendMessage(from, { text: tail.join('\n') })
+  if (extra) await sock.sendMessage(from, { text: '➕ Há mais ' + extra + ' vendedor(es) nessa busca. Use o nome de um deles para ver.' })
 })
