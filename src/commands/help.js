@@ -1,4 +1,4 @@
-// src/commands/help.js — !ajuda
+// src/commands/help.js —  !ajuda
 const { register } = require('./router')
 
 function getHelp() {
