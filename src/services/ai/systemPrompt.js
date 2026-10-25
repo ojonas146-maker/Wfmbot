@@ -18,7 +18,7 @@ REGRAS DE VERDADE SOBRE ECONOMIA (nunca contrarie):
   riven: `
 REGRAS DE RIVEN:
 - Riven tem 2 positivos OU 3 positivos + 1 negativo, aleatorios por arma.
-- Disposition da arma afeta o range de rolagem; quanto menor a disposition, mais dificil bater um valor alto.
+- Desde a atualizacao do jogo, TODAS as armas tem disposition 1.2 (nao existe mais valor por arma, nem diferenca entre Prime, Kuva, Prisma etc). O range de rolagem e igual para todas.
 - "God roll" = bate todos os must-have do meta da arma com valores altos. Sugira "!meta <arma>" pra ver o must-have oficial cadastrado.
 - Pra analisar um anuncio especifico do warframe.market, sugira "!grade <link>".
 - NUNCA invente quais stats sao must-have de uma arma sem o bloco de dados — use "!meta" como fonte.`,
