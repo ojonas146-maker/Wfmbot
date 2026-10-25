@@ -613,12 +613,22 @@ function buildCardSvg(result, imgBuf) {
 
   let svg = ''
   svg += '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="' + W + '" height="' + HT + '" viewBox="0 0 ' + W + ' ' + HT + '">'
-  svg += '<defs><clipPath id="imgclip"><rect x="0" y="0" width="' + LEFT_W + '" height="' + H + '"/></clipPath></defs>'
+  svg += '<defs><clipPath id="imgclip"><rect x="0" y="0" width="' + LEFT_W + '" height="' + H + '"/></clipPath>' +
+    '<filter id="softblur" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="22"/></filter></defs>'
   svg += '<rect width="' + W + '" height="' + HT + '" fill="#08080a"/>'
 
   if (!imgBuf && result.card) svg += buildCardPanel(result.card, LEFT_W, H)
   if (imgBuf) {
-    svg += '<image x="0" y="0" width="' + LEFT_W + '" height="' + H + '" preserveAspectRatio="xMidYMid ' + fill + '" clip-path="url(#imgclip)" xlink:href="data:' + detectMime(imgBuf) + ';base64,' + imgBuf.toString('base64') + '"/>'
+    const uri = 'data:' + detectMime(imgBuf) + ';base64,' + imgBuf.toString('base64')
+    if (fill === 'meet') {
+      // imagem que não preenche o painel (ex: print em paisagem): fundo = a própria imagem
+      // ampliada e desfocada, em vez de barras pretas em cima e embaixo
+      svg += '<g clip-path="url(#imgclip)">' +
+        '<image x="-30" y="-30" width="' + (LEFT_W + 60) + '" height="' + (H + 60) + '" preserveAspectRatio="xMidYMid slice" filter="url(#softblur)" xlink:href="' + uri + '"/>' +
+        '<rect x="0" y="0" width="' + LEFT_W + '" height="' + H + '" fill="#08080a" fill-opacity="0.35"/>' +
+        '</g>'
+    }
+    svg += '<image x="0" y="0" width="' + LEFT_W + '" height="' + H + '" preserveAspectRatio="xMidYMid ' + fill + '" clip-path="url(#imgclip)" xlink:href="' + uri + '"/>'
   }
 
   // cabeçalho
