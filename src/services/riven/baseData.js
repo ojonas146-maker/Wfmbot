@@ -4,6 +4,27 @@ const fs = require('fs')
 const { BASE_VALUES_FILE, DISPOSITIONS_FILE, RIVEN_META_FILE } = require('../../config/env')
 const { normDispKey, normalizeWeaponKey } = require('../../utils/text')
 
+// ---------------------------------------------------------------------------
+// DISPOSIÇÃO ÚNICA
+// Desde a mudança do jogo, TODAS as armas têm disposição 1.2 (não existe mais valor por arma).
+// Por isso o valor de "disposition" do dispositions.json é ignorado: ele é trocado por este
+// aqui ao carregar. Do arquivo só interessam o nome, a categoria e o tipo da arma.
+//
+// Para mudar o valor:  UNIFORM_DISPOSITION=1.25   no .env
+// Para voltar a usar a disposição de cada arma (do dispositions.json):  UNIFORM_DISPOSITION=off
+// ---------------------------------------------------------------------------
+const UNIFORM_DISPOSITION = (() => {
+  const v = String(process.env.UNIFORM_DISPOSITION == null ? '1.2' : process.env.UNIFORM_DISPOSITION).trim().toLowerCase()
+  if (v === 'off' || v === 'false' || v === '0') return null
+  const n = Number(v.replace(',', '.'))
+  return n > 0 ? n : 1.2
+})()
+
+function applyUniformDisposition(list) {
+  if (UNIFORM_DISPOSITION == null) return list
+  return list.map((w) => (w && w.name ? Object.assign({}, w, { disposition: UNIFORM_DISPOSITION, fileDisposition: w.disposition }) : w))
+}
+
 let _baseValuesCache = null
 let _dispositionsCache = null
 let _dispositionsListCache = null
@@ -17,7 +38,7 @@ function loadBaseValues() {
 
 function loadDispositions() {
   if (_dispositionsCache) return _dispositionsCache
-  const list = JSON.parse(fs.readFileSync(DISPOSITIONS_FILE, 'utf8'))
+  const list = applyUniformDisposition(JSON.parse(fs.readFileSync(DISPOSITIONS_FILE, 'utf8')))
   const map = {}
   for (const w of list) {
     if (!w || !w.name) continue
@@ -35,7 +56,7 @@ function loadDispositions() {
 function getDispositionsList() {
   if (_dispositionsListCache) return _dispositionsListCache
   try {
-    _dispositionsListCache = JSON.parse(fs.readFileSync(DISPOSITIONS_FILE, 'utf8'))
+    _dispositionsListCache = applyUniformDisposition(JSON.parse(fs.readFileSync(DISPOSITIONS_FILE, 'utf8')))
   } catch (e) {
     _dispositionsListCache = []
   }
@@ -116,6 +137,7 @@ function resolveCategoryFromDisp(disp) {
 }
 
 module.exports = {
+  UNIFORM_DISPOSITION,
   loadBaseValues,
   loadDispositions,
   getDispositionsList,
